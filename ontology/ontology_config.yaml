@@ -1,0 +1,478 @@
+# RevOps Command Center - Ontology Configuration
+# ================================================
+# This file documents the ontology structure to create in Foundry.
+# Use this as a reference when configuring in Ontology Manager.
+
+ontology_name: "RevOps Command Center"
+ontology_description: "Revenue Operations analytics and intelligence platform"
+
+# ================================================
+# OBJECT TYPES
+# ================================================
+
+object_types:
+
+  # ------------------------------------------
+  # OPPORTUNITY
+  # ------------------------------------------
+  - api_name: "Opportunity"
+    display_name: "Opportunity"
+    plural_name: "Opportunities"
+    description: "Sales opportunity with health scoring"
+    icon: "dollar-sign"
+    primary_key: "opportunityId"
+    title_property: "opportunityName"
+    backing_dataset: "/RevOps/Enriched/opportunity_health_scored"
+
+    properties:
+      - api_name: opportunityId
+        display_name: "Opportunity ID"
+        type: string
+        source_column: opportunity_id
+
+      - api_name: opportunityName
+        display_name: "Opportunity Name"
+        type: string
+        source_column: opportunity_name
+        searchable: true
+
+      - api_name: accountId
+        display_name: "Account ID"
+        type: string
+        source_column: account_id
+
+      - api_name: accountName
+        display_name: "Account"
+        type: string
+        source_column: account_name
+        searchable: true
+
+      - api_name: segment
+        display_name: "Segment"
+        type: string
+        source_column: segment
+        filterable: true
+
+      - api_name: industry
+        display_name: "Industry"
+        type: string
+        source_column: industry
+        filterable: true
+
+      - api_name: amount
+        display_name: "Amount"
+        type: double
+        source_column: amount
+        aggregatable: true
+        format: currency
+
+      - api_name: stageName
+        display_name: "Stage"
+        type: string
+        source_column: stage_name
+        filterable: true
+
+      - api_name: probability
+        display_name: "Probability"
+        type: double
+        source_column: probability
+        format: percent
+
+      - api_name: closeDate
+        display_name: "Close Date"
+        type: date
+        source_column: close_date
+
+      - api_name: daysInStage
+        display_name: "Days in Stage"
+        type: integer
+        source_column: days_in_current_stage
+
+      - api_name: ownerId
+        display_name: "Owner ID"
+        type: string
+        source_column: owner_id
+
+      - api_name: ownerName
+        display_name: "Owner"
+        type: string
+        source_column: owner_name
+        filterable: true
+
+      - api_name: managerId
+        display_name: "Manager ID"
+        type: string
+        source_column: manager_id
+
+      - api_name: managerName
+        display_name: "Manager"
+        type: string
+        source_column: manager_name
+        filterable: true
+
+      - api_name: region
+        display_name: "Region"
+        type: string
+        source_column: region
+        filterable: true
+
+      - api_name: forecastCategory
+        display_name: "Forecast Category"
+        type: string
+        source_column: forecast_category
+        filterable: true
+
+      - api_name: healthScore
+        display_name: "Health Score"
+        type: integer
+        source_column: health_score
+        aggregatable: true
+
+      - api_name: healthCategory
+        display_name: "Health"
+        type: string
+        source_column: health_category
+        filterable: true
+
+      - api_name: isClosed
+        display_name: "Is Closed"
+        type: boolean
+        source_column: is_closed
+        filterable: true
+
+      - api_name: daysToClose
+        display_name: "Days to Close"
+        type: integer
+        source_column: days_to_close
+
+      - api_name: daysSinceActivity
+        display_name: "Days Since Activity"
+        type: integer
+        source_column: days_since_activity
+
+      - api_name: competitorMentioned
+        display_name: "Competitor"
+        type: string
+        source_column: competitor_mentioned
+        filterable: true
+
+      - api_name: hasChampion
+        display_name: "Has Champion"
+        type: boolean
+        source_column: has_champion
+        filterable: true
+
+      - api_name: stakeholderCount
+        display_name: "Stakeholder Count"
+        type: integer
+        source_column: stakeholder_count
+
+      - api_name: discountPercent
+        display_name: "Discount %"
+        type: integer
+        source_column: discount_percent
+
+  # ------------------------------------------
+  # ACCOUNT
+  # ------------------------------------------
+  - api_name: "Account"
+    display_name: "Account"
+    plural_name: "Accounts"
+    description: "Customer and prospect accounts"
+    icon: "building"
+    primary_key: "accountId"
+    title_property: "accountName"
+    backing_dataset: "/RevOps/Sample/accounts"
+
+    properties:
+      - api_name: accountId
+        display_name: "Account ID"
+        type: string
+        source_column: account_id
+
+      - api_name: accountName
+        display_name: "Account Name"
+        type: string
+        source_column: account_name
+        searchable: true
+
+      - api_name: segment
+        display_name: "Segment"
+        type: string
+        source_column: segment
+        filterable: true
+
+      - api_name: industry
+        display_name: "Industry"
+        type: string
+        source_column: industry
+        filterable: true
+
+      - api_name: employeeCount
+        display_name: "Employees"
+        type: integer
+        source_column: employee_count
+
+      - api_name: annualRevenue
+        display_name: "Annual Revenue"
+        type: double
+        source_column: annual_revenue
+        format: currency
+
+      - api_name: isCustomer
+        display_name: "Is Customer"
+        type: boolean
+        source_column: is_customer
+        filterable: true
+
+      - api_name: currentArr
+        display_name: "Current ARR"
+        type: double
+        source_column: current_arr
+        format: currency
+        aggregatable: true
+
+      - api_name: healthScore
+        display_name: "Health Score"
+        type: integer
+        source_column: health_score
+
+      - api_name: ownerId
+        display_name: "Owner ID"
+        type: string
+        source_column: owner_id
+
+  # ------------------------------------------
+  # SALES REP
+  # ------------------------------------------
+  - api_name: "SalesRep"
+    display_name: "Sales Rep"
+    plural_name: "Sales Reps"
+    description: "Sales team members"
+    icon: "user"
+    primary_key: "repId"
+    title_property: "repName"
+    backing_dataset: "/RevOps/Sample/sales_reps"
+
+    properties:
+      - api_name: repId
+        display_name: "Rep ID"
+        type: string
+        source_column: rep_id
+
+      - api_name: repName
+        display_name: "Name"
+        type: string
+        source_column: rep_name
+        searchable: true
+
+      - api_name: email
+        display_name: "Email"
+        type: string
+        source_column: email
+
+      - api_name: managerId
+        display_name: "Manager ID"
+        type: string
+        source_column: manager_id
+
+      - api_name: managerName
+        display_name: "Manager"
+        type: string
+        source_column: manager_name
+        filterable: true
+
+      - api_name: region
+        display_name: "Region"
+        type: string
+        source_column: region
+        filterable: true
+
+      - api_name: segment
+        display_name: "Segment"
+        type: string
+        source_column: segment
+        filterable: true
+
+      - api_name: annualQuota
+        display_name: "Annual Quota"
+        type: double
+        source_column: annual_quota
+        format: currency
+
+      - api_name: quarterlyQuota
+        display_name: "Quarterly Quota"
+        type: double
+        source_column: quarterly_quota
+        format: currency
+
+      - api_name: ytdClosedRevenue
+        display_name: "YTD Closed"
+        type: double
+        source_column: ytd_closed_revenue
+        format: currency
+        aggregatable: true
+
+      - api_name: ytdAttainment
+        display_name: "YTD Attainment"
+        type: double
+        source_column: ytd_attainment
+        format: percent
+
+      - api_name: currentPipeline
+        display_name: "Pipeline"
+        type: double
+        source_column: current_pipeline
+        format: currency
+        aggregatable: true
+
+      - api_name: pipelineCoverage
+        display_name: "Coverage"
+        type: double
+        source_column: pipeline_coverage
+
+      - api_name: winRate
+        display_name: "Win Rate"
+        type: double
+        source_column: win_rate
+        format: percent
+
+      - api_name: avgDealSize
+        display_name: "Avg Deal Size"
+        type: double
+        source_column: avg_deal_size
+        format: currency
+
+      - api_name: tenureMonths
+        display_name: "Tenure (Months)"
+        type: integer
+        source_column: tenure_months
+
+      - api_name: dealsInPipeline
+        display_name: "Deals in Pipeline"
+        type: integer
+        source_column: deals_in_pipeline
+
+  # ------------------------------------------
+  # ACTIVITY
+  # ------------------------------------------
+  - api_name: "Activity"
+    display_name: "Activity"
+    plural_name: "Activities"
+    description: "Sales activities (calls, emails, meetings)"
+    icon: "calendar"
+    primary_key: "activityId"
+    title_property: "subject"
+    backing_dataset: "/RevOps/Sample/activities"
+
+    properties:
+      - api_name: activityId
+        display_name: "Activity ID"
+        type: string
+        source_column: activity_id
+
+      - api_name: activityType
+        display_name: "Type"
+        type: string
+        source_column: activity_type
+        filterable: true
+
+      - api_name: subject
+        display_name: "Subject"
+        type: string
+        source_column: subject
+        searchable: true
+
+      - api_name: opportunityId
+        display_name: "Opportunity ID"
+        type: string
+        source_column: opportunity_id
+
+      - api_name: accountId
+        display_name: "Account ID"
+        type: string
+        source_column: account_id
+
+      - api_name: ownerId
+        display_name: "Owner ID"
+        type: string
+        source_column: owner_id
+
+      - api_name: activityDate
+        display_name: "Date"
+        type: date
+        source_column: activity_date
+
+      - api_name: durationMinutes
+        display_name: "Duration (min)"
+        type: integer
+        source_column: duration_minutes
+        aggregatable: true
+
+      - api_name: outcome
+        display_name: "Outcome"
+        type: string
+        source_column: outcome
+        filterable: true
+
+      - api_name: isCompleted
+        display_name: "Completed"
+        type: boolean
+        source_column: is_completed
+        filterable: true
+
+
+# ================================================
+# LINK TYPES
+# ================================================
+
+link_types:
+
+  - api_name: "opportunityToAccount"
+    display_name: "Account"
+    from_object: "Opportunity"
+    to_object: "Account"
+    cardinality: "many-to-one"
+    from_property: "accountId"
+    to_property: "accountId"
+
+  - api_name: "opportunityToRep"
+    display_name: "Owner"
+    from_object: "Opportunity"
+    to_object: "SalesRep"
+    cardinality: "many-to-one"
+    from_property: "ownerId"
+    to_property: "repId"
+
+  - api_name: "accountToRep"
+    display_name: "Account Owner"
+    from_object: "Account"
+    to_object: "SalesRep"
+    cardinality: "many-to-one"
+    from_property: "ownerId"
+    to_property: "repId"
+
+  - api_name: "activityToOpportunity"
+    display_name: "Opportunity"
+    from_object: "Activity"
+    to_object: "Opportunity"
+    cardinality: "many-to-one"
+    from_property: "opportunityId"
+    to_property: "opportunityId"
+
+  - api_name: "activityToRep"
+    display_name: "Owner"
+    from_object: "Activity"
+    to_object: "SalesRep"
+    cardinality: "many-to-one"
+    from_property: "ownerId"
+    to_property: "repId"
+
+  - api_name: "repToManager"
+    display_name: "Reports To"
+    from_object: "SalesRep"
+    to_object: "SalesRep"
+    cardinality: "many-to-one"
+    from_property: "managerId"
+    to_property: "repId"
+    description: "Manager relationship (note: managers need to also exist in SalesRep table)"
