@@ -2,7 +2,8 @@
  * Foundry API Integration Layer
  *
  * This module provides functions to connect the React app to Foundry data.
- * In development, it returns mock data. In production, it calls Foundry APIs.
+ * In development, it returns mock data. In production, it calls the secure
+ * API route which proxies to Foundry (keeping credentials server-side).
  */
 
 // Import mock data for development
@@ -21,13 +22,11 @@ import type {
   CoachingInsight,
 } from '@/types'
 
-// Configuration
-const FOUNDRY_URL = process.env.NEXT_PUBLIC_FOUNDRY_URL || ''
-const FOUNDRY_TOKEN = process.env.NEXT_PUBLIC_FOUNDRY_TOKEN || ''
-const USE_MOCK_DATA = process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true' || !FOUNDRY_URL
+// Configuration - only USE_MOCK_DATA is client-safe
+const USE_MOCK_DATA = process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true'
 
 // =====================================================
-// API CLIENT
+// API CLIENT (calls secure server-side route)
 // =====================================================
 
 interface QueryParams {
@@ -36,16 +35,11 @@ interface QueryParams {
 }
 
 async function executeFoundrySQL<T>(params: QueryParams): Promise<T[]> {
-  if (USE_MOCK_DATA) {
-    console.log('[Foundry] Using mock data (no FOUNDRY_URL configured)')
-    throw new Error('Mock mode - use getMock* functions instead')
-  }
-
-  const response = await fetch(`${FOUNDRY_URL}/api/v2/datasets/sql/execute`, {
+  // Call our secure API route instead of Foundry directly
+  const response = await fetch('/api/foundry', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${FOUNDRY_TOKEN}`,
     },
     body: JSON.stringify({
       query: params.query,
@@ -53,12 +47,17 @@ async function executeFoundrySQL<T>(params: QueryParams): Promise<T[]> {
     }),
   })
 
-  if (!response.ok) {
-    const error = await response.text()
-    throw new Error(`Foundry SQL error: ${error}`)
+  const result = await response.json()
+
+  // Server tells us to use mock data if Foundry isn't configured
+  if (result.useMock) {
+    throw new Error('Mock mode - Foundry not configured on server')
   }
 
-  const result = await response.json()
+  if (!response.ok) {
+    throw new Error(result.error || `Foundry SQL error: ${response.status}`)
+  }
+
   return result.rows as T[]
 }
 
@@ -302,8 +301,15 @@ export function useRepPerformance(repId: string) {
 // UTILITY FUNCTIONS
 // =====================================================
 
-export function isFoundryConnected(): boolean {
-  return !USE_MOCK_DATA && !!FOUNDRY_URL && !!FOUNDRY_TOKEN
+export async function checkFoundryConnection(): Promise<boolean> {
+  if (USE_MOCK_DATA) return false
+  try {
+    const response = await fetch('/api/foundry')
+    const data = await response.json()
+    return data.configured === true
+  } catch {
+    return false
+  }
 }
 
 export function getDataSource(): 'foundry' | 'mock' {

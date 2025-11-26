@@ -41,7 +41,7 @@ def compute(ctx, opportunities, output):
 
     # Closed Won (100% confidence)
     closed_won = q4_opps.filter(F.col("stage_name") == "Closed Won").agg(
-        F.sum("amount").alias("amount")
+        F.coalesce(F.sum("amount"), F.lit(0.0)).alias("amount")
     ).withColumn("category", F.lit("Closed Won")
     ).withColumn("conversion_rate", F.lit(1.0)
     ).withColumn("confidence_pct", F.lit(100))
@@ -52,17 +52,17 @@ def compute(ctx, opportunities, output):
         (F.col("stage_name") != "Closed Won") &
         (F.col("stage_name") != "Closed Lost")
     ).agg(
-        F.sum("amount").alias("amount"),
-        F.sum(
+        F.coalesce(F.sum("amount"), F.lit(0.0)).alias("amount"),
+        F.coalesce(F.sum(
             F.when(F.col("health_score_override") >= 80, F.col("amount") * 0.95)
             .when(F.col("health_score_override") >= 60, F.col("amount") * 0.75)
             .otherwise(F.col("amount") * 0.50)
-        ).alias("weighted_amount"),
+        ), F.lit(0.0)).alias("weighted_amount"),
         F.round(F.avg("health_score_override"), 0).alias("avg_health")
     ).withColumn("category", F.lit("Commit")
     ).withColumn(
         "conversion_rate",
-        F.round(F.col("weighted_amount") / F.col("amount"), 2)
+        F.when(F.col("amount") > 0, F.round(F.col("weighted_amount") / F.col("amount"), 2)).otherwise(0.0)
     ).withColumn("confidence_pct", F.round(F.col("conversion_rate") * 100, 0))
 
     # Best Case (40-50% historical rate, adjusted by health)
@@ -70,17 +70,17 @@ def compute(ctx, opportunities, output):
         (F.col("forecast_category") == "Best Case") &
         (F.col("stage_name") != "Closed Lost")
     ).agg(
-        F.sum("amount").alias("amount"),
-        F.sum(
+        F.coalesce(F.sum("amount"), F.lit(0.0)).alias("amount"),
+        F.coalesce(F.sum(
             F.when(F.col("health_score_override") >= 80, F.col("amount") * 0.50)
             .when(F.col("health_score_override") >= 60, F.col("amount") * 0.40)
             .otherwise(F.col("amount") * 0.25)
-        ).alias("weighted_amount"),
+        ), F.lit(0.0)).alias("weighted_amount"),
         F.round(F.avg("health_score_override"), 0).alias("avg_health")
     ).withColumn("category", F.lit("Best Case")
     ).withColumn(
         "conversion_rate",
-        F.round(F.col("weighted_amount") / F.col("amount"), 2)
+        F.when(F.col("amount") > 0, F.round(F.col("weighted_amount") / F.col("amount"), 2)).otherwise(0.0)
     ).withColumn("confidence_pct", F.round(F.col("conversion_rate") * 100, 0))
 
     # Pipeline (20-30% historical rate)
@@ -88,17 +88,17 @@ def compute(ctx, opportunities, output):
         (F.col("forecast_category") == "Pipeline") &
         (F.col("stage_name") != "Closed Lost")
     ).agg(
-        F.sum("amount").alias("amount"),
-        F.sum(
+        F.coalesce(F.sum("amount"), F.lit(0.0)).alias("amount"),
+        F.coalesce(F.sum(
             F.when(F.col("health_score_override") >= 80, F.col("amount") * 0.30)
             .when(F.col("health_score_override") >= 60, F.col("amount") * 0.20)
             .otherwise(F.col("amount") * 0.10)
-        ).alias("weighted_amount"),
+        ), F.lit(0.0)).alias("weighted_amount"),
         F.round(F.avg("health_score_override"), 0).alias("avg_health")
     ).withColumn("category", F.lit("Pipeline")
     ).withColumn(
         "conversion_rate",
-        F.round(F.col("weighted_amount") / F.col("amount"), 2)
+        F.when(F.col("amount") > 0, F.round(F.col("weighted_amount") / F.col("amount"), 2)).otherwise(0.0)
     ).withColumn("confidence_pct", F.round(F.col("conversion_rate") * 100, 0))
 
     # ===========================================
@@ -118,12 +118,12 @@ def compute(ctx, opportunities, output):
 
     # Add totals row
     totals = combined.agg(
-        F.sum("amount").alias("amount"),
-        F.sum("weighted_amount").alias("weighted_amount")
+        F.coalesce(F.sum("amount"), F.lit(0.0)).alias("amount"),
+        F.coalesce(F.sum("weighted_amount"), F.lit(0.0)).alias("weighted_amount")
     ).withColumn("category", F.lit("TOTAL FORECAST")
     ).withColumn(
         "confidence_pct",
-        F.round(F.col("weighted_amount") / F.col("amount") * 100, 0)
+        F.when(F.col("amount") > 0, F.round(F.col("weighted_amount") / F.col("amount") * 100, 0)).otherwise(0.0)
     )
 
     result = combined.union(totals.select("category", "amount", "confidence_pct", "weighted_amount"))

@@ -159,3 +159,25 @@ export interface PipelineDeal {
   healthScore: number
   primaryAction: 'call' | 'email' | 'meeting'
 }
+
+// Sales rep for selector
+export interface SalesRep {
+  id: string
+  name: string
+  team: string
+  region?: string
+  segment?: string
+}
+
+// =====================================================
+// Foundry Schema Mapping Reference
+// =====================================================
+// The Foundry transforms output snake_case field names.
+// The foundry.ts fetchers map these to camelCase for React.
+//
+// Example mappings:
+//   quarter_target -> quarterTarget
+//   closed_won_amount -> closedWonAmount
+//   ai_forecast -> aiForecast
+//   health_score_override -> healthScore
+//   stage_name -> stageName

@@ -1,22 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { KPICard } from '@/components/ui/KPICard'
 import { HealthBadge } from '@/components/ui/HealthIndicator'
 import { ComparisonBars } from '@/components/ui/ComparisonBars'
 import { AIInsightsCard } from '@/components/ui/AIInsightsCard'
 import {
-  repPerformance,
-  driverComparisons,
-  activityMetrics,
-  coachingStrengths,
-  coachingImprovements,
-  coachingActions,
-  pipelineDeals,
-  nextBestActions,
-  salesReps,
-} from '@/data/mockData'
+  getRepPerformance,
+  getDriverComparisons,
+  getNextBestActions,
+  getDataSource,
+} from '@/lib/foundry'
+import * as mockData from '@/data/mockData'
 import { formatCurrency, formatPercent, formatDelta, cn } from '@/lib/utils'
 import {
   ChevronDown,
@@ -26,6 +22,7 @@ import {
   Calendar,
   TrendingUp,
   TrendingDown,
+  Loader2,
 } from 'lucide-react'
 import {
   LineChart,
@@ -35,11 +32,45 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from 'recharts'
+import type { RepPerformance, DriverComparison, NextBestAction } from '@/types'
 
 export default function RepCoachingDashboard() {
-  const [selectedRep, setSelectedRep] = useState(salesReps[0])
+  const [selectedRep, setSelectedRep] = useState(mockData.salesReps[0])
+  const [showRepDropdown, setShowRepDropdown] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [dataSource, setDataSource] = useState<'foundry' | 'mock'>('mock')
 
-  const rep = repPerformance
+  // Dynamic data state
+  const [rep, setRep] = useState<RepPerformance>(mockData.repPerformance)
+  const [driverComparisons, setDriverComparisons] = useState<DriverComparison[]>(mockData.driverComparisons)
+  const [nextBestActions, setNextBestActions] = useState<NextBestAction[]>(mockData.nextBestActions)
+
+  // Fetch data when selectedRep changes
+  useEffect(() => {
+    async function loadRepData() {
+      setLoading(true)
+      setDataSource(getDataSource())
+
+      try {
+        const [repData, drivers, actions] = await Promise.all([
+          getRepPerformance(selectedRep.id).catch(() => mockData.repPerformance),
+          getDriverComparisons(selectedRep.id).catch(() => mockData.driverComparisons),
+          getNextBestActions(selectedRep.id).catch(() => mockData.nextBestActions),
+        ])
+
+        setRep(repData)
+        setDriverComparisons(drivers)
+        setNextBestActions(actions)
+      } catch (error) {
+        console.error('Error loading rep data:', error)
+        // Keep mock data on error
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadRepData()
+  }, [selectedRep.id])
 
   return (
     <div className="min-h-screen bg-bg-primary">
@@ -58,8 +89,15 @@ export default function RepCoachingDashboard() {
                 <h1 className="text-xl font-semibold text-text-primary">
                   Rep Coaching Dashboard
                 </h1>
-                <p className="text-sm text-text-muted">
+                <p className="text-sm text-text-muted flex items-center gap-2">
                   Individual Performance Analysis
+                  {loading && <Loader2 className="w-3 h-3 animate-spin" />}
+                  <span className={cn(
+                    'px-1.5 py-0.5 rounded text-xs',
+                    dataSource === 'foundry' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'
+                  )}>
+                    {dataSource === 'foundry' ? 'Live' : 'Demo'}
+                  </span>
                 </p>
               </div>
             </div>
@@ -67,7 +105,10 @@ export default function RepCoachingDashboard() {
             <div className="flex items-center gap-4">
               {/* Rep selector */}
               <div className="relative">
-                <button className="flex items-center gap-3 px-4 py-2 bg-bg-elevated rounded-lg text-text-primary hover:bg-bg-interactive transition-colors">
+                <button
+                  onClick={() => setShowRepDropdown(!showRepDropdown)}
+                  className="flex items-center gap-3 px-4 py-2 bg-bg-elevated rounded-lg text-text-primary hover:bg-bg-interactive transition-colors"
+                >
                   <div className="w-8 h-8 bg-accent-blue/20 rounded-full flex items-center justify-center text-accent-blue font-medium">
                     {selectedRep.name.split(' ').map(n => n[0]).join('')}
                   </div>
@@ -75,8 +116,35 @@ export default function RepCoachingDashboard() {
                     <p className="text-sm font-medium">{selectedRep.name}</p>
                     <p className="text-xs text-text-muted">{selectedRep.team} Region</p>
                   </div>
-                  <ChevronDown className="w-4 h-4 text-text-muted" />
+                  <ChevronDown className={cn("w-4 h-4 text-text-muted transition-transform", showRepDropdown && "rotate-180")} />
                 </button>
+
+                {/* Dropdown menu */}
+                {showRepDropdown && (
+                  <div className="absolute top-full mt-2 right-0 w-64 bg-bg-elevated border border-border-subtle rounded-lg shadow-xl z-50 overflow-hidden">
+                    {mockData.salesReps.map((repOption) => (
+                      <button
+                        key={repOption.id}
+                        onClick={() => {
+                          setSelectedRep(repOption)
+                          setShowRepDropdown(false)
+                        }}
+                        className={cn(
+                          "w-full flex items-center gap-3 px-4 py-3 hover:bg-bg-interactive transition-colors text-left",
+                          selectedRep.id === repOption.id && "bg-accent-blue/10"
+                        )}
+                      >
+                        <div className="w-8 h-8 bg-accent-blue/20 rounded-full flex items-center justify-center text-accent-blue font-medium text-sm">
+                          {repOption.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-text-primary">{repOption.name}</p>
+                          <p className="text-xs text-text-muted">{repOption.team} Region</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Quarter */}

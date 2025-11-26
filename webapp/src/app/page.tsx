@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { KPICard } from '@/components/ui/KPICard'
 import { HealthIndicator } from '@/components/ui/HealthIndicator'
@@ -9,19 +9,54 @@ import { ForecastTrendChart } from '@/components/charts/ForecastTrendChart'
 import { HealthDistributionChart } from '@/components/charts/HealthDistributionChart'
 import { PipelineFunnel } from '@/components/charts/PipelineFunnel'
 import {
-  dashboardKPIs,
-  forecastTrend,
-  stageVelocity,
-  pipelineFunnel,
-  stuckDeals,
-  healthDistribution,
-} from '@/data/mockData'
+  getDashboardKPIs,
+  getForecastTrend,
+  getStuckDeals,
+  getHealthDistribution,
+  getDataSource,
+} from '@/lib/foundry'
+import * as mockData from '@/data/mockData'
 import { formatCurrency, formatPercent, formatDelta, cn } from '@/lib/utils'
-import { ChevronDown, RefreshCw, Settings, Bell } from 'lucide-react'
-import type { StuckDeal } from '@/types'
+import { ChevronDown, RefreshCw, Settings, Bell, Loader2 } from 'lucide-react'
+import type { StuckDeal, DashboardKPIs, ForecastTrendPoint, HealthDistribution } from '@/types'
 
 export default function PipelineHealthDashboard() {
   const [selectedDeal, setSelectedDeal] = useState<StuckDeal | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [dashboardKPIs, setDashboardKPIs] = useState<DashboardKPIs>(mockData.dashboardKPIs)
+  const [forecastTrend, setForecastTrend] = useState<ForecastTrendPoint[]>(mockData.forecastTrend)
+  const [stuckDeals, setStuckDeals] = useState<StuckDeal[]>(mockData.stuckDeals)
+  const [healthDistribution, setHealthDistribution] = useState<HealthDistribution>(mockData.healthDistribution)
+  const [dataSource, setDataSource] = useState<'foundry' | 'mock'>('mock')
+
+  // Fetch data on mount
+  useEffect(() => {
+    async function loadData() {
+      setLoading(true)
+      setDataSource(getDataSource())
+
+      try {
+        const [kpis, trend, stuck, health] = await Promise.all([
+          getDashboardKPIs().catch(() => mockData.dashboardKPIs),
+          getForecastTrend().catch(() => mockData.forecastTrend),
+          getStuckDeals().catch(() => mockData.stuckDeals),
+          getHealthDistribution().catch(() => mockData.healthDistribution),
+        ])
+
+        setDashboardKPIs(kpis)
+        setForecastTrend(trend)
+        setStuckDeals(stuck)
+        setHealthDistribution(health)
+      } catch (error) {
+        console.error('Error loading dashboard data:', error)
+        // Keep mock data on error
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadData()
+  }, [])
 
   return (
     <div className="min-h-screen bg-bg-primary">
@@ -33,8 +68,15 @@ export default function PipelineHealthDashboard() {
               <h1 className="text-xl font-semibold text-text-primary">
                 Pipeline Health Dashboard
               </h1>
-              <p className="text-sm text-text-muted">
+              <p className="text-sm text-text-muted flex items-center gap-2">
                 RevOps Hub • Q4 2024
+                {loading && <Loader2 className="w-3 h-3 animate-spin" />}
+                <span className={cn(
+                  'px-1.5 py-0.5 rounded text-xs',
+                  dataSource === 'foundry' ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'
+                )}>
+                  {dataSource === 'foundry' ? 'Live' : 'Demo'}
+                </span>
               </p>
             </div>
 

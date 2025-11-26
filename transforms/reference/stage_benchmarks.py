@@ -9,7 +9,7 @@ Used by health score calculations and process mining analysis.
 from transforms.api import transform, Output
 from pyspark.sql import Row
 from pyspark.sql.types import (
-    StructType, StructField, StringType, IntegerType, DoubleType
+    StructType, StructField, StringType, IntegerType, DoubleType, BooleanType
 )
 
 
@@ -55,8 +55,8 @@ def compute(ctx, output):
         StructField("max_acceptable_days", IntegerType(), True),
         StructField("historical_conversion_rate", DoubleType(), True),
         StructField("stage_order", IntegerType(), True),
-        StructField("is_sales_stage", StringType(), True),
-        StructField("is_admin_stage", StringType(), True),
+        StructField("is_sales_stage", BooleanType(), True),
+        StructField("is_admin_stage", BooleanType(), True),
         StructField("stall_threshold_days", IntegerType(), True),
         StructField("critical_threshold_days", IntegerType(), True),
     ])
