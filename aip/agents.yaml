@@ -3,7 +3,30 @@
 # ================================================================
 # Copy these prompts into AIP Agent Studio in Foundry.
 # Each agent serves a specific persona and use case.
+#
+# FUNCTION BINDINGS:
+# When setting up agents in AIP Agent Studio, bind the Functions
+# listed in each agent's function_bindings section. These provide
+# the agent access to query Ontology objects and datasets.
 # ================================================================
+
+# Available Ontology Objects (from ontology_config.yaml):
+# - Opportunity: Deal health data (/RevOps/Enriched/deal_health_scores)
+# - Account: Customer/prospect accounts (/RevOps/Scenario/accounts)
+# - SalesRep: Sales team members (/RevOps/Scenario/sales_reps)
+# - Activity: Sales activities (/RevOps/Scenario/activities)
+
+# Available Analytics Datasets:
+# - /RevOps/Analytics/pipeline_health_summary
+# - /RevOps/Analytics/forecast_confidence
+# - /RevOps/Analytics/swing_deals
+# - /RevOps/Analytics/rep_performance
+# - /RevOps/Analytics/top_performer_patterns
+# - /RevOps/Analytics/process_bottlenecks
+# - /RevOps/Analytics/deals_stuck_in_process
+# - /RevOps/Analytics/rework_analysis
+# - /RevOps/Dashboard/kpis
+# - /RevOps/Dashboard/next_best_actions
 
 agents:
 
@@ -52,6 +75,23 @@ agents:
       - "Tell me about the Acme Corporation deal"
       - "What deals need my attention this week?"
       - "Why is the GlobalTech deal healthy?"
+
+    function_bindings:
+      # Ontology Objects (bind these in AIP Agent Studio)
+      - object_type: "Opportunity"
+        operations: ["search", "get", "aggregate"]
+        description: "Query deals by health score, stage, owner, or account"
+      - object_type: "Account"
+        operations: ["search", "get"]
+        description: "Look up account details and history"
+      - object_type: "Activity"
+        operations: ["search", "aggregate"]
+        description: "Query activity history for deals"
+
+      # Dataset Functions
+      - dataset: "/RevOps/Dashboard/next_best_actions"
+        operation: "query"
+        description: "Get prioritized actions for deals"
 
   # ============================================================
   # FORECAST CONFIDENCE ADVISOR
@@ -103,6 +143,20 @@ agents:
       - "What needs to close for us to hit target?"
       - "Where is the risk in our forecast?"
 
+    function_bindings:
+      - object_type: "Opportunity"
+        operations: ["search", "aggregate"]
+        description: "Query pipeline by forecast category and stage"
+      - dataset: "/RevOps/Dashboard/kpis"
+        operation: "query"
+        description: "Get current quarter KPIs and targets"
+      - dataset: "/RevOps/Analytics/forecast_confidence"
+        operation: "query"
+        description: "Get health-adjusted forecast by category"
+      - dataset: "/RevOps/Analytics/swing_deals"
+        operation: "query"
+        description: "Identify deals that determine the quarter"
+
   # ============================================================
   # REP COACHING ASSISTANT
   # ============================================================
@@ -149,6 +203,23 @@ agents:
       - "How can we help Kevin improve?"
       - "What patterns do our top performers share?"
       - "Who needs coaching this month?"
+
+    function_bindings:
+      - object_type: "SalesRep"
+        operations: ["search", "get"]
+        description: "Get rep details and metrics"
+      - object_type: "Opportunity"
+        operations: ["search", "aggregate"]
+        description: "Query deals by owner for pattern analysis"
+      - object_type: "Activity"
+        operations: ["aggregate"]
+        description: "Analyze activity patterns by rep"
+      - dataset: "/RevOps/Analytics/rep_performance"
+        operation: "query"
+        description: "Get rep performance metrics and rankings"
+      - dataset: "/RevOps/Analytics/top_performer_patterns"
+        operation: "query"
+        description: "Get patterns from top performers"
 
   # ============================================================
   # MORNING BRIEFING GENERATOR
@@ -210,6 +281,20 @@ agents:
       - "What should I focus on today?"
       - "What happened overnight?"
 
+    function_bindings:
+      - object_type: "Opportunity"
+        operations: ["search", "aggregate"]
+        description: "Find deals needing attention"
+      - object_type: "Activity"
+        operations: ["search"]
+        description: "Check recent activity and gaps"
+      - dataset: "/RevOps/Dashboard/kpis"
+        operation: "query"
+        description: "Get daily/weekly KPIs"
+      - dataset: "/RevOps/Dashboard/next_best_actions"
+        operation: "query"
+        description: "Get prioritized to-do list"
+
   # ============================================================
   # COMPETITIVE INTELLIGENCE ANALYST
   # ============================================================
@@ -261,6 +346,16 @@ agents:
       - "Why are we losing deals?"
       - "How should we handle competitive situations?"
 
+    function_bindings:
+      - object_type: "Opportunity"
+        operations: ["search", "aggregate"]
+        filters: ["is_closed = true", "is_won = false"]
+        description: "Query closed-lost deals by competitor"
+      - dataset: "/RevOps/Enriched/deal_health_scores"
+        operation: "query"
+        filters: ["competitor_mentioned IS NOT NULL"]
+        description: "Analyze competitive deal patterns"
+
   # ============================================================
   # PROCESS BOTTLENECK ANALYZER
   # ============================================================
@@ -310,3 +405,17 @@ agents:
       - "Why is legal review taking so long?"
       - "What's slowing down our sales cycle?"
       - "Show me process bottlenecks"
+
+    function_bindings:
+      - dataset: "/RevOps/Analytics/process_bottlenecks"
+        operation: "query"
+        description: "Get bottleneck analysis by stage"
+      - dataset: "/RevOps/Analytics/deals_stuck_in_process"
+        operation: "query"
+        description: "Find deals currently stuck in bottleneck stages"
+      - dataset: "/RevOps/Analytics/rework_analysis"
+        operation: "query"
+        description: "Analyze deals with rework patterns"
+      - dataset: "/RevOps/Scenario/process_events"
+        operation: "query"
+        description: "Raw process event data for detailed analysis"

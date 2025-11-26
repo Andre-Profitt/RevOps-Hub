@@ -22,7 +22,7 @@ object_types:
     icon: "dollar-sign"
     primary_key: "opportunityId"
     title_property: "opportunityName"
-    backing_dataset: "/RevOps/Enriched/opportunity_health_scored"
+    backing_dataset: "/RevOps/Enriched/deal_health_scores"
 
     properties:
       - api_name: opportunityId
@@ -182,7 +182,7 @@ object_types:
     icon: "building"
     primary_key: "accountId"
     title_property: "accountName"
-    backing_dataset: "/RevOps/Sample/accounts"
+    backing_dataset: "/RevOps/Scenario/accounts"
 
     properties:
       - api_name: accountId
@@ -252,7 +252,7 @@ object_types:
     icon: "user"
     primary_key: "repId"
     title_property: "repName"
-    backing_dataset: "/RevOps/Sample/sales_reps"
+    backing_dataset: "/RevOps/Scenario/sales_reps"
 
     properties:
       - api_name: repId
@@ -363,7 +363,7 @@ object_types:
     icon: "calendar"
     primary_key: "activityId"
     title_property: "subject"
-    backing_dataset: "/RevOps/Sample/activities"
+    backing_dataset: "/RevOps/Scenario/activities"
 
     properties:
       - api_name: activityId

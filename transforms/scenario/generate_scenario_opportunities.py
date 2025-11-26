@@ -237,6 +237,7 @@ def compute(ctx, output):
             created_date=SCENARIO_DATE - timedelta(days=random.randint(30, 90)),
             last_activity_date=SCENARIO_DATE - timedelta(days=deal["last_activity_days_ago"]),
             competitor_mentioned=deal["competitor"],
+            is_competitive=deal["competitor"] is not None,
             discount_percent=random.choice([0, 0, 5, 10]) if deal["competitor"] else 0,
             has_champion=deal["has_champion"],
             stakeholder_count=deal["stakeholder_count"],
@@ -322,6 +323,7 @@ def compute(ctx, output):
                 created_date=close_date - timedelta(days=random.randint(30, 90)),
                 last_activity_date=close_date,
                 competitor_mentioned=None,
+                is_competitive=False,
                 discount_percent=random.choice([0, 0, 0, 5, 10]),
                 has_champion=True,
                 stakeholder_count=stakeholders,
@@ -383,6 +385,7 @@ def compute(ctx, output):
             created_date=close_date - timedelta(days=random.randint(30, 75)),
             last_activity_date=close_date - timedelta(days=random.randint(3, 10)),
             competitor_mentioned=competitor,
+            is_competitive=competitor is not None,
             discount_percent=random.choice([10, 15, 20]) if competitor else 0,
             has_champion=random.choice([True, False]),
             stakeholder_count=random.randint(1, 2),  # Losses tend to be single-threaded
@@ -403,6 +406,7 @@ def compute(ctx, output):
         account = get_random_account()
         rep = get_random_rep()
         close_date = Q4_START + timedelta(days=random.randint(0, 45))
+        competitor = random.choice([None, None, None, "TechRival", "Competitor B"])
 
         opportunities.append(Row(
             opportunity_id=opp_id,
@@ -424,7 +428,8 @@ def compute(ctx, output):
             forecast_category="Omitted",
             created_date=close_date - timedelta(days=random.randint(20, 60)),
             last_activity_date=close_date - timedelta(days=random.randint(5, 15)),
-            competitor_mentioned=random.choice([None, None, None, "TechRival", "Competitor B"]),
+            competitor_mentioned=competitor,
+            is_competitive=competitor is not None,
             discount_percent=0,
             has_champion=random.choice([True, False, False]),
             stakeholder_count=random.randint(1, 2),
@@ -519,6 +524,7 @@ def compute(ctx, output):
             else:
                 health_cat = "Critical"
 
+            competitor = random.choice([None, None, None, None, "TechRival", "Competitor B"])
             opportunities.append(Row(
                 opportunity_id=opp_id,
                 opportunity_name=f"{account[0]} - {stage}",
@@ -539,7 +545,8 @@ def compute(ctx, output):
                 forecast_category=forecast,
                 created_date=SCENARIO_DATE - timedelta(days=random.randint(20, 90)),
                 last_activity_date=SCENARIO_DATE - timedelta(days=last_activity_days),
-                competitor_mentioned=random.choice([None, None, None, None, "TechRival", "Competitor B"]),
+                competitor_mentioned=competitor,
+                is_competitive=competitor is not None,
                 discount_percent=0,
                 has_champion=health >= 60,
                 stakeholder_count=stakeholders,
@@ -579,6 +586,7 @@ def compute(ctx, output):
         StructField("created_date", DateType(), True),
         StructField("last_activity_date", DateType(), True),
         StructField("competitor_mentioned", StringType(), True),
+        StructField("is_competitive", BooleanType(), True),
         StructField("discount_percent", IntegerType(), True),
         StructField("has_champion", BooleanType(), True),
         StructField("stakeholder_count", IntegerType(), True),

@@ -32,7 +32,7 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from 'recharts'
-import type { RepPerformance, DriverComparison, NextBestAction } from '@/types'
+import type { RepPerformance, DriverComparison, NextBestAction, ActivityMetrics, CoachingInsight, PipelineDeal } from '@/types'
 
 export default function RepCoachingDashboard() {
   const [selectedRep, setSelectedRep] = useState(mockData.salesReps[0])
@@ -44,6 +44,11 @@ export default function RepCoachingDashboard() {
   const [rep, setRep] = useState<RepPerformance>(mockData.repPerformance)
   const [driverComparisons, setDriverComparisons] = useState<DriverComparison[]>(mockData.driverComparisons)
   const [nextBestActions, setNextBestActions] = useState<NextBestAction[]>(mockData.nextBestActions)
+  const [activityMetrics, setActivityMetrics] = useState<ActivityMetrics>(mockData.activityMetrics)
+  const [coachingStrengths, setCoachingStrengths] = useState<CoachingInsight[]>(mockData.coachingStrengths)
+  const [coachingImprovements, setCoachingImprovements] = useState<CoachingInsight[]>(mockData.coachingImprovements)
+  const [coachingActions, setCoachingActions] = useState<CoachingInsight[]>(mockData.coachingActions)
+  const [pipelineDeals, setPipelineDeals] = useState<PipelineDeal[]>(mockData.pipelineDeals)
 
   // Fetch data when selectedRep changes
   useEffect(() => {
@@ -61,6 +66,12 @@ export default function RepCoachingDashboard() {
         setRep(repData)
         setDriverComparisons(drivers)
         setNextBestActions(actions)
+        // These currently use mock data only
+        setActivityMetrics(mockData.activityMetrics)
+        setCoachingStrengths(mockData.coachingStrengths)
+        setCoachingImprovements(mockData.coachingImprovements)
+        setCoachingActions(mockData.coachingActions)
+        setPipelineDeals(mockData.pipelineDeals)
       } catch (error) {
         console.error('Error loading rep data:', error)
         // Keep mock data on error
