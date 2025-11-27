@@ -192,6 +192,24 @@ DEFAULT_SEGMENTS = [
 
 
 # =============================================================================
+# SCHEMA ALIASES (for config validation)
+# =============================================================================
+
+@dataclass
+class TierConfig:
+    """Canonical tier definition schema for validation."""
+
+    tier_name: str
+    display_name: str
+    price_monthly: Optional[float]
+    price_annual: Optional[float]
+    limits: Dict[str, Any]
+    features: List[str]
+    sla: Dict[str, Any] = field(default_factory=dict)
+    billing: Dict[str, Any] = field(default_factory=dict)
+
+
+# =============================================================================
 # ALERTING
 # =============================================================================
 
@@ -339,6 +357,7 @@ class CustomerSettings:
         if self.max_opportunities == 10000:  # default
             self.max_opportunities = limits["max_opportunities"]
 
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization."""
         return asdict(self)
@@ -386,6 +405,14 @@ class CustomerSettings:
             data["schedules"] = [ScheduleConfig(**s) for s in data["schedules"]]
 
         return cls(**data)
+
+
+@dataclass
+class CustomerConfig(CustomerSettings):
+    """Alias to align validation expectations with config schema."""
+
+    def __post_init__(self):
+        super().__post_init__()
 
 
 # =============================================================================

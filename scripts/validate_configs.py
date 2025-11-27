@@ -14,11 +14,18 @@ Exit codes:
 
 import sys
 import json
-import yaml
+import importlib.util
 from pathlib import Path
-from typing import List, Tuple, Optional
+from typing import List, Tuple, Optional, Dict
 from dataclasses import dataclass
 from datetime import datetime
+
+
+yaml_spec = importlib.util.find_spec("yaml")
+if yaml_spec:
+    import yaml  # type: ignore
+else:
+    yaml = None
 
 
 @dataclass
@@ -36,12 +43,18 @@ class ConfigValidator:
     def __init__(self, config_dir: Path):
         self.config_dir = config_dir
         self.errors: List[ValidationError] = []
+        self.valid_tiers: List[str] = []
+        self._seen_tier_files: Dict[str, str] = {}
+        self._seen_customer_ids: Dict[str, str] = {}
 
     def validate_all(self) -> bool:
         """Validate all configuration files. Returns True if all valid."""
         print("=" * 60)
         print("Configuration Validation")
         print("=" * 60)
+
+        # Load tier names once so customer validation can use canonical values
+        self.valid_tiers = self._load_valid_tiers()
 
         # Validate customer configs
         self._validate_customer_configs()
@@ -93,14 +106,37 @@ class ConfigValidator:
                     message=f"Missing required field: {field}"
                 ))
 
+        # Ensure customer IDs are unique across files
+        customer_id = config.get("customer_id")
+        if isinstance(customer_id, str):
+            if customer_id in self._seen_customer_ids:
+                self.errors.append(ValidationError(
+                    file=str(path),
+                    path="customer_id",
+                    message=(
+                        f"Duplicate customer_id '{customer_id}'. First seen in {self._seen_customer_ids[customer_id]}"
+                    )
+                ))
+            else:
+                self._seen_customer_ids[customer_id] = path.name
+
         # Validate tier
-        valid_tiers = ["Starter", "Growth", "Enterprise"]
-        if config.get("tier") and config["tier"] not in valid_tiers:
-            self.errors.append(ValidationError(
-                file=str(path),
-                path="tier",
-                message=f"Invalid tier '{config['tier']}'. Must be one of: {valid_tiers}"
-            ))
+        tier_value = config.get("tier")
+        normalized_tiers = {tier.lower(): tier for tier in self.valid_tiers} if self.valid_tiers else {}
+        if tier_value:
+            if isinstance(tier_value, str):
+                if normalized_tiers and tier_value.lower() not in normalized_tiers:
+                    self.errors.append(ValidationError(
+                        file=str(path),
+                        path="tier",
+                        message=f"Invalid tier '{tier_value}'. Must be one of: {self.valid_tiers}"
+                    ))
+            else:
+                self.errors.append(ValidationError(
+                    file=str(path),
+                    path="tier",
+                    message="Tier must be a string value"
+                ))
 
         # Validate limits (if present)
         if "limits" in config:
@@ -109,6 +145,19 @@ class ConfigValidator:
         # Validate features (if present)
         if "features" in config:
             self._validate_features(path, config["features"])
+
+        # Validate contact emails if present
+        contacts = config.get("contacts", {}) if isinstance(config.get("contacts"), dict) else {}
+        for contact_key, contact in contacts.items():
+            if isinstance(contact, dict) and "email" in contact:
+                email = contact.get("email")
+                if not isinstance(email, str) or "@" not in email:
+                    self.errors.append(ValidationError(
+                        file=str(path),
+                        path=f"contacts.{contact_key}.email",
+                        message="Contact email must be a valid string containing '@'",
+                        severity="warning",
+                    ))
 
     def _validate_limits(self, path: Path, limits: dict):
         """Validate limit configuration."""
@@ -132,6 +181,14 @@ class ConfigValidator:
 
         if isinstance(features, list):
             for feature in features:
+                if not isinstance(feature, str):
+                    self.errors.append(ValidationError(
+                        file=str(path),
+                        path="features",
+                        message="Features must be strings"
+                    ))
+                    continue
+
                 if feature not in valid_features:
                     self.errors.append(ValidationError(
                         file=str(path),
@@ -139,6 +196,12 @@ class ConfigValidator:
                         message=f"Unknown feature: {feature}",
                         severity="warning"
                     ))
+        else:
+            self.errors.append(ValidationError(
+                file=str(path),
+                path="features",
+                message="Features must be provided as a list"
+            ))
 
     def _validate_tier_configs(self):
         """Validate tier definition files."""
@@ -148,7 +211,11 @@ class ConfigValidator:
 
         print(f"\nValidating tier configs in {tier_dir}...")
 
-        for config_file in tier_dir.glob("*.yaml"):
+        tier_files = list(tier_dir.glob("*.json"))
+        tier_files.extend(tier_dir.glob("*.yaml"))
+        tier_files.extend(tier_dir.glob("*.yml"))
+
+        for config_file in sorted(tier_files):
             self._validate_tier_config(config_file)
 
     def _validate_tier_config(self, path: Path):
@@ -174,6 +241,76 @@ class ConfigValidator:
                     path=field,
                     message=f"Missing required field: {field}"
                 ))
+
+        # Enforce unique tier names
+        tier_name = config.get("tier_name") or config.get("name")
+        if isinstance(tier_name, str):
+            normalized_name = tier_name.lower()
+            if normalized_name in self._seen_tier_files:
+                self.errors.append(ValidationError(
+                    file=str(path),
+                    path="tier_name",
+                    message=(
+                        f"Duplicate tier name '{tier_name}'. First defined in {self._seen_tier_files[normalized_name]}"
+                    )
+                ))
+            else:
+                self._seen_tier_files[normalized_name] = path.name
+
+        # Validate pricing fields
+        for price_field in ["price_monthly", "price_annual"]:
+            if price_field in config:
+                price_value = config.get(price_field)
+                if price_value is not None and (not isinstance(price_value, (int, float)) or price_value < 0):
+                    self.errors.append(ValidationError(
+                        file=str(path),
+                        path=price_field,
+                        message=f"{price_field} must be a non-negative number or null"
+                    ))
+
+        # Validate limits and features
+        limits = config.get("limits")
+        if isinstance(limits, dict):
+            self._validate_limits(path, limits)
+        else:
+            self.errors.append(ValidationError(
+                file=str(path),
+                path="limits",
+                message="Limits must be provided as an object"
+            ))
+
+        if "features" in config:
+            self._validate_features(path, config.get("features"))
+
+    def _load_valid_tiers(self) -> List[str]:
+        """Load valid tier names from tier configs (case-insensitive)."""
+        tier_dir = self.config_dir / "tiers"
+        if not tier_dir.exists():
+            return []
+
+        valid_tiers: List[str] = []
+        for config_file in tier_dir.glob("*.*"):
+            if config_file.suffix not in {".json", ".yaml", ".yml"}:
+                continue
+
+            try:
+                config = self._load_config(config_file)
+            except Exception as e:
+                self.errors.append(ValidationError(
+                    file=str(config_file),
+                    path="tier_name",
+                    message=f"Failed to read tier definition: {e}",
+                    severity="warning"
+                ))
+                continue
+
+            tier_name = config.get("tier_name") or config.get("name")
+            if tier_name:
+                valid_tiers.append(str(tier_name))
+            else:
+                valid_tiers.append(config_file.stem.title())
+
+        return valid_tiers
 
     def _validate_schema_definitions(self):
         """Validate schema.py definitions."""
@@ -215,6 +352,10 @@ class ConfigValidator:
         """Load a config file (YAML or JSON)."""
         with open(path) as f:
             if path.suffix in [".yaml", ".yml"]:
+                if yaml is None:
+                    raise RuntimeError(
+                        "PyYAML is required to load YAML config files. Install pyyaml or convert the file to JSON."
+                    )
                 return yaml.safe_load(f)
             else:
                 return json.load(f)
