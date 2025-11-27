@@ -22,6 +22,9 @@ from dataclasses import dataclass
 
 yaml_spec = importlib.util.find_spec("yaml")
 YAML_AVAILABLE = yaml_spec is not None
+YAML_MISSING_MESSAGE = (
+    "PyYAML is required to load YAML config files. Install pyyaml or convert the file to JSON."
+)
 if YAML_AVAILABLE:
     import yaml  # type: ignore
 else:
@@ -375,7 +378,6 @@ class ConfigValidator:
 
         # Try to import and validate schema
         try:
-            import importlib.util
             spec = importlib.util.spec_from_file_location("schema", schema_file)
             schema_module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(schema_module)
@@ -405,9 +407,7 @@ class ConfigValidator:
         with open(path) as f:
             if path.suffix in [".yaml", ".yml"]:
                 if yaml is None:
-                    raise RuntimeError(
-                        "PyYAML is required to load YAML config files. Install pyyaml or convert the file to JSON."
-                    )
+                    raise RuntimeError(YAML_MISSING_MESSAGE)
                 return yaml.safe_load(f)
             else:
                 return json.load(f)
@@ -459,8 +459,7 @@ def main():
     # Fail fast if YAML configs exist but PyYAML is missing
     yaml_files = list(config_dir.rglob("*.yaml")) + list(config_dir.rglob("*.yml"))
     if yaml_files and not YAML_AVAILABLE:
-        print("ERROR: PyYAML is required to validate YAML configuration files.")
-        print("Install with: pip install pyyaml")
+        print(f"ERROR: {YAML_MISSING_MESSAGE}")
         print(f"\nFound {len(yaml_files)} YAML file(s) that cannot be validated.")
         sys.exit(1)
 
