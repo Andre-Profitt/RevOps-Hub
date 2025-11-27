@@ -41,6 +41,34 @@ import type {
   ExpansionOpportunity,
   ChurnRiskAccount,
   CustomerHealthSummary,
+  // Forecasting Hub
+  ForecastMethod,
+  ForecastBySegment,
+  ForecastHistoryPoint,
+  ForecastAccuracy,
+  ForecastSummary,
+  // Win/Loss Analysis
+  WinLossSummary,
+  LossReason,
+  WinFactor,
+  CompetitiveBattle,
+  WinLossBySegment,
+  // Deal Desk
+  DealApproval,
+  DiscountAnalysis,
+  DealDeskSummary,
+  // Compensation & Attainment
+  RepAttainment,
+  CompPlanSummary,
+  AttainmentTrend,
+  // Data Quality
+  DataQualityMetric,
+  SyncStatus,
+  DataQualitySummary,
+  // Alerts
+  Alert,
+  AlertRule,
+  AlertSummary,
 } from '@/types'
 
 // =====================================================
@@ -2243,4 +2271,254 @@ export const churnRiskAccounts: ChurnRiskAccount[] = [
     urgency: 'This Month',
     priorityRank: 4,
   },
+]
+
+// =====================================================
+// FORECASTING HUB DATA
+// =====================================================
+
+export const forecastSummary: ForecastSummary = {
+  quota: 8500000,
+  totalPipeline: 18500000,
+  pipelineCoverage: 2.18,
+  bottomUpForecast: 6200000,
+  aiForecast: 7150000,
+  bestCaseForecast: 8900000,
+  highConfidenceAmount: 4850000,
+  methodologyVariancePct: -13.3,
+  recommendedMethod: 'AI-Weighted',
+  methodAccuracy: 0.93,
+  gapToTarget: 1350000,
+  closedWonYtd: 5840000,
+  topSegment: 'Enterprise',
+  topSegmentForecast: 4200000,
+  forecastConfidence: 'Medium',
+  weeksRemaining: 6,
+  requiredWeeklyClose: 443333,
+  snapshotDate: '2024-11-15',
+}
+
+export const forecastBySegment: ForecastBySegment[] = [
+  { dimension: 'segment', dimensionValue: 'Enterprise', pipelineAmount: 9200000, commitAmount: 3800000, weightedForecast: 4200000, dealCount: 18, avgHealth: 72, avgWinProb: 45, commitRate: 41.3, confidenceScore: 59 },
+  { dimension: 'segment', dimensionValue: 'Mid-Market', pipelineAmount: 6800000, commitAmount: 2100000, weightedForecast: 2450000, dealCount: 28, avgHealth: 65, avgWinProb: 38, commitRate: 30.9, confidenceScore: 52 },
+  { dimension: 'segment', dimensionValue: 'SMB', pipelineAmount: 2500000, commitAmount: 300000, weightedForecast: 500000, dealCount: 42, avgHealth: 58, avgWinProb: 28, commitRate: 12.0, confidenceScore: 43 },
+  { dimension: 'rep', dimensionValue: 'Sarah Chen', pipelineAmount: 3200000, commitAmount: 1400000, weightedForecast: 1580000, dealCount: 8, avgHealth: 78, avgWinProb: 52, commitRate: 43.8, confidenceScore: 65 },
+  { dimension: 'rep', dimensionValue: 'David Kim', pipelineAmount: 2800000, commitAmount: 980000, weightedForecast: 1120000, dealCount: 12, avgHealth: 68, avgWinProb: 42, commitRate: 35.0, confidenceScore: 55 },
+  { dimension: 'rep', dimensionValue: 'Emily Rodriguez', pipelineAmount: 4100000, commitAmount: 1650000, weightedForecast: 1850000, dealCount: 10, avgHealth: 75, avgWinProb: 48, commitRate: 40.2, confidenceScore: 62 },
+  { dimension: 'stage', dimensionValue: 'Negotiation', pipelineAmount: 4200000, commitAmount: 3800000, weightedForecast: 3360000, dealCount: 12, avgHealth: 72, avgWinProb: 75, commitRate: 90.5, confidenceScore: 74 },
+  { dimension: 'stage', dimensionValue: 'Proposal', pipelineAmount: 5800000, commitAmount: 1800000, weightedForecast: 2320000, dealCount: 18, avgHealth: 65, avgWinProb: 45, commitRate: 31.0, confidenceScore: 55 },
+  { dimension: 'stage', dimensionValue: 'Solution Design', pipelineAmount: 4500000, commitAmount: 600000, weightedForecast: 1125000, dealCount: 22, avgHealth: 62, avgWinProb: 32, commitRate: 13.3, confidenceScore: 47 },
+]
+
+export const forecastHistory: ForecastHistoryPoint[] = [
+  { weekNumber: 1, weekLabel: 'W1', pipelineAmount: 22500000, commitAmount: 7800000, aiForecast: 8200000, closedWon: 1200000, target: 8500000, gapToTarget: 7300000, forecastAccuracy: 96.5 },
+  { weekNumber: 2, weekLabel: 'W2', pipelineAmount: 21800000, commitAmount: 7500000, aiForecast: 8050000, closedWon: 1850000, target: 8500000, gapToTarget: 6650000, forecastAccuracy: 94.7 },
+  { weekNumber: 3, weekLabel: 'W3', pipelineAmount: 21200000, commitAmount: 7200000, aiForecast: 7850000, closedWon: 2680000, target: 8500000, gapToTarget: 5820000, forecastAccuracy: 92.4 },
+  { weekNumber: 4, weekLabel: 'W4', pipelineAmount: 20500000, commitAmount: 6900000, aiForecast: 7600000, closedWon: 3520000, target: 8500000, gapToTarget: 4980000, forecastAccuracy: 89.4 },
+  { weekNumber: 5, weekLabel: 'W5', pipelineAmount: 19800000, commitAmount: 6600000, aiForecast: 7380000, closedWon: 4450000, target: 8500000, gapToTarget: 4050000, forecastAccuracy: 86.8 },
+  { weekNumber: 6, weekLabel: 'W6', pipelineAmount: 19200000, commitAmount: 6400000, aiForecast: 7200000, closedWon: 5120000, target: 8500000, gapToTarget: 3380000, forecastAccuracy: 84.7 },
+  { weekNumber: 7, weekLabel: 'W7', pipelineAmount: 18500000, commitAmount: 6200000, aiForecast: 7150000, closedWon: 5840000, target: 8500000, gapToTarget: 2660000, forecastAccuracy: 84.1 },
+]
+
+export const forecastAccuracy: ForecastAccuracy[] = [
+  { method: 'Bottom-Up Commit', q1Accuracy: 0.92, q2Accuracy: 0.88, q3Accuracy: 0.85, avgAccuracy: 0.88, bias: 'optimistic', accuracyTier: 'Medium', recommended: false },
+  { method: 'AI-Weighted', q1Accuracy: 0.95, q2Accuracy: 0.93, q3Accuracy: 0.91, avgAccuracy: 0.93, bias: 'slight_pessimistic', accuracyTier: 'High', recommended: true },
+  { method: 'Historical Rate', q1Accuracy: 0.78, q2Accuracy: 0.82, q3Accuracy: 0.80, avgAccuracy: 0.80, bias: 'neutral', accuracyTier: 'Low', recommended: false },
+  { method: 'Manager Override', q1Accuracy: 0.85, q2Accuracy: 0.87, q3Accuracy: 0.83, avgAccuracy: 0.85, bias: 'optimistic', accuracyTier: 'Medium', recommended: false },
+]
+
+// =====================================================
+// WIN/LOSS ANALYSIS DATA
+// =====================================================
+
+export const winLossSummary: WinLossSummary = {
+  totalClosed: 59,
+  totalWon: 34,
+  totalLost: 25,
+  wonRevenue: 8200000,
+  lostRevenue: 5400000,
+  avgWonDealSize: 241176,
+  avgLostDealSize: 216000,
+  avgWonCycle: 68,
+  avgLostCycle: 85,
+  winRate: 57.6,
+  lossRate: 42.4,
+  winRateByValue: 60.3,
+  dealSizeGap: 25176,
+  cycleGap: -17,
+}
+
+export const lossReasons: LossReason[] = [
+  { primaryCompetitor: 'TechRival', dealsLost: 8, revenueLost: 1728000, avgDealSize: 216000, avgHealthAtLoss: 45, avgCycleDays: 92, lossSharePct: 32, revenueSharePct: 32, threatLevel: 'Critical' },
+  { primaryCompetitor: 'DataPro', dealsLost: 6, revenueLost: 1296000, avgDealSize: 216000, avgHealthAtLoss: 52, avgCycleDays: 78, lossSharePct: 24, revenueSharePct: 24, threatLevel: 'High' },
+  { primaryCompetitor: 'CloudFirst', dealsLost: 5, revenueLost: 1080000, avgDealSize: 216000, avgHealthAtLoss: 48, avgCycleDays: 85, lossSharePct: 20, revenueSharePct: 20, threatLevel: 'High' },
+  { primaryCompetitor: 'No Decision', dealsLost: 4, revenueLost: 864000, avgDealSize: 216000, avgHealthAtLoss: 38, avgCycleDays: 110, lossSharePct: 16, revenueSharePct: 16, threatLevel: 'Medium' },
+  { primaryCompetitor: 'Budget Cut', dealsLost: 2, revenueLost: 432000, avgDealSize: 216000, avgHealthAtLoss: 42, avgCycleDays: 95, lossSharePct: 8, revenueSharePct: 8, threatLevel: 'Low' },
+]
+
+export const winFactors: WinFactor[] = [
+  { factor: 'Stakeholder Count', wonAvg: 4.2, lostAvg: 1.8, difference: 2.4, impact: 'positive', recommendation: 'Increase multi-threading on all deals above $100K' },
+  { factor: 'Activity Volume', wonAvg: 18.4, lostAvg: 10.2, difference: 8.2, impact: 'positive', recommendation: 'Maintain minimum 15 activities per deal' },
+  { factor: 'Meeting Count', wonAvg: 6.2, lostAvg: 3.1, difference: 3.1, impact: 'positive', recommendation: 'Target 5+ meetings before proposal stage' },
+  { factor: 'Health Score', wonAvg: 72, lostAvg: 48, difference: 24, impact: 'positive', recommendation: 'Intervene immediately on deals with health < 50' },
+  { factor: 'Discount Level', wonAvg: 12.5, lostAvg: 8.2, difference: 4.3, impact: 'negative', recommendation: 'Higher discounts correlate with wins but reduce margin' },
+  { factor: 'Sales Cycle', wonAvg: 68, lostAvg: 85, difference: -17, impact: 'positive', recommendation: 'Faster cycles improve win rates - accelerate stuck deals' },
+]
+
+export const competitiveBattles: CompetitiveBattle[] = [
+  { primaryCompetitor: 'TechRival', totalBattles: 18, wins: 10, losses: 8, revenueWon: 2400000, revenueLost: 1728000, avgBattleSize: 229333, winRate: 55.6, lossRate: 44.4, netRevenue: 672000, competitivePosition: 'Competitive', priority: 'High' },
+  { primaryCompetitor: 'DataPro', totalBattles: 14, wins: 8, losses: 6, revenueWon: 1920000, revenueLost: 1296000, avgBattleSize: 229714, winRate: 57.1, lossRate: 42.9, netRevenue: 624000, competitivePosition: 'Competitive', priority: 'High' },
+  { primaryCompetitor: 'CloudFirst', totalBattles: 10, wins: 5, losses: 5, revenueWon: 1150000, revenueLost: 1080000, avgBattleSize: 223000, winRate: 50.0, lossRate: 50.0, netRevenue: 70000, competitivePosition: 'Competitive', priority: 'Medium' },
+  { primaryCompetitor: 'IndustryTech', totalBattles: 6, wins: 4, losses: 2, revenueWon: 880000, revenueLost: 420000, avgBattleSize: 216667, winRate: 66.7, lossRate: 33.3, netRevenue: 460000, competitivePosition: 'Strong', priority: 'Low' },
+]
+
+export const winLossBySegment: WinLossBySegment[] = [
+  { dimension: 'segment', dimensionValue: 'Enterprise', totalDeals: 22, wins: 14, losses: 8, wonRevenue: 4200000, lostRevenue: 2160000, avgWonCycle: 82, avgLostCycle: 98, winRate: 63.6, revenueWinRate: 66.0, performanceTier: 'Strong' },
+  { dimension: 'segment', dimensionValue: 'Mid-Market', totalDeals: 25, wins: 14, losses: 11, wonRevenue: 2940000, lostRevenue: 2310000, avgWonCycle: 62, avgLostCycle: 78, winRate: 56.0, revenueWinRate: 56.0, performanceTier: 'Average' },
+  { dimension: 'segment', dimensionValue: 'SMB', totalDeals: 12, wins: 6, losses: 6, wonRevenue: 1060000, lostRevenue: 930000, avgWonCycle: 45, avgLostCycle: 68, winRate: 50.0, revenueWinRate: 53.3, performanceTier: 'Average' },
+  { dimension: 'size_band', dimensionValue: 'Enterprise ($500K+)', totalDeals: 8, wins: 5, losses: 3, wonRevenue: 3250000, lostRevenue: 1680000, avgWonCycle: 95, avgLostCycle: 115, winRate: 62.5, revenueWinRate: 65.9, performanceTier: 'Strong' },
+  { dimension: 'size_band', dimensionValue: 'Mid-Market ($100K-$500K)', totalDeals: 24, wins: 15, losses: 9, wonRevenue: 3600000, lostRevenue: 2160000, avgWonCycle: 72, avgLostCycle: 88, winRate: 62.5, revenueWinRate: 62.5, performanceTier: 'Strong' },
+  { dimension: 'size_band', dimensionValue: 'SMB ($25K-$100K)', totalDeals: 18, wins: 10, losses: 8, wonRevenue: 1050000, lostRevenue: 1080000, avgWonCycle: 48, avgLostCycle: 62, winRate: 55.6, revenueWinRate: 49.3, performanceTier: 'Average' },
+  { dimension: 'size_band', dimensionValue: 'Velocity (<$25K)', totalDeals: 9, wins: 4, losses: 5, wonRevenue: 300000, lostRevenue: 480000, avgWonCycle: 28, avgLostCycle: 42, winRate: 44.4, revenueWinRate: 38.5, performanceTier: 'Needs Improvement' },
+]
+
+// =====================================================
+// DEAL DESK DATA
+// =====================================================
+
+export const dealDeskSummary: DealDeskSummary = {
+  pendingApprovals: 8,
+  pendingValue: 2450000,
+  avgApprovalTime: 2.4,
+  slaBreachCount: 2,
+  approvedToday: 3,
+  rejectedToday: 1,
+  avgDiscount: 14.2,
+  discountTrend: 'up',
+  dealsByUrgency: { critical: 2, high: 3, medium: 2, low: 1 },
+}
+
+export const dealApprovals: DealApproval[] = [
+  { dealId: 'DEAL-001', dealName: 'Platform Expansion', accountName: 'MegaCorp Industries', ownerName: 'Sarah Chen', amount: 680000, discountPercent: 18, discountAmount: 149160, approvalStatus: 'pending', urgency: 'high', submittedAt: '2024-11-14T10:30:00Z', approver: 'VP Sales', slaDeadline: '2024-11-16T10:30:00Z', isSlaBreach: false, approvalReason: null, notes: 'Strategic account, multi-year commitment' },
+  { dealId: 'DEAL-002', dealName: 'Enterprise License', accountName: 'GlobalTech Solutions', ownerName: 'David Kim', amount: 420000, discountPercent: 22, discountAmount: 118440, approvalStatus: 'pending', urgency: 'critical', submittedAt: '2024-11-12T09:00:00Z', approver: 'CRO', slaDeadline: '2024-11-14T09:00:00Z', isSlaBreach: true, approvalReason: null, notes: 'Competitive pressure from TechRival' },
+  { dealId: 'DEAL-003', dealName: 'Healthcare Module', accountName: 'InnovateCo', ownerName: 'Emily Rodriguez', amount: 180000, discountPercent: 12, discountAmount: 24480, approvalStatus: 'pending', urgency: 'medium', submittedAt: '2024-11-15T08:00:00Z', approver: 'Sales Manager', slaDeadline: '2024-11-17T08:00:00Z', isSlaBreach: false, approvalReason: null, notes: 'Standard deal, within guidelines' },
+  { dealId: 'DEAL-004', dealName: 'Inventory Platform', accountName: 'RetailMax Corp', ownerName: 'Michael Brown', amount: 245000, discountPercent: 25, discountAmount: 81667, approvalStatus: 'pending', urgency: 'high', submittedAt: '2024-11-13T14:00:00Z', approver: 'Director', slaDeadline: '2024-11-15T14:00:00Z', isSlaBreach: true, approvalReason: null, notes: 'Net new logo, retail vertical' },
+  { dealId: 'DEAL-005', dealName: 'Renewal + Expansion', accountName: 'DataDriven Inc', ownerName: 'Jessica Taylor', amount: 520000, discountPercent: 15, discountAmount: 91765, approvalStatus: 'approved', urgency: 'critical', submittedAt: '2024-11-11T11:00:00Z', approver: 'VP Sales', slaDeadline: '2024-11-13T11:00:00Z', isSlaBreach: false, approvalReason: 'Strategic renewal approved', notes: 'Critical renewal, at-risk account' },
+  { dealId: 'DEAL-006', dealName: 'SMB Package', accountName: 'StartupCo', ownerName: 'Alex Thompson', amount: 45000, discountPercent: 8, discountAmount: 3913, approvalStatus: 'rejected', urgency: 'low', submittedAt: '2024-11-10T15:00:00Z', approver: 'Sales Manager', slaDeadline: '2024-11-12T15:00:00Z', isSlaBreach: false, approvalReason: 'Discount exceeds segment guidelines', notes: 'Renegotiate at standard pricing' },
+]
+
+export const discountAnalysis: DiscountAnalysis[] = [
+  { segment: 'Enterprise', avgDiscount: 16.2, medianDiscount: 15, maxDiscount: 28, dealCount: 22, totalDiscountGiven: 680000, winRateWithDiscount: 42.5, winRateWithoutDiscount: 32.0, recommendation: 'Consider reducing max discount to 20%' },
+  { segment: 'Mid-Market', avgDiscount: 12.8, medianDiscount: 12, maxDiscount: 22, dealCount: 28, totalDiscountGiven: 420000, winRateWithDiscount: 38.2, winRateWithoutDiscount: 35.5, recommendation: 'Discount impact marginal - focus on value selling' },
+  { segment: 'SMB', avgDiscount: 8.5, medianDiscount: 8, maxDiscount: 15, dealCount: 12, totalDiscountGiven: 150000, winRateWithDiscount: 45.0, winRateWithoutDiscount: 42.8, recommendation: null },
+]
+
+// =====================================================
+// COMPENSATION & ATTAINMENT DATA
+// =====================================================
+
+export const compPlanSummary: CompPlanSummary = {
+  totalQuota: 15600000,
+  totalClosed: 8200000,
+  teamAttainment: 52.6,
+  avgRepAttainment: 68.3,
+  onTrackCount: 4,
+  atRiskCount: 3,
+  overachieversCount: 3,
+  totalCommissionPaid: 820000,
+  projectedCommission: 1850000,
+  acceleratorEligible: 3,
+}
+
+export const repAttainment: RepAttainment[] = [
+  { repId: 'REP-001', repName: 'Sarah Chen', region: 'West', segment: 'Enterprise', quotaAmount: 2000000, closedWon: 1850000, attainmentPct: 92.5, attainmentTier: 'on_track', commissionEarned: 185000, acceleratorRate: 1, projectedAttainment: 102, gapToQuota: 150000, pipelineCoverage: 1.8, rank: 3, trend: 'up' },
+  { repId: 'REP-002', repName: 'David Kim', region: 'East', segment: 'Mid-Market', quotaAmount: 1500000, closedWon: 1420000, attainmentPct: 94.7, attainmentTier: 'on_track', commissionEarned: 142000, acceleratorRate: 1, projectedAttainment: 105, gapToQuota: 80000, pipelineCoverage: 2.1, rank: 4, trend: 'up' },
+  { repId: 'REP-003', repName: 'Emily Rodriguez', region: 'West', segment: 'Enterprise', quotaAmount: 2000000, closedWon: 2340000, attainmentPct: 117.0, attainmentTier: 'overachiever', commissionEarned: 302000, acceleratorRate: 1.5, projectedAttainment: 128, gapToQuota: -340000, pipelineCoverage: 2.4, rank: 1, trend: 'up' },
+  { repId: 'REP-004', repName: 'Michael Brown', region: 'Central', segment: 'Mid-Market', quotaAmount: 1200000, closedWon: 680000, attainmentPct: 56.7, attainmentTier: 'at_risk', commissionEarned: 68000, acceleratorRate: 1, projectedAttainment: 72, gapToQuota: 520000, pipelineCoverage: 1.2, rank: 10, trend: 'down' },
+  { repId: 'REP-005', repName: 'Jessica Taylor', region: 'Central', segment: 'Enterprise', quotaAmount: 1800000, closedWon: 1910000, attainmentPct: 106.1, attainmentTier: 'overachiever', commissionEarned: 213000, acceleratorRate: 1.2, projectedAttainment: 115, gapToQuota: -110000, pipelineCoverage: 1.9, rank: 2, trend: 'flat' },
+  { repId: 'REP-006', repName: 'Alex Thompson', region: 'South', segment: 'Mid-Market', quotaAmount: 1200000, closedWon: 180000, attainmentPct: 15.0, attainmentTier: 'below', commissionEarned: 18000, acceleratorRate: 1, projectedAttainment: 35, gapToQuota: 1020000, pipelineCoverage: 0.8, rank: 12, trend: 'down' },
+  { repId: 'REP-007', repName: 'Kevin Brown', region: 'East', segment: 'Enterprise', quotaAmount: 1800000, closedWon: 1520000, attainmentPct: 84.4, attainmentTier: 'on_track', commissionEarned: 152000, acceleratorRate: 1, projectedAttainment: 95, gapToQuota: 280000, pipelineCoverage: 1.6, rank: 5, trend: 'up' },
+  { repId: 'REP-008', repName: 'Lisa Wang', region: 'West', segment: 'Mid-Market', quotaAmount: 1400000, closedWon: 980000, attainmentPct: 70.0, attainmentTier: 'at_risk', commissionEarned: 98000, acceleratorRate: 1, projectedAttainment: 82, gapToQuota: 420000, pipelineCoverage: 1.4, rank: 7, trend: 'flat' },
+]
+
+export const attainmentTrend: AttainmentTrend[] = [
+  { month: 'Jul', quota: 2600000, closed: 2100000, attainment: 80.8, teamAvg: 75.2 },
+  { month: 'Aug', quota: 2600000, closed: 2450000, attainment: 94.2, teamAvg: 82.5 },
+  { month: 'Sep', quota: 2600000, closed: 2380000, attainment: 91.5, teamAvg: 78.8 },
+  { month: 'Oct', quota: 2600000, closed: 2750000, attainment: 105.8, teamAvg: 88.2 },
+  { month: 'Nov', quota: 2600000, closed: 2520000, attainment: 96.9, teamAvg: 85.5 },
+  { month: 'Dec', quota: 2600000, closed: 0, attainment: 0, teamAvg: 0 },
+]
+
+// =====================================================
+// DATA QUALITY DATA
+// =====================================================
+
+export const dataQualitySummary: DataQualitySummary = {
+  overallScore: 78,
+  completenessScore: 82,
+  validityScore: 85,
+  freshnessScore: 72,
+  totalRecords: 1245000,
+  issueCount: 48500,
+  criticalIssues: 2,
+  lastSyncTime: '2024-11-15T14:30:00Z',
+  syncStatus: 'healthy',
+  trend: 'improving',
+}
+
+export const dataQualityMetrics: DataQualityMetric[] = [
+  { field: 'close_date', object: 'Opportunities', completeness: 98.5, validity: 82.3, totalRecords: 2450, issueCount: 432, severity: 'critical', recommendation: 'Update stale close dates for 432 opportunities', priority: 1 },
+  { field: 'amount', object: 'Opportunities', completeness: 99.8, validity: 95.2, totalRecords: 2450, issueCount: 118, severity: 'high', recommendation: 'Review $0 or negative amounts', priority: 2 },
+  { field: 'owner_id', object: 'Opportunities', completeness: 100, validity: 98.5, totalRecords: 2450, issueCount: 37, severity: 'medium', recommendation: 'Reassign orphaned deals', priority: 3 },
+  { field: 'email', object: 'Contacts', completeness: 85.2, validity: 92.8, totalRecords: 18500, issueCount: 2738, severity: 'high', recommendation: 'Enrich missing contact emails', priority: 4 },
+  { field: 'industry', object: 'Accounts', completeness: 78.5, validity: 99.2, totalRecords: 4200, issueCount: 903, severity: 'medium', recommendation: 'Populate industry for key accounts', priority: 5 },
+  { field: 'next_step', object: 'Opportunities', completeness: 62.4, validity: 100, totalRecords: 1850, issueCount: 695, severity: 'critical', recommendation: 'Require next step for active deals', priority: 6 },
+]
+
+export const syncStatus: SyncStatus[] = [
+  { source: 'Salesforce CRM', status: 'healthy', lastSync: '2024-11-15T14:28:00Z', recordsProcessed: 48520, errorCount: 0, avgSyncTime: 45, nextScheduledSync: '2024-11-15T14:43:00Z' },
+  { source: 'Marketo', status: 'healthy', lastSync: '2024-11-15T14:00:00Z', recordsProcessed: 12450, errorCount: 23, avgSyncTime: 120, nextScheduledSync: '2024-11-15T15:00:00Z' },
+  { source: 'Zendesk', status: 'warning', lastSync: '2024-11-15T13:45:00Z', recordsProcessed: 3200, errorCount: 156, avgSyncTime: 60, nextScheduledSync: '2024-11-15T14:45:00Z' },
+  { source: 'NetSuite', status: 'healthy', lastSync: '2024-11-15T06:00:00Z', recordsProcessed: 8950, errorCount: 0, avgSyncTime: 180, nextScheduledSync: '2024-11-16T06:00:00Z' },
+  { source: 'Product Analytics', status: 'error', lastSync: '2024-11-14T23:00:00Z', recordsProcessed: 0, errorCount: 24500, avgSyncTime: 300, nextScheduledSync: '2024-11-15T23:00:00Z' },
+]
+
+// =====================================================
+// ALERTS & NOTIFICATIONS DATA
+// =====================================================
+
+export const alertSummary: AlertSummary = {
+  totalActive: 24,
+  criticalCount: 3,
+  highCount: 4,
+  mediumCount: 2,
+  lowCount: 1,
+  acknowledgedCount: 3,
+  resolvedToday: 6,
+  avgResolutionTime: 4.2,
+}
+
+export const alerts: Alert[] = [
+  { alertId: 'ALT-001', ruleId: 'RULE-001', ruleName: 'Deal Health Drop', severity: 'critical', status: 'active', message: 'Acme Corp deal health dropped from 62 to 38. Champion has gone dark (12 days no contact).', triggeredAt: '2024-11-15T10:30:00Z', acknowledgedAt: null, resolvedAt: null, relatedEntity: 'Deal', relatedEntityId: 'OPP-001', assignedTo: 'Sarah Chen' },
+  { alertId: 'ALT-002', ruleId: 'RULE-002', ruleName: 'Forecast Gap Alert', severity: 'high', status: 'acknowledged', message: 'Gap to quota increased by $450K this week. Current gap: $1.35M with 6 weeks remaining.', triggeredAt: '2024-11-15T08:00:00Z', acknowledgedAt: '2024-11-15T09:00:00Z', resolvedAt: null, relatedEntity: 'Team', relatedEntityId: 'TEAM-001', assignedTo: 'VP Sales' },
+  { alertId: 'ALT-003', ruleId: 'RULE-003', ruleName: 'Churn Risk Alert', severity: 'critical', status: 'active', message: 'Customer health score is 32. Renewal in 46 days. No activity in 68 days.', triggeredAt: '2024-11-15T07:00:00Z', acknowledgedAt: null, resolvedAt: null, relatedEntity: 'Account', relatedEntityId: 'CUST-005', assignedTo: 'Jessica Taylor' },
+  { alertId: 'ALT-004', ruleId: 'RULE-004', ruleName: 'Pipeline Coverage Low', severity: 'high', status: 'resolved', message: 'Current coverage ratio is 1.4x vs 2.0x target. Need $2.8M additional pipeline.', triggeredAt: '2024-11-14T16:00:00Z', acknowledgedAt: '2024-11-14T17:00:00Z', resolvedAt: '2024-11-15T10:00:00Z', relatedEntity: 'Team', relatedEntityId: 'TEAM-002', assignedTo: 'Sales Manager' },
+  { alertId: 'ALT-005', ruleId: 'RULE-005', ruleName: 'Sync Failure', severity: 'critical', status: 'active', message: 'Product Analytics sync has been failing for 16 hours. 24,500 records not updated.', triggeredAt: '2024-11-15T06:00:00Z', acknowledgedAt: null, resolvedAt: null, relatedEntity: 'System', relatedEntityId: 'SYNC-005', assignedTo: 'Data Team' },
+  { alertId: 'ALT-006', ruleId: 'RULE-006', ruleName: 'Attainment Below Pace', severity: 'high', status: 'acknowledged', message: 'Michael Brown is at 56.7% attainment with 6 weeks remaining. Needs $520K to hit quota.', triggeredAt: '2024-11-14T09:00:00Z', acknowledgedAt: '2024-11-14T10:00:00Z', resolvedAt: null, relatedEntity: 'Rep', relatedEntityId: 'REP-004', assignedTo: 'Sales Manager' },
+  { alertId: 'ALT-007', ruleId: 'RULE-001', ruleName: 'Deal Health Drop', severity: 'medium', status: 'active', message: 'GlobalTech deal stuck in negotiation stage for 18 days. Benchmark is 10 days.', triggeredAt: '2024-11-14T11:00:00Z', acknowledgedAt: null, resolvedAt: null, relatedEntity: 'Deal', relatedEntityId: 'OPP-003', assignedTo: 'David Kim' },
+  { alertId: 'ALT-008', ruleId: 'RULE-007', ruleName: 'Process Bottleneck', severity: 'high', status: 'acknowledged', message: '6 deals stuck in legal review. Average duration 12 days vs 5 day benchmark.', triggeredAt: '2024-11-13T14:00:00Z', acknowledgedAt: '2024-11-13T15:00:00Z', resolvedAt: null, relatedEntity: 'System', relatedEntityId: 'PROC-001', assignedTo: 'RevOps' },
+  { alertId: 'ALT-009', ruleId: 'RULE-002', ruleName: 'Forecast Gap Alert', severity: 'medium', status: 'resolved', message: 'East region forecast gap closed after deal acceleration.', triggeredAt: '2024-11-12T10:00:00Z', acknowledgedAt: '2024-11-12T11:00:00Z', resolvedAt: '2024-11-14T16:00:00Z', relatedEntity: 'Team', relatedEntityId: 'TEAM-003', assignedTo: null },
+  { alertId: 'ALT-010', ruleId: 'RULE-006', ruleName: 'Attainment Below Pace', severity: 'low', status: 'resolved', message: 'Rep attainment recovered after Q3 deal closed.', triggeredAt: '2024-11-10T08:00:00Z', acknowledgedAt: '2024-11-10T09:00:00Z', resolvedAt: '2024-11-12T14:00:00Z', relatedEntity: 'Rep', relatedEntityId: 'REP-002', assignedTo: null },
+]
+
+export const alertRules: AlertRule[] = [
+  { ruleId: 'RULE-001', name: 'Deal Health Drop', description: 'Alert when deal health score drops by more than 15 points', category: 'Deal Health', condition: 'health_score_change < -15', threshold: -15, severity: 'critical', enabled: true, recipients: ['Deal Owner', 'Manager'], triggeredCount30d: 12 },
+  { ruleId: 'RULE-002', name: 'Forecast Gap Alert', description: 'Alert when gap to quota increases significantly', category: 'Forecast', condition: 'gap_increase > $250K', threshold: 250000, severity: 'high', enabled: true, recipients: ['VP Sales', 'Manager'], triggeredCount30d: 8 },
+  { ruleId: 'RULE-003', name: 'Churn Risk Alert', description: 'Alert when customer enters critical churn risk', category: 'Customer Health', condition: 'churn_risk = critical', threshold: 0, severity: 'critical', enabled: true, recipients: ['CSM', 'Account Owner'], triggeredCount30d: 5 },
+  { ruleId: 'RULE-004', name: 'Pipeline Coverage Low', description: 'Alert when pipeline coverage falls below target', category: 'Pipeline', condition: 'coverage_ratio < 1.5', threshold: 1.5, severity: 'high', enabled: true, recipients: ['Manager', 'VP Sales'], triggeredCount30d: 3 },
+  { ruleId: 'RULE-005', name: 'Sync Failure', description: 'Alert when data sync fails', category: 'Data Quality', condition: 'sync_status = failed', threshold: 0, severity: 'critical', enabled: true, recipients: ['Data Team', 'Admin'], triggeredCount30d: 2 },
+  { ruleId: 'RULE-006', name: 'Attainment Below Pace', description: 'Alert when rep falls below attainment pace', category: 'Compensation', condition: 'attainment_pct < pace', threshold: 60, severity: 'high', enabled: true, recipients: ['Manager'], triggeredCount30d: 4 },
+  { ruleId: 'RULE-007', name: 'Process Bottleneck', description: 'Alert when process stage exceeds benchmark', category: 'Process', condition: 'stage_duration > benchmark * 2', threshold: 2, severity: 'high', enabled: true, recipients: ['RevOps'], triggeredCount30d: 6 },
+  { ruleId: 'RULE-008', name: 'Stale Close Date', description: 'Alert when close date is in the past', category: 'Hygiene', condition: 'close_date < today', threshold: 0, severity: 'medium', enabled: false, recipients: ['Deal Owner'], triggeredCount30d: 15 },
 ]

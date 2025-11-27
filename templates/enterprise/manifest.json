@@ -1,0 +1,260 @@
+{
+  "name": "RevOps Enterprise Pack",
+  "version": "1.0.0",
+  "tier": "enterprise",
+  "description": "Full-featured RevOps platform with advanced AI, multi-team support, and custom integrations",
+  "author": "RevOps Team",
+  "minCliVersion": "0.1.0",
+  "extends": "growth",
+  "contents": {
+    "dashboards": [
+      {
+        "id": "pipeline-overview",
+        "name": "Pipeline Overview",
+        "description": "Executive pipeline view with multi-team rollup",
+        "file": "dashboards/pipeline-overview.json"
+      },
+      {
+        "id": "forecast-summary",
+        "name": "Forecast Summary",
+        "description": "Multi-scenario forecast with Monte Carlo simulation",
+        "file": "dashboards/forecast-summary.json"
+      },
+      {
+        "id": "rep-performance",
+        "name": "Rep Performance",
+        "description": "Advanced rep analytics with peer comparison",
+        "file": "dashboards/rep-performance.json"
+      },
+      {
+        "id": "deal-insights",
+        "name": "Deal Insights",
+        "description": "Deep deal intelligence with competitive analysis",
+        "file": "dashboards/deal-insights.json"
+      },
+      {
+        "id": "activity-analytics",
+        "name": "Activity Analytics",
+        "description": "Full activity analytics with conversation intelligence",
+        "file": "dashboards/activity-analytics.json"
+      },
+      {
+        "id": "executive-summary",
+        "name": "Executive Summary",
+        "description": "Board-ready executive dashboard",
+        "file": "dashboards/executive-summary.json"
+      },
+      {
+        "id": "territory-planning",
+        "name": "Territory Planning",
+        "description": "Territory and quota planning analytics",
+        "file": "dashboards/territory-planning.json"
+      },
+      {
+        "id": "competitive-intelligence",
+        "name": "Competitive Intelligence",
+        "description": "Win/loss analysis by competitor",
+        "file": "dashboards/competitive-intelligence.json"
+      },
+      {
+        "id": "customer-health",
+        "name": "Customer Health",
+        "description": "Post-sale customer health monitoring",
+        "file": "dashboards/customer-health.json"
+      }
+    ],
+    "workflows": [
+      {
+        "id": "deal-sync",
+        "name": "CRM Deal Sync",
+        "description": "Real-time sync with field-level change tracking",
+        "file": "workflows/deal-sync.json"
+      },
+      {
+        "id": "activity-sync",
+        "name": "Activity Sync",
+        "description": "Full activity sync with sentiment analysis",
+        "file": "workflows/activity-sync.json"
+      },
+      {
+        "id": "ai-scoring",
+        "name": "AI Deal Scoring",
+        "description": "Continuous AI scoring with ensemble models",
+        "file": "workflows/ai-scoring.json"
+      },
+      {
+        "id": "weekly-digest",
+        "name": "Weekly Pipeline Digest",
+        "description": "Executive-ready weekly report with insights",
+        "file": "workflows/weekly-digest.json"
+      },
+      {
+        "id": "deal-alerts",
+        "name": "Deal Risk Alerts",
+        "description": "ML-powered risk detection with Slack/email alerts",
+        "file": "workflows/deal-alerts.json"
+      },
+      {
+        "id": "forecast-snapshot",
+        "name": "Forecast Snapshot",
+        "description": "Hourly forecast snapshots for trend analysis",
+        "file": "workflows/forecast-snapshot.json"
+      },
+      {
+        "id": "data-quality",
+        "name": "Data Quality Monitor",
+        "description": "Continuous data quality scoring and alerts",
+        "file": "workflows/data-quality.json"
+      },
+      {
+        "id": "conversation-analysis",
+        "name": "Conversation Analysis",
+        "description": "NLP analysis of call transcripts and emails",
+        "file": "workflows/conversation-analysis.json"
+      }
+    ],
+    "datasets": [
+      "opportunities",
+      "accounts",
+      "users",
+      "forecasts",
+      "activities",
+      "deal_scores",
+      "insights",
+      "territories",
+      "quotas",
+      "competitors",
+      "win_loss_analysis",
+      "conversation_insights",
+      "data_quality_scores",
+      "forecast_snapshots"
+    ]
+  },
+  "configuration": {
+    "required": [
+      "crm_connection_id",
+      "timezone"
+    ],
+    "optional": [
+      "fiscal_year_start",
+      "currency",
+      "email_provider",
+      "calendar_provider",
+      "slack_webhook",
+      "teams_webhook",
+      "pagerduty_key",
+      "sso_provider",
+      "custom_models"
+    ]
+  },
+  "limits": {
+    "maxUsers": "unlimited",
+    "maxDeals": "unlimited",
+    "aiFeatures": true,
+    "customDashboards": "unlimited",
+    "apiAccess": true,
+    "customModels": true,
+    "whiteLabel": true,
+    "dedicatedSupport": true
+  },
+  "aiModels": [
+    {
+      "id": "deal-win-probability",
+      "name": "Deal Win Probability",
+      "type": "ensemble",
+      "models": ["gradient_boost", "neural_network", "logistic_regression"],
+      "features": ["stage", "amount", "days_in_stage", "activity_score", "engagement_score", "sentiment", "competitor_mentioned", "executive_engaged"],
+      "target": "is_won",
+      "refreshSchedule": "hourly"
+    },
+    {
+      "id": "deal-close-date",
+      "name": "Close Date Prediction",
+      "type": "regression",
+      "features": ["stage", "amount", "historical_cycle_time", "activity_velocity", "stakeholder_count"],
+      "target": "days_to_close",
+      "refreshSchedule": "hourly"
+    },
+    {
+      "id": "deal-amount",
+      "name": "Deal Amount Prediction",
+      "type": "regression",
+      "features": ["account_size", "product_interest", "engagement_score", "similar_deals"],
+      "target": "final_amount",
+      "refreshSchedule": "daily"
+    },
+    {
+      "id": "churn-risk",
+      "name": "Customer Churn Risk",
+      "type": "classification",
+      "features": ["usage_trend", "support_tickets", "nps_score", "engagement_decline"],
+      "target": "will_churn",
+      "refreshSchedule": "daily"
+    },
+    {
+      "id": "sentiment-analysis",
+      "name": "Communication Sentiment",
+      "type": "nlp",
+      "model": "transformer",
+      "refreshSchedule": "real-time"
+    }
+  ],
+  "integrations": [
+    {
+      "id": "salesforce",
+      "name": "Salesforce",
+      "type": "crm",
+      "bidirectional": true
+    },
+    {
+      "id": "hubspot",
+      "name": "HubSpot",
+      "type": "crm",
+      "bidirectional": true
+    },
+    {
+      "id": "gong",
+      "name": "Gong",
+      "type": "conversation_intelligence",
+      "direction": "inbound"
+    },
+    {
+      "id": "chorus",
+      "name": "Chorus",
+      "type": "conversation_intelligence",
+      "direction": "inbound"
+    },
+    {
+      "id": "outreach",
+      "name": "Outreach",
+      "type": "sales_engagement",
+      "direction": "inbound"
+    },
+    {
+      "id": "salesloft",
+      "name": "SalesLoft",
+      "type": "sales_engagement",
+      "direction": "inbound"
+    },
+    {
+      "id": "linkedin",
+      "name": "LinkedIn Sales Navigator",
+      "type": "social_selling",
+      "direction": "inbound"
+    },
+    {
+      "id": "zoominfo",
+      "name": "ZoomInfo",
+      "type": "data_enrichment",
+      "direction": "inbound"
+    }
+  ],
+  "security": {
+    "sso": ["okta", "azure_ad", "google"],
+    "rbac": true,
+    "fieldLevelSecurity": true,
+    "auditLog": true,
+    "dataEncryption": "AES-256",
+    "compliance": ["SOC2", "GDPR", "HIPAA"]
+  }
+}

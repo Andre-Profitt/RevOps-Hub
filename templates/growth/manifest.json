@@ -1,0 +1,122 @@
+{
+  "name": "RevOps Growth Pack",
+  "version": "1.0.0",
+  "tier": "growth",
+  "description": "Advanced RevOps analytics with AI insights for scaling teams",
+  "author": "RevOps Team",
+  "minCliVersion": "0.1.0",
+  "extends": "starter",
+  "contents": {
+    "dashboards": [
+      {
+        "id": "pipeline-overview",
+        "name": "Pipeline Overview",
+        "description": "Enhanced pipeline with AI win probability",
+        "file": "dashboards/pipeline-overview.json"
+      },
+      {
+        "id": "forecast-summary",
+        "name": "Forecast Summary",
+        "description": "AI-enhanced forecast with confidence intervals",
+        "file": "dashboards/forecast-summary.json"
+      },
+      {
+        "id": "rep-performance",
+        "name": "Rep Performance",
+        "description": "Individual rep metrics and coaching insights",
+        "file": "dashboards/rep-performance.json"
+      },
+      {
+        "id": "deal-insights",
+        "name": "Deal Insights",
+        "description": "AI-powered deal scoring and risk analysis",
+        "file": "dashboards/deal-insights.json"
+      },
+      {
+        "id": "activity-analytics",
+        "name": "Activity Analytics",
+        "description": "Email, call, and meeting activity tracking",
+        "file": "dashboards/activity-analytics.json"
+      }
+    ],
+    "workflows": [
+      {
+        "id": "deal-sync",
+        "name": "CRM Deal Sync",
+        "description": "Real-time deal sync with change detection",
+        "file": "workflows/deal-sync.json"
+      },
+      {
+        "id": "activity-sync",
+        "name": "Activity Sync",
+        "description": "Sync emails, calls, and meetings",
+        "file": "workflows/activity-sync.json"
+      },
+      {
+        "id": "ai-scoring",
+        "name": "AI Deal Scoring",
+        "description": "Daily AI model inference for deal scores",
+        "file": "workflows/ai-scoring.json"
+      },
+      {
+        "id": "weekly-digest",
+        "name": "Weekly Pipeline Digest",
+        "description": "AI-enhanced weekly summary with insights",
+        "file": "workflows/weekly-digest.json"
+      },
+      {
+        "id": "deal-alerts",
+        "name": "Deal Risk Alerts",
+        "description": "Real-time alerts for at-risk deals",
+        "file": "workflows/deal-alerts.json"
+      }
+    ],
+    "datasets": [
+      "opportunities",
+      "accounts",
+      "users",
+      "forecasts",
+      "activities",
+      "deal_scores",
+      "insights"
+    ]
+  },
+  "configuration": {
+    "required": [
+      "crm_connection_id",
+      "timezone"
+    ],
+    "optional": [
+      "fiscal_year_start",
+      "currency",
+      "email_provider",
+      "calendar_provider",
+      "slack_webhook"
+    ]
+  },
+  "limits": {
+    "maxUsers": 25,
+    "maxDeals": 100000,
+    "aiFeatures": true,
+    "customDashboards": 5,
+    "apiAccess": true
+  },
+  "aiModels": [
+    {
+      "id": "deal-win-probability",
+      "name": "Deal Win Probability",
+      "type": "classification",
+      "features": ["stage", "amount", "days_in_stage", "activity_score", "engagement_score"],
+      "target": "is_won",
+      "refreshSchedule": "daily"
+    },
+    {
+      "id": "deal-close-date",
+      "name": "Close Date Prediction",
+      "type": "regression",
+      "features": ["stage", "amount", "historical_cycle_time", "activity_velocity"],
+      "target": "days_to_close",
+      "refreshSchedule": "daily"
+    }
+  ]
+}

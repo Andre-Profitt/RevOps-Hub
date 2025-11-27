@@ -1,0 +1,91 @@
+{
+  "id": "deal-sync",
+  "name": "CRM Deal Sync",
+  "version": "1.0.0",
+  "description": "Synchronize deals from CRM to Foundry",
+  "trigger": {
+    "type": "schedule",
+    "config": {
+      "cron": "0 */4 * * *",
+      "timezone": "{{timezone}}"
+    }
+  },
+  "steps": [
+    {
+      "id": "fetch-deals",
+      "type": "crm_query",
+      "name": "Fetch Deals from CRM",
+      "config": {
+        "connection": "{{crm_connection_id}}",
+        "object": "Opportunity",
+        "fields": [
+          "Id", "Name", "Amount", "StageName", "CloseDate",
+          "Probability", "ForecastCategory", "OwnerId",
+          "AccountId", "LastModifiedDate", "CreatedDate"
+        ],
+        "filter": {
+          "LastModifiedDate": {
+            "gte": "{{last_sync_timestamp}}"
+          }
+        },
+        "limit": 10000
+      }
+    },
+    {
+      "id": "transform-deals",
+      "type": "transform",
+      "name": "Transform Deal Data",
+      "config": {
+        "input": "{{steps.fetch-deals.output}}",
+        "mappings": [
+          { "source": "Id", "target": "deal_id" },
+          { "source": "Name", "target": "name" },
+          { "source": "Amount", "target": "amount", "type": "number" },
+          { "source": "StageName", "target": "stage" },
+          { "source": "CloseDate", "target": "close_date", "type": "date" },
+          { "source": "Probability", "target": "probability", "type": "number" },
+          { "source": "ForecastCategory", "target": "forecast_category" },
+          { "source": "OwnerId", "target": "owner_id" },
+          { "source": "AccountId", "target": "account_id" },
+          { "source": "LastModifiedDate", "target": "last_modified_date", "type": "timestamp" },
+          { "source": "CreatedDate", "target": "created_date", "type": "timestamp" }
+        ],
+        "addFields": [
+          { "name": "synced_at", "value": "{{now}}" },
+          { "name": "customer_id", "value": "{{customer_id}}" }
+        ]
+      }
+    },
+    {
+      "id": "upsert-deals",
+      "type": "foundry_upsert",
+      "name": "Upsert to Foundry",
+      "config": {
+        "dataset": "opportunities",
+        "input": "{{steps.transform-deals.output}}",
+        "key": ["customer_id", "deal_id"],
+        "mode": "upsert"
+      }
+    },
+    {
+      "id": "update-sync-status",
+      "type": "update_metadata",
+      "name": "Update Sync Status",
+      "config": {
+        "key": "last_sync_timestamp",
+        "value": "{{now}}"
+      }
+    }
+  ],
+  "errorHandling": {
+    "retries": 3,
+    "retryDelay": 60,
+    "onFailure": "notify"
+  },
+  "notifications": {
+    "onFailure": {
+      "type": "email",
+      "recipients": ["{{admin_email}}"]
+    }
+  }
+}

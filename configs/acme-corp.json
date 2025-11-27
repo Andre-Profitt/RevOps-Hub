@@ -1,0 +1,100 @@
+{
+  "customer_id": "acme-corp",
+  "customer_name": "Acme Corporation",
+  "tier": "enterprise",
+  "primary_crm": "salesforce",
+  "crm_instance_url": "https://acme.my.salesforce.com",
+  "timezone": "America/Los_Angeles",
+  "currency": "USD",
+  "currency_symbol": "$",
+  "date_format": "MM/DD/YYYY",
+  "fiscal_year_start": "02-01",
+  "max_users": 200,
+  "max_opportunities": 100000,
+  "data_retention_days": 730,
+  "features": {
+    "pipeline_health": true,
+    "pipeline_hygiene": true,
+    "forecast_summary": true,
+    "deal_predictions": true,
+    "coaching_insights": true,
+    "rep_performance": true,
+    "activity_analytics": true,
+    "scenario_modeling": true,
+    "territory_planning": true,
+    "custom_integrations": true,
+    "api_access": true,
+    "sso_enabled": true,
+    "white_labeling": false,
+    "data_export": true
+  },
+  "thresholds": {
+    "health": {
+      "critical": 35,
+      "at_risk": 55,
+      "monitor": 75,
+      "healthy": 75
+    },
+    "hygiene": {
+      "days_stale_warning": 5,
+      "days_stale_critical": 10,
+      "days_past_close_warning": 5,
+      "days_past_close_critical": 21,
+      "missing_next_step_days": 2,
+      "missing_amount_threshold": 0
+    },
+    "forecast": {
+      "pipeline_coverage_target": 3.5,
+      "commit_coverage_target": 1.3,
+      "win_rate_benchmark": 0.28,
+      "avg_cycle_days_benchmark": 38,
+      "quota_attainment_target": 1.0
+    }
+  },
+  "stages": [
+    {"name": "Qualification", "order": 1, "probability": 0.10, "benchmark_days": 7, "is_closed": false, "is_won": false},
+    {"name": "Discovery", "order": 2, "probability": 0.20, "benchmark_days": 14, "is_closed": false, "is_won": false},
+    {"name": "Demo/POC", "order": 3, "probability": 0.40, "benchmark_days": 21, "is_closed": false, "is_won": false},
+    {"name": "Proposal", "order": 4, "probability": 0.60, "benchmark_days": 7, "is_closed": false, "is_won": false},
+    {"name": "Negotiation", "order": 5, "probability": 0.80, "benchmark_days": 14, "is_closed": false, "is_won": false},
+    {"name": "Closed Won", "order": 6, "probability": 1.00, "benchmark_days": 0, "is_closed": true, "is_won": true},
+    {"name": "Closed Lost", "order": 7, "probability": 0.00, "benchmark_days": 0, "is_closed": true, "is_won": false}
+  ],
+  "segments": [
+    {"name": "Strategic", "min_revenue": 500000000, "min_employees": 5000},
+    {"name": "Enterprise", "min_revenue": 100000000, "min_employees": 1000},
+    {"name": "Mid-Market", "min_revenue": 25000000, "min_employees": 250},
+    {"name": "Commercial", "min_revenue": 5000000, "min_employees": 50},
+    {"name": "SMB", "max_revenue": 5000000, "max_employees": 50}
+  ],
+  "alerts": {
+    "enabled": true,
+    "default_channels": ["email", "slack"],
+    "slack_webhook_url": "https://hooks.slack.com/services/XXX/YYY/ZZZ",
+    "slack_channel": "#revops-alerts",
+    "email_recipients": ["revops@acme.com", "sales-ops@acme.com"],
+    "email_from": "alerts@revops-hub.io",
+    "pagerduty_service_key": null,
+    "rules": [
+      {"name": "stale_pipeline", "enabled": true, "severity": "warning", "channels": ["slack"], "threshold": 0.15, "cooldown_minutes": 120},
+      {"name": "build_failure", "enabled": true, "severity": "critical", "channels": ["email", "slack"], "threshold": null, "cooldown_minutes": 30},
+      {"name": "data_quality_drop", "enabled": true, "severity": "warning", "channels": ["email"], "threshold": 0.03, "cooldown_minutes": 360},
+      {"name": "sync_delay", "enabled": true, "severity": "warning", "channels": ["slack"], "threshold": 45, "cooldown_minutes": 60},
+      {"name": "forecast_miss", "enabled": true, "severity": "warning", "channels": ["email"], "threshold": 0.20, "cooldown_minutes": 1440}
+    ]
+  },
+  "schedules": [
+    {"name": "realtime-sync", "cron": "*/15 * * * *", "datasets": ["/RevOps/Staging/opportunities", "/RevOps/Staging/activities"], "enabled": true, "retry_count": 3, "timeout_minutes": 30},
+    {"name": "hourly-enrichment", "cron": "0 * * * *", "datasets": ["/RevOps/Enriched/deal_health_scores", "/RevOps/Enriched/opportunity_health_scored"], "enabled": true, "retry_count": 2, "timeout_minutes": 45},
+    {"name": "daily-analytics", "cron": "0 5 * * *", "datasets": ["/RevOps/Analytics/pipeline_health_summary", "/RevOps/Analytics/pipeline_hygiene_alerts", "/RevOps/Analytics/deal_predictions", "/RevOps/Dashboard/kpis"], "enabled": true, "retry_count": 2, "timeout_minutes": 90},
+    {"name": "weekly-coaching", "cron": "0 6 * * 1", "datasets": ["/RevOps/Coaching/rep_performance", "/RevOps/Coaching/coaching_insights"], "enabled": true, "retry_count": 2, "timeout_minutes": 60}
+  ],
+  "custom_fields": {
+    "product_lines": ["Platform", "Services", "Support"],
+    "regions": ["NA-West", "NA-East", "EMEA", "APAC"],
+    "custom_health_factors": {
+      "product_fit_weight": 0.15,
+      "champion_strength_weight": 0.20
+    }
+  }
+}

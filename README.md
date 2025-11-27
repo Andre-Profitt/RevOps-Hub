@@ -89,26 +89,92 @@ Upload the transforms to a Code Repository in Foundry:
 Repository: /RevOps/Transforms
 ```
 
-### 2. Build Scenario Data
+### 2. Build Transforms in Tier Order
 
-Build transforms in this order:
+The pipeline is organized into build tiers. Run `python scripts/generate_manifest.py` to see current status.
 
-1. `/RevOps/Reference/stage_benchmarks`
-2. `/RevOps/Scenario/opportunities`
-3. `/RevOps/Scenario/sales_reps`
-4. `/RevOps/Scenario/process_events`
+**Tier 1: Scenario & Reference Data**
+```
+/RevOps/Scenario/accounts
+/RevOps/Scenario/sales_reps
+/RevOps/Scenario/opportunities
+/RevOps/Scenario/activities
+/RevOps/Scenario/process_events
+/RevOps/Reference/stage_benchmarks
+```
 
-### 3. Build Enrichment & Analytics
+**Tier 2: Enrichment**
+```
+/RevOps/Enriched/deal_health_scores
+/RevOps/Enriched/opportunity_health_scored
+```
 
-5. `/RevOps/Enriched/deal_health_scores`
-6. `/RevOps/Analytics/pipeline_health_summary`
-7. `/RevOps/Analytics/forecast_confidence`
-8. `/RevOps/Analytics/swing_deals`
-9. `/RevOps/Analytics/rep_performance`
-10. `/RevOps/Analytics/top_performer_patterns`
-11. `/RevOps/Analytics/process_bottlenecks`
-12. `/RevOps/Analytics/deals_stuck_in_process`
-13. `/RevOps/Analytics/rework_analysis`
+**Tier 3: Analytics (runs in parallel)**
+```
+/RevOps/Analytics/pipeline_health_summary
+/RevOps/Analytics/pipeline_hygiene_alerts
+/RevOps/Analytics/pipeline_hygiene_summary
+/RevOps/Analytics/pipeline_hygiene_by_owner
+/RevOps/Analytics/pipeline_hygiene_trends
+/RevOps/Analytics/deal_predictions
+/RevOps/Analytics/leading_indicators_summary
+/RevOps/Analytics/forecast_summary
+/RevOps/Analytics/forecast_by_segment
+/RevOps/Analytics/forecast_history
+/RevOps/Analytics/forecast_accuracy
+/RevOps/Analytics/process_bottlenecks
+/RevOps/Analytics/deals_stuck_in_process
+/RevOps/Analytics/competitive_battles
+/RevOps/Analytics/win_loss_summary
+/RevOps/Analytics/loss_reasons
+/RevOps/Analytics/win_factors
+/RevOps/Analytics/win_loss_by_segment
+/RevOps/Analytics/scenario_summary
+/RevOps/Analytics/scenario_win_rate_impact
+/RevOps/Analytics/scenario_deal_size_impact
+/RevOps/Analytics/scenario_cycle_time_impact
+/RevOps/Analytics/territory_summary
+/RevOps/Analytics/account_scores
+/RevOps/Analytics/territory_balance
+/RevOps/Analytics/white_space_analysis
+/RevOps/Analytics/customer_health_summary
+/RevOps/Analytics/customer_health_scores
+/RevOps/Analytics/expansion_opportunities
+/RevOps/Analytics/churn_risk_analysis
+/RevOps/Analytics/capacity_planning_summary
+/RevOps/Analytics/rep_capacity_model
+/RevOps/Analytics/team_capacity_summary
+/RevOps/Analytics/ramp_time_analysis
+/RevOps/Analytics/qbr_executive_summary
+/RevOps/Analytics/qbr_performance_summary
+/RevOps/Analytics/qbr_win_loss_analysis
+/RevOps/Analytics/telemetry_summary
+/RevOps/Analytics/funnel_handoff_metrics
+/RevOps/Analytics/cross_team_activity
+/RevOps/Analytics/rep_performance
+```
+
+**Tier 4: Dashboard & Monitoring**
+```
+/RevOps/Dashboard/kpis
+/RevOps/Dashboard/next_best_actions
+/RevOps/Monitoring/build_metrics
+/RevOps/Monitoring/stale_datasets
+```
+
+### 3. Validate Alignment
+
+Run the manifest check to verify webapp and transforms are in sync:
+
+```bash
+python scripts/generate_manifest.py --check
+```
+
+This generates `manifest.json` with:
+- Webapp dataset dependencies
+- Transform inputs/outputs
+- Gap analysis (missing transforms, orphaned outputs)
+- Topologically-sorted build order
 
 ### 4. Run Demo Queries
 

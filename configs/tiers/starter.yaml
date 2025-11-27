@@ -1,0 +1,25 @@
+# Starter Tier Configuration
+tier_name: Starter
+display_name: Starter
+price_monthly: 500
+price_annual: 5000
+
+limits:
+  users: 10
+  opportunities: 500
+  api_calls: 10000
+  compute_hours: 10
+  data_refresh_hours: 4
+
+features:
+  - core
+  - forecasting
+
+sla:
+  uptime_target: 99.0
+  support_response_hours: 48
+  support_level: email
+
+billing:
+  payment_terms: prepaid
+  overage_allowed: false

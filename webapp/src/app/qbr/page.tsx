@@ -6,9 +6,12 @@ import {
   getQBRExecutiveSummary,
   getQBRRepPerformance,
   getQBRWinLossAnalysis,
-  getDataSource,
+  getDataSourceAsync,
 } from '@/lib/foundry'
-import * as mockData from '@/data/mockData'
+import {
+  defaultQBRExecutiveSummary,
+  defaultQBRWinLossAnalysis,
+} from '@/lib/defaults'
 import { formatCurrency, cn } from '@/lib/utils'
 import {
   ArrowLeft,
@@ -36,21 +39,24 @@ const QUARTERS = ['Q4 2024', 'Q3 2024', 'Q2 2024', 'Q1 2024']
 export default function QBRPage() {
   const [loading, setLoading] = useState(true)
   const [selectedQuarter, setSelectedQuarter] = useState('Q4 2024')
-  const [summary, setSummary] = useState<QBRExecutiveSummary>(mockData.qbrExecutiveSummary)
-  const [repPerformance, setRepPerformance] = useState<QBRRepPerformance[]>(mockData.qbrRepPerformance)
-  const [winLoss, setWinLoss] = useState<QBRWinLossAnalysis>(mockData.qbrWinLossAnalysis)
+  const [summary, setSummary] = useState<QBRExecutiveSummary>(defaultQBRExecutiveSummary)
+  const [repPerformance, setRepPerformance] = useState<QBRRepPerformance[]>([])
+  const [winLoss, setWinLoss] = useState<QBRWinLossAnalysis>(defaultQBRWinLossAnalysis)
   const [dataSource, setDataSource] = useState<'foundry' | 'mock'>('mock')
 
   useEffect(() => {
     async function loadData() {
       setLoading(true)
-      setDataSource(getDataSource())
+
+      // Check server to accurately determine data source
+      const source = await getDataSourceAsync()
+      setDataSource(source)
 
       try {
         const [summaryData, repData, winLossData] = await Promise.all([
-          getQBRExecutiveSummary(selectedQuarter).catch(() => mockData.qbrExecutiveSummary),
-          getQBRRepPerformance(selectedQuarter).catch(() => mockData.qbrRepPerformance),
-          getQBRWinLossAnalysis(selectedQuarter).catch(() => mockData.qbrWinLossAnalysis),
+          getQBRExecutiveSummary(selectedQuarter).catch(() => defaultQBRExecutiveSummary),
+          getQBRRepPerformance(selectedQuarter).catch(() => []),
+          getQBRWinLossAnalysis(selectedQuarter).catch(() => defaultQBRWinLossAnalysis),
         ])
 
         setSummary(summaryData)

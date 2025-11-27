@@ -901,6 +901,330 @@ export interface CustomerHealthSummary {
 }
 
 // =====================================================
+// Forecasting Hub Types
+// =====================================================
+
+export interface ForecastMethod {
+  quota: number
+  totalPipeline: number
+  pipelineCoverage: number
+  bottomUpCommit: number
+  bottomUpBestCase: number
+  aiWeightedForecast: number
+  probabilityWeighted: number
+  highConfidenceAmount: number
+  methodologyVariancePct: number
+  totalDeals: number
+  commitDeals: number
+  avgWinProbability: number
+  avgHealthScore: number
+  bottomUpCoverage: number
+  aiCoverage: number
+  forecastSpread: number
+  snapshotDate: string
+}
+
+export interface ForecastBySegment {
+  dimension: 'segment' | 'rep' | 'stage'
+  dimensionValue: string
+  pipelineAmount: number
+  commitAmount: number
+  weightedForecast: number
+  dealCount: number
+  avgHealth: number
+  avgWinProb: number
+  commitRate: number
+  confidenceScore: number
+}
+
+export interface ForecastHistoryPoint {
+  weekNumber: number
+  weekLabel: string
+  pipelineAmount: number
+  commitAmount: number
+  aiForecast: number
+  closedWon: number
+  target: number
+  gapToTarget: number
+  forecastAccuracy: number
+}
+
+export interface ForecastAccuracy {
+  method: string
+  q1Accuracy: number
+  q2Accuracy: number
+  q3Accuracy: number
+  avgAccuracy: number
+  bias: 'optimistic' | 'slight_pessimistic' | 'pessimistic' | 'neutral'
+  accuracyTier: 'High' | 'Medium' | 'Low'
+  recommended: boolean
+}
+
+export interface ForecastSummary {
+  quota: number
+  totalPipeline: number
+  pipelineCoverage: number
+  bottomUpForecast: number
+  aiForecast: number
+  bestCaseForecast: number
+  highConfidenceAmount: number
+  methodologyVariancePct: number
+  recommendedMethod: string
+  methodAccuracy: number
+  gapToTarget: number
+  closedWonYtd: number
+  topSegment: string
+  topSegmentForecast: number
+  forecastConfidence: 'High' | 'Medium' | 'Low'
+  weeksRemaining: number
+  requiredWeeklyClose: number
+  snapshotDate: string
+}
+
+// =====================================================
+// Win/Loss Analysis Types
+// =====================================================
+
+export interface WinLossSummary {
+  totalClosed: number
+  totalWon: number
+  totalLost: number
+  wonRevenue: number
+  lostRevenue: number
+  avgWonDealSize: number
+  avgLostDealSize: number
+  avgWonCycle: number
+  avgLostCycle: number
+  winRate: number
+  lossRate: number
+  winRateByValue: number
+  dealSizeGap: number
+  cycleGap: number
+}
+
+export interface LossReason {
+  primaryCompetitor: string
+  dealsLost: number
+  revenueLost: number
+  avgDealSize: number
+  avgHealthAtLoss: number
+  avgCycleDays: number
+  lossSharePct: number
+  revenueSharePct: number
+  threatLevel: 'Critical' | 'High' | 'Medium' | 'Low'
+}
+
+export interface WinFactor {
+  factor: string
+  wonAvg: number
+  lostAvg: number
+  difference: number
+  impact: 'positive' | 'negative' | 'neutral'
+  recommendation: string
+}
+
+export interface CompetitiveBattle {
+  primaryCompetitor: string
+  totalBattles: number
+  wins: number
+  losses: number
+  revenueWon: number
+  revenueLost: number
+  avgBattleSize: number
+  winRate: number
+  lossRate: number
+  netRevenue: number
+  competitivePosition: 'Strong' | 'Competitive' | 'Weak'
+  priority: 'High' | 'Medium' | 'Low'
+}
+
+export interface WinLossBySegment {
+  dimension: 'segment' | 'size_band'
+  dimensionValue: string
+  totalDeals: number
+  wins: number
+  losses: number
+  wonRevenue: number
+  lostRevenue: number
+  avgWonCycle: number
+  avgLostCycle: number
+  winRate: number
+  revenueWinRate: number
+  performanceTier: 'Strong' | 'Average' | 'Needs Improvement'
+}
+
+// =====================================================
+// Deal Desk Types
+// =====================================================
+
+export interface DealApproval {
+  dealId: string
+  dealName: string
+  accountName: string
+  ownerName: string
+  amount: number
+  discountPercent: number
+  discountAmount: number
+  approvalStatus: 'pending' | 'approved' | 'rejected'
+  urgency: 'critical' | 'high' | 'medium' | 'low'
+  submittedAt: string
+  approver: string
+  slaDeadline: string
+  isSlaBreach: boolean
+  approvalReason: string | null
+  notes: string | null
+}
+
+export interface DiscountAnalysis {
+  segment: string
+  avgDiscount: number
+  medianDiscount: number
+  maxDiscount: number
+  dealCount: number
+  totalDiscountGiven: number
+  winRateWithDiscount: number
+  winRateWithoutDiscount: number
+  recommendation: string | null
+}
+
+export interface DealDeskSummary {
+  pendingApprovals: number
+  pendingValue: number
+  avgApprovalTime: number
+  slaBreachCount: number
+  approvedToday: number
+  rejectedToday: number
+  avgDiscount: number
+  discountTrend: 'up' | 'down' | 'stable'
+  dealsByUrgency: Record<string, number>
+}
+
+// =====================================================
+// Compensation & Attainment Types
+// =====================================================
+
+export interface RepAttainment {
+  repId: string
+  repName: string
+  region: string
+  segment: string
+  quotaAmount: number
+  closedWon: number
+  attainmentPct: number
+  attainmentTier: 'overachiever' | 'on_track' | 'at_risk' | 'below'
+  commissionEarned: number
+  acceleratorRate: number
+  projectedAttainment: number
+  gapToQuota: number
+  pipelineCoverage: number
+  rank: number
+  trend: 'up' | 'down' | 'flat'
+}
+
+export interface CompPlanSummary {
+  totalQuota: number
+  totalClosed: number
+  teamAttainment: number
+  avgRepAttainment: number
+  onTrackCount: number
+  atRiskCount: number
+  overachieversCount: number
+  totalCommissionPaid: number
+  projectedCommission: number
+  acceleratorEligible: number
+}
+
+export interface AttainmentTrend {
+  month: string
+  quota: number
+  closed: number
+  attainment: number
+  teamAvg: number
+}
+
+// =====================================================
+// Data Quality Types
+// =====================================================
+
+export interface DataQualityMetric {
+  field: string
+  object: string
+  completeness: number
+  validity: number
+  totalRecords: number
+  issueCount: number
+  severity: 'critical' | 'high' | 'medium' | 'low'
+  recommendation: string
+  priority: number
+}
+
+export interface SyncStatus {
+  source: string
+  status: 'healthy' | 'warning' | 'error'
+  lastSync: string
+  recordsProcessed: number
+  errorCount: number
+  avgSyncTime: number
+  nextScheduledSync: string
+}
+
+export interface DataQualitySummary {
+  overallScore: number
+  completenessScore: number
+  validityScore: number
+  freshnessScore: number
+  totalRecords: number
+  issueCount: number
+  criticalIssues: number
+  lastSyncTime: string
+  syncStatus: 'healthy' | 'warning' | 'error'
+  trend: 'improving' | 'stable' | 'declining'
+}
+
+// =====================================================
+// Alerts & Notifications Types
+// =====================================================
+
+export interface Alert {
+  alertId: string
+  ruleId: string
+  ruleName: string
+  severity: 'critical' | 'high' | 'medium' | 'low'
+  status: 'active' | 'acknowledged' | 'resolved'
+  message: string
+  triggeredAt: string
+  acknowledgedAt: string | null
+  resolvedAt: string | null
+  relatedEntity: string | null
+  relatedEntityId: string | null
+  assignedTo: string | null
+}
+
+export interface AlertRule {
+  ruleId: string
+  name: string
+  description: string
+  category: string
+  severity: 'critical' | 'high' | 'medium' | 'low'
+  enabled: boolean
+  condition: string
+  threshold: number
+  recipients: string[]
+  triggeredCount30d: number
+}
+
+export interface AlertSummary {
+  totalActive: number
+  criticalCount: number
+  highCount: number
+  mediumCount: number
+  lowCount: number
+  acknowledgedCount: number
+  resolvedToday: number
+  avgResolutionTime: number
+}
+
+// =====================================================
 // Foundry Schema Mapping Reference
 // =====================================================
 // The Foundry transforms output snake_case field names.

@@ -1,0 +1,1283 @@
+{
+  "webapp_datasets": {
+    "/RevOps/Alerts/active": [
+      "alerts"
+    ],
+    "/RevOps/Alerts/rules": [
+      "alerts"
+    ],
+    "/RevOps/Alerts/summary": [
+      "alerts"
+    ],
+    "/RevOps/Analytics/account_scores": [
+      "territory"
+    ],
+    "/RevOps/Analytics/capacity_planning_summary": [
+      "capacity"
+    ],
+    "/RevOps/Analytics/churn_risk_analysis": [
+      "customers"
+    ],
+    "/RevOps/Analytics/company_forecast": [
+      "forecasting"
+    ],
+    "/RevOps/Analytics/competitive_battles": [
+      "pipeline",
+      "winloss"
+    ],
+    "/RevOps/Analytics/cross_team_activity": [
+      "telemetry"
+    ],
+    "/RevOps/Analytics/customer_health_scores": [
+      "customers"
+    ],
+    "/RevOps/Analytics/customer_health_summary": [
+      "customers"
+    ],
+    "/RevOps/Analytics/deal_predictions": [
+      "predictions"
+    ],
+    "/RevOps/Analytics/deals_stuck_in_process": [
+      "pipeline"
+    ],
+    "/RevOps/Analytics/expansion_opportunities": [
+      "customers"
+    ],
+    "/RevOps/Analytics/forecast_accuracy": [
+      "forecasting"
+    ],
+    "/RevOps/Analytics/forecast_by_segment": [
+      "forecasting"
+    ],
+    "/RevOps/Analytics/forecast_history": [
+      "forecasting",
+      "pipeline"
+    ],
+    "/RevOps/Analytics/forecast_summary": [
+      "forecasting"
+    ],
+    "/RevOps/Analytics/funnel_handoff_metrics": [
+      "telemetry"
+    ],
+    "/RevOps/Analytics/hygiene_alert_feed": [
+      "hygiene"
+    ],
+    "/RevOps/Analytics/leading_indicators_summary": [
+      "predictions"
+    ],
+    "/RevOps/Analytics/loss_reasons": [
+      "winloss"
+    ],
+    "/RevOps/Analytics/manager_forecast": [
+      "forecasting"
+    ],
+    "/RevOps/Analytics/pipeline_funnel": [
+      "pipeline"
+    ],
+    "/RevOps/Analytics/pipeline_health_summary": [
+      "pipeline"
+    ],
+    "/RevOps/Analytics/pipeline_hygiene_alerts": [
+      "hygiene"
+    ],
+    "/RevOps/Analytics/pipeline_hygiene_by_owner": [
+      "hygiene"
+    ],
+    "/RevOps/Analytics/pipeline_hygiene_summary": [
+      "hygiene"
+    ],
+    "/RevOps/Analytics/pipeline_hygiene_trends": [
+      "hygiene"
+    ],
+    "/RevOps/Analytics/pipeline_summary": [
+      "pipeline"
+    ],
+    "/RevOps/Analytics/process_bottlenecks": [
+      "pipeline"
+    ],
+    "/RevOps/Analytics/qbr_executive_summary": [
+      "qbr"
+    ],
+    "/RevOps/Analytics/qbr_performance_summary": [
+      "qbr"
+    ],
+    "/RevOps/Analytics/qbr_win_loss_analysis": [
+      "qbr"
+    ],
+    "/RevOps/Analytics/ramp_time_analysis": [
+      "capacity"
+    ],
+    "/RevOps/Analytics/region_forecast": [
+      "forecasting"
+    ],
+    "/RevOps/Analytics/rep_capacity_model": [
+      "capacity"
+    ],
+    "/RevOps/Analytics/rework_analysis": [
+      "pipeline"
+    ],
+    "/RevOps/Analytics/scenario_base_metrics": [
+      "scenarios"
+    ],
+    "/RevOps/Analytics/scenario_cycle_time_impact": [
+      "scenarios"
+    ],
+    "/RevOps/Analytics/scenario_deal_size_impact": [
+      "scenarios"
+    ],
+    "/RevOps/Analytics/scenario_summary": [
+      "scenarios"
+    ],
+    "/RevOps/Analytics/scenario_win_rate_impact": [
+      "scenarios"
+    ],
+    "/RevOps/Analytics/stage_velocity": [
+      "pipeline"
+    ],
+    "/RevOps/Analytics/swing_deals": [
+      "forecasting"
+    ],
+    "/RevOps/Analytics/team_capacity_summary": [
+      "capacity"
+    ],
+    "/RevOps/Analytics/telemetry_summary": [
+      "telemetry"
+    ],
+    "/RevOps/Analytics/territory_balance": [
+      "territory"
+    ],
+    "/RevOps/Analytics/territory_summary": [
+      "territory"
+    ],
+    "/RevOps/Analytics/top_performer_patterns": [
+      "coaching"
+    ],
+    "/RevOps/Analytics/white_space_analysis": [
+      "territory"
+    ],
+    "/RevOps/Analytics/win_factors": [
+      "winloss"
+    ],
+    "/RevOps/Analytics/win_loss_by_segment": [
+      "winloss"
+    ],
+    "/RevOps/Analytics/win_loss_summary": [
+      "winloss"
+    ],
+    "/RevOps/Coaching/activity_metrics": [
+      "coaching"
+    ],
+    "/RevOps/Coaching/coaching_insights": [
+      "coaching"
+    ],
+    "/RevOps/Coaching/driver_comparisons": [
+      "coaching"
+    ],
+    "/RevOps/Coaching/next_best_actions": [
+      "coaching"
+    ],
+    "/RevOps/Coaching/rep_performance": [
+      "coaching"
+    ],
+    "/RevOps/Coaching/rep_roster": [
+      "coaching"
+    ],
+    "/RevOps/Commercial/billing_summary": [
+      "ops"
+    ],
+    "/RevOps/Commercial/implementation_status": [
+      "ops"
+    ],
+    "/RevOps/Commercial/implementation_summary": [
+      "ops"
+    ],
+    "/RevOps/Commercial/license_status": [
+      "ops"
+    ],
+    "/RevOps/Commercial/tenant_health_scores": [
+      "ops"
+    ],
+    "/RevOps/Commercial/tenant_health_trends": [
+      "ops"
+    ],
+    "/RevOps/Commercial/tenant_plans": [
+      "ops"
+    ],
+    "/RevOps/Commercial/tenant_roi_summary": [
+      "ops"
+    ],
+    "/RevOps/Compensation/attainment_trend": [
+      "compensation"
+    ],
+    "/RevOps/Compensation/rep_attainment": [
+      "compensation"
+    ],
+    "/RevOps/Compensation/summary": [
+      "compensation"
+    ],
+    "/RevOps/Dashboard/kpis": [
+      "pipeline"
+    ],
+    "/RevOps/Dashboard/next_best_actions": [
+      "predictions"
+    ],
+    "/RevOps/DataQuality/metrics": [
+      "data-quality"
+    ],
+    "/RevOps/DataQuality/summary": [
+      "data-quality"
+    ],
+    "/RevOps/DataQuality/sync_status": [
+      "data-quality"
+    ],
+    "/RevOps/DealDesk/approvals": [
+      "dealdesk"
+    ],
+    "/RevOps/DealDesk/discount_analysis": [
+      "dealdesk"
+    ],
+    "/RevOps/DealDesk/summary": [
+      "dealdesk"
+    ],
+    "/RevOps/ML/account_recommendations": [
+      "predictions"
+    ],
+    "/RevOps/ML/churn_cohorts": [
+      "customers"
+    ],
+    "/RevOps/ML/rep_recommendations": [
+      "coaching"
+    ],
+    "/RevOps/Monitoring/action_execution_results": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/action_feedback": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/agent_action_log": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/agent_decisions": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/agent_performance": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/agent_status_dashboard": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/alert_history": [
+      "alerts"
+    ],
+    "/RevOps/Monitoring/alert_summary": [
+      "alerts"
+    ],
+    "/RevOps/Monitoring/api_execution_summary": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/build_metrics": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/build_summary": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/config_agent_status": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/escalation_queue": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/escalation_tracker": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/model_explanations": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/notification_log": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/ops_agent_queue": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/pipeline_events": [
+      "ops"
+    ],
+    "/RevOps/Monitoring/stale_datasets": [
+      "ops"
+    ],
+    "/RevOps/Ops/build_performance": [
+      "ops"
+    ],
+    "/RevOps/Ops/data_freshness": [
+      "ops"
+    ],
+    "/RevOps/Ops/sla_tracking": [
+      "ops"
+    ],
+    "/RevOps/Ops/system_health": [
+      "ops"
+    ],
+    "/RevOps/Ops/usage_metrics": [
+      "ops"
+    ],
+    "/RevOps/Sample/accounts": [
+      "staging"
+    ],
+    "/RevOps/Sample/activities": [
+      "staging"
+    ],
+    "/RevOps/Scenario/accounts": [
+      "staging"
+    ],
+    "/RevOps/Scenario/activities": [
+      "staging"
+    ],
+    "/RevOps/SelfService/self_service_dashboard": [
+      "ops"
+    ],
+    "/RevOps/Staging/hubspot_accounts": [
+      "staging"
+    ],
+    "/RevOps/Staging/hubspot_activities": [
+      "staging"
+    ],
+    "/RevOps/Staging/hubspot_contacts": [
+      "staging"
+    ],
+    "/RevOps/Staging/hubspot_opportunities": [
+      "staging"
+    ],
+    "/RevOps/Staging/marketing_activities": [
+      "telemetry"
+    ],
+    "/RevOps/Telemetry/support_health_by_account": [
+      "telemetry"
+    ],
+    "/RevOps/Telemetry/unified_timeline": [
+      "telemetry"
+    ]
+  },
+  "transform_outputs": {
+    "/RevOps/Staging/hubspot_accounts": "transforms/ingestion/hubspot_sync.py",
+    "/RevOps/Staging/hubspot_activities": "transforms/ingestion/hubspot_sync.py",
+    "/RevOps/Staging/hubspot_contacts": "transforms/ingestion/hubspot_sync.py",
+    "/RevOps/Staging/hubspot_opportunities": "transforms/ingestion/hubspot_sync.py",
+    "/RevOps/Staging/marketing_activities": "transforms/ingestion/hubspot_sync.py",
+    "/RevOps/Telemetry/feature_usage": "transforms/ingestion/telemetry_feeds.py",
+    "/RevOps/Telemetry/marketing_touches": "transforms/ingestion/telemetry_feeds.py",
+    "/RevOps/Telemetry/product_usage": "transforms/ingestion/telemetry_feeds.py",
+    "/RevOps/Telemetry/support_health_by_account": "transforms/ingestion/telemetry_feeds.py",
+    "/RevOps/Telemetry/support_tickets": "transforms/ingestion/telemetry_feeds.py",
+    "/RevOps/Telemetry/unified_timeline": "transforms/ingestion/telemetry_feeds.py",
+    "/RevOps/Staging/accounts": "transforms/ingestion/salesforce_sync.py",
+    "/RevOps/Staging/activities": "transforms/ingestion/salesforce_sync.py",
+    "/RevOps/Staging/contacts": "transforms/ingestion/salesforce_sync.py",
+    "/RevOps/Staging/opportunities": "transforms/ingestion/salesforce_sync.py",
+    "/RevOps/Config/salesforce_field_map": "transforms/config/salesforce_field_map.py",
+    "/RevOps/Config/customer_settings": "transforms/config/customer_settings.py",
+    "/RevOps/Monitoring/action_execution_results": "transforms/agents/action_hooks.py",
+    "/RevOps/Monitoring/action_feedback": "transforms/agents/action_hooks.py",
+    "/RevOps/Monitoring/escalation_tracker": "transforms/agents/action_hooks.py",
+    "/RevOps/Monitoring/notification_log": "transforms/agents/action_hooks.py",
+    "/RevOps/Monitoring/api_build_requests": "transforms/agents/action_apis.py",
+    "/RevOps/Monitoring/api_execution_summary": "transforms/agents/action_apis.py",
+    "/RevOps/Monitoring/jira_tickets": "transforms/agents/action_apis.py",
+    "/RevOps/Monitoring/pagerduty_incidents": "transforms/agents/action_apis.py",
+    "/RevOps/Monitoring/slack_messages": "transforms/agents/action_apis.py",
+    "/RevOps/Monitoring/agent_action_log": "transforms/agents/ops_agent.py",
+    "/RevOps/Monitoring/agent_decisions": "transforms/agents/ops_agent.py",
+    "/RevOps/Monitoring/agent_performance": "transforms/agents/ops_agent.py",
+    "/RevOps/Monitoring/agent_status_dashboard": "transforms/agents/ops_agent.py",
+    "/RevOps/Monitoring/escalation_queue": "transforms/agents/ops_agent.py",
+    "/RevOps/Monitoring/config_agent_status": "transforms/agents/config_agent.py",
+    "/RevOps/Monitoring/model_explanations": "transforms/agents/config_agent.py",
+    "/RevOps/Monitoring/model_performance_metrics": "transforms/agents/config_agent.py",
+    "/RevOps/Monitoring/schema_drift_alerts": "transforms/agents/config_agent.py",
+    "/RevOps/Monitoring/threshold_recommendations": "transforms/agents/config_agent.py",
+    "/RevOps/SelfService/config_validation_results": "transforms/agents/self_service_wizard.py",
+    "/RevOps/SelfService/integration_opportunities": "transforms/agents/self_service_wizard.py",
+    "/RevOps/SelfService/onboarding_progress": "transforms/agents/self_service_wizard.py",
+    "/RevOps/SelfService/self_service_dashboard": "transforms/agents/self_service_wizard.py",
+    "/RevOps/SelfService/usage_recommendations": "transforms/agents/self_service_wizard.py",
+    "/RevOps/Commercial/tenant_roi_baseline": "transforms/commercial/tenant_roi_metrics.py",
+    "/RevOps/Commercial/tenant_roi_current": "transforms/commercial/tenant_roi_metrics.py",
+    "/RevOps/Commercial/tenant_roi_summary": "transforms/commercial/tenant_roi_metrics.py",
+    "/RevOps/Commercial/notification_log": "transforms/commercial/notification_log.py",
+    "/RevOps/Commercial/notification_preferences": "transforms/commercial/notification_log.py",
+    "/RevOps/Commercial/notification_summary": "transforms/commercial/notification_log.py",
+    "/RevOps/Commercial/webhook_analytics": "transforms/commercial/integrations_webhooks.py",
+    "/RevOps/Commercial/webhook_deliveries": "transforms/commercial/integrations_webhooks.py",
+    "/RevOps/Commercial/webhook_subscriptions": "transforms/commercial/integrations_webhooks.py",
+    "/RevOps/Commercial/billing_plans": "transforms/commercial/billing_plans.py",
+    "/RevOps/Commercial/billing_summary": "transforms/commercial/billing_plans.py",
+    "/RevOps/Commercial/tenant_plans": "transforms/commercial/billing_plans.py",
+    "/RevOps/Commercial/implementation_history": "transforms/commercial/implementation_status.py",
+    "/RevOps/Commercial/implementation_status": "transforms/commercial/implementation_status.py",
+    "/RevOps/Commercial/implementation_summary": "transforms/commercial/implementation_status.py",
+    "/RevOps/Commercial/billing_events": "transforms/commercial/usage_metering.py",
+    "/RevOps/Commercial/license_status": "transforms/commercial/usage_metering.py",
+    "/RevOps/Commercial/usage_daily": "transforms/commercial/usage_metering.py",
+    "/RevOps/Commercial/usage_summary": "transforms/commercial/usage_metering.py",
+    "/RevOps/Commercial/tenant_health_scores": "transforms/commercial/tenant_health_metrics.py",
+    "/RevOps/Commercial/tenant_health_trends": "transforms/commercial/tenant_health_metrics.py",
+    "/RevOps/Dashboard/next_best_actions": "transforms/dashboard/compute_next_best_actions.py",
+    "/RevOps/Dashboard/kpis": "transforms/dashboard/compute_dashboard_kpis.py",
+    "/RevOps/Scenario/accounts": "transforms/scenario/generate_scenario_accounts.py",
+    "/RevOps/Scenario/sales_reps": "transforms/scenario/generate_scenario_reps.py",
+    "/RevOps/Scenario/process_events": "transforms/scenario/generate_process_events.py",
+    "/RevOps/Scenario/activities": "transforms/scenario/generate_scenario_activities.py",
+    "/RevOps/Scenario/opportunities": "transforms/scenario/generate_scenario_opportunities.py",
+    "/RevOps/Sample/opportunities": "transforms/sample_data/generate_opportunities.py",
+    "/RevOps/Sample/accounts": "transforms/sample_data/generate_accounts.py",
+    "/RevOps/Sample/activities": "transforms/sample_data/generate_activities.py",
+    "/RevOps/Sample/sales_reps": "transforms/sample_data/generate_sales_reps.py",
+    "/RevOps/Audit/api_access_log": "transforms/audit/api_access_log.py",
+    "/RevOps/ML/churn_cohorts": "transforms/ml/churn_prediction.py",
+    "/RevOps/ML/churn_features": "transforms/ml/churn_prediction.py",
+    "/RevOps/ML/churn_scores": "transforms/ml/churn_prediction.py",
+    "/RevOps/ML/account_recommendations": "transforms/ml/next_best_action.py",
+    "/RevOps/ML/deal_recommendations": "transforms/ml/next_best_action.py",
+    "/RevOps/ML/rep_recommendations": "transforms/ml/next_best_action.py",
+    "/RevOps/ML/deal_features": "transforms/ml/deal_scoring.py",
+    "/RevOps/ML/deal_scores": "transforms/ml/deal_scoring.py",
+    "/RevOps/ML/model_performance": "transforms/ml/deal_scoring.py",
+    "/RevOps/ML/model_weights": "transforms/ml/deal_scoring.py",
+    "/RevOps/Enriched/deal_health_scores": "transforms/enrichment/calculate_deal_health.py",
+    "/RevOps/Enriched/users": "transforms/enrichment/enrich_users.py",
+    "/RevOps/Enriched/opportunity_health_scored": "transforms/enrichment/deal_health_score.py",
+    "/RevOps/Enriched/accounts": "transforms/enrichment/enrich_accounts.py",
+    "/RevOps/Ops/build_performance": "transforms/monitoring/ops_dashboard.py",
+    "/RevOps/Ops/data_freshness": "transforms/monitoring/ops_dashboard.py",
+    "/RevOps/Ops/sla_tracking": "transforms/monitoring/ops_dashboard.py",
+    "/RevOps/Ops/system_health": "transforms/monitoring/ops_dashboard.py",
+    "/RevOps/Ops/usage_metrics": "transforms/monitoring/ops_dashboard.py",
+    "/RevOps/Monitoring/active_alerts": "transforms/monitoring/alert_evaluator.py",
+    "/RevOps/Monitoring/alert_history": "transforms/monitoring/alert_evaluator.py",
+    "/RevOps/Monitoring/alert_summary": "transforms/monitoring/alert_evaluator.py",
+    "/RevOps/Monitoring/build_metrics": "transforms/monitoring/build_metrics_collector.py",
+    "/RevOps/Monitoring/build_summary": "transforms/monitoring/build_metrics_collector.py",
+    "/RevOps/Monitoring/ops_agent_queue": "transforms/monitoring/build_metrics_collector.py",
+    "/RevOps/Monitoring/pipeline_events": "transforms/monitoring/build_metrics_collector.py",
+    "/RevOps/Monitoring/stale_datasets": "transforms/monitoring/build_metrics_collector.py",
+    "/RevOps/Reference/stage_benchmarks": "transforms/reference/stage_benchmarks.py",
+    "/RevOps/DataQuality/metrics": "transforms/analytics/data_quality_analytics.py",
+    "/RevOps/DataQuality/summary": "transforms/analytics/data_quality_analytics.py",
+    "/RevOps/DataQuality/sync_status": "transforms/analytics/data_quality_analytics.py",
+    "/RevOps/Analytics/cross_team_activity": "transforms/analytics/cross_functional_telemetry.py",
+    "/RevOps/Analytics/funnel_drop_analysis": "transforms/analytics/cross_functional_telemetry.py",
+    "/RevOps/Analytics/funnel_handoff_metrics": "transforms/analytics/cross_functional_telemetry.py",
+    "/RevOps/Analytics/lead_response_analytics": "transforms/analytics/cross_functional_telemetry.py",
+    "/RevOps/Analytics/telemetry_summary": "transforms/analytics/cross_functional_telemetry.py",
+    "/RevOps/Analytics/rep_performance": "transforms/analytics/rep_performance_analytics.py",
+    "/RevOps/Analytics/top_performer_patterns": "transforms/analytics/rep_performance_analytics.py",
+    "/RevOps/Analytics/qbr_executive_summary": "transforms/analytics/qbr_pack_builder.py",
+    "/RevOps/Analytics/qbr_forecast_accuracy": "transforms/analytics/qbr_pack_builder.py",
+    "/RevOps/Analytics/qbr_performance_summary": "transforms/analytics/qbr_pack_builder.py",
+    "/RevOps/Analytics/qbr_pipeline_health": "transforms/analytics/qbr_pack_builder.py",
+    "/RevOps/Analytics/qbr_win_loss_analysis": "transforms/analytics/qbr_pack_builder.py",
+    "/RevOps/Analytics/company_forecast": "transforms/analytics/forecast_rollup.py",
+    "/RevOps/Analytics/manager_forecast": "transforms/analytics/forecast_rollup.py",
+    "/RevOps/Analytics/region_forecast": "transforms/analytics/forecast_rollup.py",
+    "/RevOps/Analytics/deals_stuck_in_process": "transforms/analytics/process_bottleneck_analytics.py",
+    "/RevOps/Analytics/process_bottlenecks": "transforms/analytics/process_bottleneck_analytics.py",
+    "/RevOps/Analytics/rework_analysis": "transforms/analytics/process_bottleneck_analytics.py",
+    "/RevOps/DealDesk/approvals": "transforms/analytics/dealdesk_analytics.py",
+    "/RevOps/DealDesk/discount_analysis": "transforms/analytics/dealdesk_analytics.py",
+    "/RevOps/DealDesk/summary": "transforms/analytics/dealdesk_analytics.py",
+    "/RevOps/Analytics/pipeline_summary": "transforms/analytics/pipeline_summary.py",
+    "/RevOps/Analytics/account_scores": "transforms/analytics/territory_account_planning.py",
+    "/RevOps/Analytics/territory_balance": "transforms/analytics/territory_account_planning.py",
+    "/RevOps/Analytics/territory_summary": "transforms/analytics/territory_account_planning.py",
+    "/RevOps/Analytics/white_space_analysis": "transforms/analytics/territory_account_planning.py",
+    "/RevOps/Alerts/active": "transforms/analytics/alerts_analytics.py",
+    "/RevOps/Alerts/rules": "transforms/analytics/alerts_analytics.py",
+    "/RevOps/Alerts/summary": "transforms/analytics/alerts_analytics.py",
+    "/RevOps/Analytics/hygiene_alert_feed": "transforms/analytics/pipeline_hygiene_analytics.py",
+    "/RevOps/Analytics/pipeline_hygiene_alerts": "transforms/analytics/pipeline_hygiene_analytics.py",
+    "/RevOps/Analytics/pipeline_hygiene_by_owner": "transforms/analytics/pipeline_hygiene_analytics.py",
+    "/RevOps/Analytics/pipeline_hygiene_summary": "transforms/analytics/pipeline_hygiene_analytics.py",
+    "/RevOps/Analytics/pipeline_hygiene_trends": "transforms/analytics/pipeline_hygiene_analytics.py",
+    "/RevOps/Analytics/churn_risk_analysis": "transforms/analytics/customer_health_expansion.py",
+    "/RevOps/Analytics/customer_health_scores": "transforms/analytics/customer_health_expansion.py",
+    "/RevOps/Analytics/customer_health_summary": "transforms/analytics/customer_health_expansion.py",
+    "/RevOps/Analytics/expansion_opportunities": "transforms/analytics/customer_health_expansion.py",
+    "/RevOps/Analytics/competitive_battles": "transforms/analytics/win_loss_analysis.py",
+    "/RevOps/Analytics/loss_reasons": "transforms/analytics/win_loss_analysis.py",
+    "/RevOps/Analytics/win_factors": "transforms/analytics/win_loss_analysis.py",
+    "/RevOps/Analytics/win_loss_by_segment": "transforms/analytics/win_loss_analysis.py",
+    "/RevOps/Analytics/win_loss_summary": "transforms/analytics/win_loss_analysis.py",
+    "/RevOps/Analytics/deal_predictions": "transforms/analytics/leading_indicator_analytics.py",
+    "/RevOps/Analytics/leading_indicators_summary": "transforms/analytics/leading_indicator_analytics.py",
+    "/RevOps/Analytics/slip_risk_scores": "transforms/analytics/leading_indicator_analytics.py",
+    "/RevOps/Analytics/win_probability_scores": "transforms/analytics/leading_indicator_analytics.py",
+    "/RevOps/Compensation/attainment_trend": "transforms/analytics/compensation_analytics.py",
+    "/RevOps/Compensation/rep_attainment": "transforms/analytics/compensation_analytics.py",
+    "/RevOps/Compensation/summary": "transforms/analytics/compensation_analytics.py",
+    "/RevOps/Analytics/forecast_confidence": "transforms/analytics/forecast_confidence.py",
+    "/RevOps/Analytics/swing_deals": "transforms/analytics/forecast_confidence.py",
+    "/RevOps/Analytics/capacity_planning_summary": "transforms/analytics/capacity_hiring_planning.py",
+    "/RevOps/Analytics/hiring_impact_model": "transforms/analytics/capacity_hiring_planning.py",
+    "/RevOps/Analytics/ramp_time_analysis": "transforms/analytics/capacity_hiring_planning.py",
+    "/RevOps/Analytics/rep_capacity_model": "transforms/analytics/capacity_hiring_planning.py",
+    "/RevOps/Analytics/team_capacity_summary": "transforms/analytics/capacity_hiring_planning.py",
+    "/RevOps/Analytics/pipeline_funnel": "transforms/analytics/stage_velocity_analytics.py",
+    "/RevOps/Analytics/stage_velocity": "transforms/analytics/stage_velocity_analytics.py",
+    "/RevOps/Analytics/pipeline_health_summary": "transforms/analytics/pipeline_health_summary.py",
+    "/RevOps/Analytics/scenario_base_metrics": "transforms/analytics/scenario_modeling.py",
+    "/RevOps/Analytics/scenario_cycle_time_impact": "transforms/analytics/scenario_modeling.py",
+    "/RevOps/Analytics/scenario_deal_size_impact": "transforms/analytics/scenario_modeling.py",
+    "/RevOps/Analytics/scenario_summary": "transforms/analytics/scenario_modeling.py",
+    "/RevOps/Analytics/scenario_win_rate_impact": "transforms/analytics/scenario_modeling.py",
+    "/RevOps/Analytics/forecast_accuracy": "transforms/analytics/forecasting_hub.py",
+    "/RevOps/Analytics/forecast_by_segment": "transforms/analytics/forecasting_hub.py",
+    "/RevOps/Analytics/forecast_history": "transforms/analytics/forecasting_hub.py",
+    "/RevOps/Analytics/forecast_methods": "transforms/analytics/forecasting_hub.py",
+    "/RevOps/Analytics/forecast_summary": "transforms/analytics/forecasting_hub.py",
+    "/RevOps/Analytics/customer_health_details": "transforms/analytics/historical_details.py",
+    "/RevOps/Analytics/win_loss_details": "transforms/analytics/historical_details.py",
+    "/RevOps/Coaching/activity_metrics": "transforms/analytics/coaching_analytics.py",
+    "/RevOps/Coaching/coaching_insights": "transforms/analytics/coaching_analytics.py",
+    "/RevOps/Coaching/driver_comparisons": "transforms/analytics/coaching_analytics.py",
+    "/RevOps/Coaching/next_best_actions": "transforms/analytics/coaching_analytics.py",
+    "/RevOps/Coaching/rep_performance": "transforms/analytics/coaching_analytics.py",
+    "/RevOps/Coaching/rep_roster": "transforms/analytics/coaching_analytics.py"
+  },
+  "transform_inputs": {
+    "/Analytics/Raw/ProductEvents": [
+      "transforms/ingestion/telemetry_feeds.py"
+    ],
+    "/HubSpot/Raw/Campaigns": [
+      "transforms/ingestion/hubspot_sync.py"
+    ],
+    "/HubSpot/Raw/Companies": [
+      "transforms/ingestion/hubspot_sync.py"
+    ],
+    "/HubSpot/Raw/Contacts": [
+      "transforms/ingestion/hubspot_sync.py"
+    ],
+    "/HubSpot/Raw/Deals": [
+      "transforms/ingestion/hubspot_sync.py"
+    ],
+    "/HubSpot/Raw/EmailEvents": [
+      "transforms/ingestion/hubspot_sync.py"
+    ],
+    "/HubSpot/Raw/Engagements": [
+      "transforms/ingestion/hubspot_sync.py"
+    ],
+    "/HubSpot/Raw/Owners": [
+      "transforms/ingestion/hubspot_sync.py"
+    ],
+    "/Marketo/Raw/Activities": [
+      "transforms/ingestion/telemetry_feeds.py"
+    ],
+    "/RevOps/Agents/action_feedback": [
+      "transforms/commercial/tenant_health_metrics.py"
+    ],
+    "/RevOps/Agents/action_log": [
+      "transforms/commercial/implementation_status.py"
+    ],
+    "/RevOps/Analytics/account_scores": [
+      "transforms/analytics/territory_account_planning.py"
+    ],
+    "/RevOps/Analytics/churn_risk_analysis": [
+      "transforms/analytics/customer_health_expansion.py"
+    ],
+    "/RevOps/Analytics/cross_team_activity": [
+      "transforms/analytics/cross_functional_telemetry.py"
+    ],
+    "/RevOps/Analytics/customer_health_details": [
+      "transforms/ml/churn_prediction.py"
+    ],
+    "/RevOps/Analytics/customer_health_scores": [
+      "transforms/analytics/customer_health_expansion.py"
+    ],
+    "/RevOps/Analytics/deal_predictions": [
+      "transforms/agents/config_agent.py"
+    ],
+    "/RevOps/Analytics/expansion_opportunities": [
+      "transforms/analytics/customer_health_expansion.py"
+    ],
+    "/RevOps/Analytics/forecast_accuracy": [
+      "transforms/analytics/forecasting_hub.py",
+      "transforms/commercial/tenant_roi_metrics.py"
+    ],
+    "/RevOps/Analytics/forecast_by_segment": [
+      "transforms/analytics/forecasting_hub.py"
+    ],
+    "/RevOps/Analytics/forecast_confidence": [
+      "transforms/dashboard/compute_dashboard_kpis.py"
+    ],
+    "/RevOps/Analytics/forecast_history": [
+      "transforms/analytics/forecasting_hub.py",
+      "transforms/analytics/qbr_pack_builder.py"
+    ],
+    "/RevOps/Analytics/forecast_methods": [
+      "transforms/analytics/forecasting_hub.py"
+    ],
+    "/RevOps/Analytics/funnel_drop_analysis": [
+      "transforms/analytics/cross_functional_telemetry.py"
+    ],
+    "/RevOps/Analytics/funnel_handoff_metrics": [
+      "transforms/analytics/cross_functional_telemetry.py"
+    ],
+    "/RevOps/Analytics/hiring_impact_model": [
+      "transforms/analytics/capacity_hiring_planning.py"
+    ],
+    "/RevOps/Analytics/lead_response_analytics": [
+      "transforms/analytics/cross_functional_telemetry.py"
+    ],
+    "/RevOps/Analytics/pipeline_health_summary": [
+      "transforms/monitoring/alert_evaluator.py"
+    ],
+    "/RevOps/Analytics/pipeline_hygiene_alerts": [
+      "transforms/analytics/alerts_analytics.py",
+      "transforms/analytics/pipeline_hygiene_analytics.py",
+      "transforms/commercial/tenant_roi_metrics.py",
+      "transforms/dashboard/compute_next_best_actions.py",
+      "transforms/ml/next_best_action.py"
+    ],
+    "/RevOps/Analytics/pipeline_hygiene_by_owner": [
+      "transforms/analytics/pipeline_hygiene_analytics.py"
+    ],
+    "/RevOps/Analytics/pipeline_hygiene_summary": [
+      "transforms/analytics/pipeline_hygiene_analytics.py",
+      "transforms/analytics/qbr_pack_builder.py"
+    ],
+    "/RevOps/Analytics/qbr_forecast_accuracy": [
+      "transforms/analytics/qbr_pack_builder.py"
+    ],
+    "/RevOps/Analytics/qbr_performance_summary": [
+      "transforms/analytics/qbr_pack_builder.py"
+    ],
+    "/RevOps/Analytics/qbr_pipeline_health": [
+      "transforms/analytics/qbr_pack_builder.py"
+    ],
+    "/RevOps/Analytics/qbr_win_loss_analysis": [
+      "transforms/analytics/qbr_pack_builder.py"
+    ],
+    "/RevOps/Analytics/rep_capacity_model": [
+      "transforms/analytics/capacity_hiring_planning.py"
+    ],
+    "/RevOps/Analytics/rep_performance": [
+      "transforms/analytics/coaching_analytics.py",
+      "transforms/analytics/leading_indicator_analytics.py"
+    ],
+    "/RevOps/Analytics/scenario_cycle_time_impact": [
+      "transforms/analytics/scenario_modeling.py"
+    ],
+    "/RevOps/Analytics/scenario_deal_size_impact": [
+      "transforms/analytics/scenario_modeling.py"
+    ],
+    "/RevOps/Analytics/scenario_win_rate_impact": [
+      "transforms/analytics/scenario_modeling.py"
+    ],
+    "/RevOps/Analytics/slip_risk_scores": [
+      "transforms/analytics/leading_indicator_analytics.py"
+    ],
+    "/RevOps/Analytics/team_capacity_summary": [
+      "transforms/analytics/capacity_hiring_planning.py"
+    ],
+    "/RevOps/Analytics/territory_balance": [
+      "transforms/analytics/territory_account_planning.py"
+    ],
+    "/RevOps/Analytics/white_space_analysis": [
+      "transforms/analytics/territory_account_planning.py"
+    ],
+    "/RevOps/Analytics/win_loss_details": [
+      "transforms/ml/deal_scoring.py"
+    ],
+    "/RevOps/Analytics/win_probability_scores": [
+      "transforms/analytics/leading_indicator_analytics.py"
+    ],
+    "/RevOps/Audit/api_access_log": [
+      "transforms/commercial/usage_metering.py"
+    ],
+    "/RevOps/Audit/notification_events": [
+      "transforms/commercial/notification_log.py"
+    ],
+    "/RevOps/Audit/subscription_events": [
+      "transforms/commercial/billing_plans.py"
+    ],
+    "/RevOps/Audit/webhook_delivery_log": [
+      "transforms/commercial/integrations_webhooks.py"
+    ],
+    "/RevOps/Coaching/rep_performance": [
+      "transforms/ml/next_best_action.py"
+    ],
+    "/RevOps/Commercial/billing_events": [
+      "transforms/commercial/usage_metering.py"
+    ],
+    "/RevOps/Commercial/billing_plans": [
+      "transforms/commercial/billing_plans.py"
+    ],
+    "/RevOps/Commercial/implementation_history": [
+      "transforms/commercial/implementation_status.py"
+    ],
+    "/RevOps/Commercial/implementation_status": [
+      "transforms/commercial/implementation_status.py",
+      "transforms/commercial/tenant_roi_metrics.py"
+    ],
+    "/RevOps/Commercial/license_status": [
+      "transforms/agents/self_service_wizard.py"
+    ],
+    "/RevOps/Commercial/notification_log": [
+      "transforms/commercial/notification_log.py"
+    ],
+    "/RevOps/Commercial/tenant_health_scores": [
+      "transforms/commercial/tenant_health_metrics.py"
+    ],
+    "/RevOps/Commercial/tenant_health_trends": [
+      "transforms/commercial/tenant_health_metrics.py"
+    ],
+    "/RevOps/Commercial/tenant_plans": [
+      "transforms/commercial/billing_plans.py"
+    ],
+    "/RevOps/Commercial/tenant_roi_baseline": [
+      "transforms/commercial/tenant_roi_metrics.py"
+    ],
+    "/RevOps/Commercial/tenant_roi_current": [
+      "transforms/commercial/tenant_roi_metrics.py"
+    ],
+    "/RevOps/Commercial/usage_daily": [
+      "transforms/commercial/tenant_health_metrics.py",
+      "transforms/commercial/usage_metering.py"
+    ],
+    "/RevOps/Commercial/usage_summary": [
+      "transforms/commercial/usage_metering.py"
+    ],
+    "/RevOps/Commercial/webhook_deliveries": [
+      "transforms/commercial/integrations_webhooks.py"
+    ],
+    "/RevOps/Commercial/webhook_subscriptions": [
+      "transforms/commercial/integrations_webhooks.py"
+    ],
+    "/RevOps/Config/customer_settings": [
+      "transforms/commercial/billing_plans.py",
+      "transforms/commercial/implementation_status.py",
+      "transforms/commercial/integrations_webhooks.py",
+      "transforms/commercial/notification_log.py",
+      "transforms/commercial/tenant_health_metrics.py",
+      "transforms/commercial/tenant_roi_metrics.py",
+      "transforms/commercial/usage_metering.py",
+      "transforms/monitoring/alert_evaluator.py",
+      "transforms/monitoring/ops_dashboard.py"
+    ],
+    "/RevOps/Config/salesforce_field_map": [
+      "transforms/ingestion/salesforce_sync.py"
+    ],
+    "/RevOps/Config/user_notification_preferences": [
+      "transforms/commercial/notification_log.py"
+    ],
+    "/RevOps/Config/webhook_configs": [
+      "transforms/commercial/integrations_webhooks.py"
+    ],
+    "/RevOps/DataQuality/summary": [
+      "transforms/monitoring/alert_evaluator.py",
+      "transforms/monitoring/ops_dashboard.py"
+    ],
+    "/RevOps/DataQuality/sync_status": [
+      "transforms/monitoring/alert_evaluator.py",
+      "transforms/monitoring/ops_dashboard.py"
+    ],
+    "/RevOps/Enriched/accounts": [
+      "transforms/analytics/customer_health_expansion.py",
+      "transforms/analytics/historical_details.py"
+    ],
+    "/RevOps/Enriched/deal_health_scores": [
+      "transforms/analytics/alerts_analytics.py",
+      "transforms/analytics/capacity_hiring_planning.py",
+      "transforms/analytics/coaching_analytics.py",
+      "transforms/analytics/cross_functional_telemetry.py",
+      "transforms/analytics/customer_health_expansion.py",
+      "transforms/analytics/forecasting_hub.py",
+      "transforms/analytics/leading_indicator_analytics.py",
+      "transforms/analytics/pipeline_health_summary.py",
+      "transforms/analytics/pipeline_hygiene_analytics.py",
+      "transforms/analytics/qbr_pack_builder.py",
+      "transforms/analytics/scenario_modeling.py",
+      "transforms/analytics/win_loss_analysis.py",
+      "transforms/dashboard/compute_next_best_actions.py"
+    ],
+    "/RevOps/Enriched/opportunity_health_scored": [
+      "transforms/analytics/forecast_rollup.py",
+      "transforms/analytics/pipeline_summary.py"
+    ],
+    "/RevOps/Enriched/users": [
+      "transforms/analytics/capacity_hiring_planning.py"
+    ],
+    "/RevOps/ML/churn_features": [
+      "transforms/ml/churn_prediction.py"
+    ],
+    "/RevOps/ML/churn_scores": [
+      "transforms/ml/churn_prediction.py",
+      "transforms/ml/next_best_action.py"
+    ],
+    "/RevOps/ML/deal_features": [
+      "transforms/ml/deal_scoring.py"
+    ],
+    "/RevOps/ML/deal_recommendations": [
+      "transforms/ml/next_best_action.py"
+    ],
+    "/RevOps/ML/deal_scores": [
+      "transforms/ml/deal_scoring.py",
+      "transforms/ml/next_best_action.py"
+    ],
+    "/RevOps/ML/model_performance": [
+      "transforms/ml/deal_scoring.py"
+    ],
+    "/RevOps/ML/model_weights": [
+      "transforms/ml/deal_scoring.py"
+    ],
+    "/RevOps/Monitoring/action_execution_results": [
+      "transforms/agents/action_hooks.py"
+    ],
+    "/RevOps/Monitoring/action_feedback": [
+      "transforms/agents/config_agent.py"
+    ],
+    "/RevOps/Monitoring/active_alerts": [
+      "transforms/monitoring/ops_dashboard.py"
+    ],
+    "/RevOps/Monitoring/agent_action_log": [
+      "transforms/agents/ops_agent.py"
+    ],
+    "/RevOps/Monitoring/agent_decisions": [
+      "transforms/agents/action_apis.py",
+      "transforms/agents/action_hooks.py",
+      "transforms/agents/ops_agent.py"
+    ],
+    "/RevOps/Monitoring/agent_performance": [
+      "transforms/agents/ops_agent.py"
+    ],
+    "/RevOps/Monitoring/alert_history": [
+      "transforms/monitoring/alert_evaluator.py"
+    ],
+    "/RevOps/Monitoring/api_build_requests": [
+      "transforms/agents/action_apis.py"
+    ],
+    "/RevOps/Monitoring/build_metrics": [
+      "transforms/agents/action_hooks.py",
+      "transforms/agents/config_agent.py",
+      "transforms/commercial/implementation_status.py",
+      "transforms/commercial/tenant_health_metrics.py",
+      "transforms/commercial/usage_metering.py",
+      "transforms/monitoring/alert_evaluator.py",
+      "transforms/monitoring/build_metrics_collector.py",
+      "transforms/monitoring/ops_dashboard.py"
+    ],
+    "/RevOps/Monitoring/build_summary": [
+      "transforms/agents/config_agent.py"
+    ],
+    "/RevOps/Monitoring/escalation_queue": [
+      "transforms/agents/action_apis.py",
+      "transforms/agents/action_hooks.py",
+      "transforms/agents/ops_agent.py"
+    ],
+    "/RevOps/Monitoring/jira_tickets": [
+      "transforms/agents/action_apis.py"
+    ],
+    "/RevOps/Monitoring/model_performance_metrics": [
+      "transforms/agents/config_agent.py"
+    ],
+    "/RevOps/Monitoring/notification_log": [
+      "transforms/agents/action_hooks.py"
+    ],
+    "/RevOps/Monitoring/ops_agent_queue": [
+      "transforms/agents/action_apis.py",
+      "transforms/agents/ops_agent.py"
+    ],
+    "/RevOps/Monitoring/pagerduty_incidents": [
+      "transforms/agents/action_apis.py"
+    ],
+    "/RevOps/Monitoring/pipeline_events": [
+      "transforms/monitoring/build_metrics_collector.py"
+    ],
+    "/RevOps/Monitoring/schema_drift_alerts": [
+      "transforms/agents/config_agent.py"
+    ],
+    "/RevOps/Monitoring/slack_messages": [
+      "transforms/agents/action_apis.py"
+    ],
+    "/RevOps/Monitoring/stale_datasets": [
+      "transforms/monitoring/build_metrics_collector.py"
+    ],
+    "/RevOps/Monitoring/sync_status": [
+      "transforms/commercial/implementation_status.py",
+      "transforms/commercial/tenant_health_metrics.py"
+    ],
+    "/RevOps/Monitoring/threshold_recommendations": [
+      "transforms/agents/config_agent.py"
+    ],
+    "/RevOps/Ops/data_freshness": [
+      "transforms/monitoring/ops_dashboard.py"
+    ],
+    "/RevOps/Ops/usage_metrics": [
+      "transforms/agents/self_service_wizard.py"
+    ],
+    "/RevOps/Raw/activities": [
+      "transforms/analytics/customer_health_expansion.py"
+    ],
+    "/RevOps/Raw/quotas": [
+      "transforms/analytics/capacity_hiring_planning.py",
+      "transforms/analytics/forecasting_hub.py",
+      "transforms/analytics/scenario_modeling.py"
+    ],
+    "/RevOps/Reference/account_domain_mapping": [
+      "transforms/ingestion/telemetry_feeds.py"
+    ],
+    "/RevOps/Reference/quota_targets": [
+      "transforms/analytics/qbr_pack_builder.py",
+      "transforms/analytics/territory_account_planning.py"
+    ],
+    "/RevOps/Reference/sales_reps": [
+      "transforms/analytics/cross_functional_telemetry.py",
+      "transforms/analytics/qbr_pack_builder.py",
+      "transforms/analytics/territory_account_planning.py"
+    ],
+    "/RevOps/Reference/stage_benchmarks": [
+      "transforms/analytics/leading_indicator_analytics.py",
+      "transforms/analytics/pipeline_hygiene_analytics.py",
+      "transforms/analytics/stage_velocity_analytics.py",
+      "transforms/enrichment/calculate_deal_health.py",
+      "transforms/enrichment/deal_health_score.py",
+      "transforms/ml/deal_scoring.py"
+    ],
+    "/RevOps/Sample/opportunities": [
+      "transforms/enrichment/deal_health_score.py",
+      "transforms/sample_data/generate_activities.py"
+    ],
+    "/RevOps/Sample/sales_reps": [
+      "transforms/analytics/forecast_rollup.py",
+      "transforms/analytics/pipeline_summary.py"
+    ],
+    "/RevOps/Scenario/accounts": [
+      "transforms/analytics/cross_functional_telemetry.py",
+      "transforms/analytics/data_quality_analytics.py",
+      "transforms/analytics/territory_account_planning.py",
+      "transforms/audit/api_access_log.py",
+      "transforms/config/customer_settings.py",
+      "transforms/enrichment/enrich_accounts.py"
+    ],
+    "/RevOps/Scenario/activities": [
+      "transforms/analytics/coaching_analytics.py",
+      "transforms/analytics/cross_functional_telemetry.py",
+      "transforms/analytics/historical_details.py",
+      "transforms/analytics/leading_indicator_analytics.py",
+      "transforms/analytics/pipeline_hygiene_analytics.py",
+      "transforms/analytics/qbr_pack_builder.py",
+      "transforms/analytics/territory_account_planning.py",
+      "transforms/enrichment/enrich_users.py"
+    ],
+    "/RevOps/Scenario/leads": [
+      "transforms/analytics/cross_functional_telemetry.py"
+    ],
+    "/RevOps/Scenario/opportunities": [
+      "transforms/analytics/coaching_analytics.py",
+      "transforms/analytics/compensation_analytics.py",
+      "transforms/analytics/cross_functional_telemetry.py",
+      "transforms/analytics/data_quality_analytics.py",
+      "transforms/analytics/dealdesk_analytics.py",
+      "transforms/analytics/forecast_confidence.py",
+      "transforms/analytics/historical_details.py",
+      "transforms/analytics/process_bottleneck_analytics.py",
+      "transforms/analytics/qbr_pack_builder.py",
+      "transforms/analytics/rep_performance_analytics.py",
+      "transforms/analytics/stage_velocity_analytics.py",
+      "transforms/analytics/territory_account_planning.py",
+      "transforms/dashboard/compute_dashboard_kpis.py",
+      "transforms/enrichment/calculate_deal_health.py",
+      "transforms/enrichment/enrich_accounts.py",
+      "transforms/enrichment/enrich_users.py",
+      "transforms/scenario/generate_process_events.py",
+      "transforms/scenario/generate_scenario_activities.py"
+    ],
+    "/RevOps/Scenario/process_events": [
+      "transforms/analytics/process_bottleneck_analytics.py"
+    ],
+    "/RevOps/Scenario/sales_reps": [
+      "transforms/analytics/coaching_analytics.py",
+      "transforms/analytics/compensation_analytics.py",
+      "transforms/analytics/data_quality_analytics.py",
+      "transforms/analytics/rep_performance_analytics.py",
+      "transforms/enrichment/enrich_users.py"
+    ],
+    "/RevOps/SelfService/config_validation_results": [
+      "transforms/agents/self_service_wizard.py"
+    ],
+    "/RevOps/SelfService/integration_opportunities": [
+      "transforms/agents/self_service_wizard.py"
+    ],
+    "/RevOps/SelfService/onboarding_progress": [
+      "transforms/agents/self_service_wizard.py"
+    ],
+    "/RevOps/SelfService/usage_recommendations": [
+      "transforms/agents/self_service_wizard.py"
+    ],
+    "/RevOps/Staging/accounts": [
+      "transforms/ml/churn_prediction.py",
+      "transforms/ml/deal_scoring.py",
+      "transforms/ml/next_best_action.py"
+    ],
+    "/RevOps/Staging/activities": [
+      "transforms/commercial/usage_metering.py",
+      "transforms/ingestion/telemetry_feeds.py",
+      "transforms/ml/churn_prediction.py",
+      "transforms/ml/deal_scoring.py",
+      "transforms/ml/next_best_action.py"
+    ],
+    "/RevOps/Staging/contacts": [
+      "transforms/ml/next_best_action.py"
+    ],
+    "/RevOps/Staging/opportunities": [
+      "transforms/commercial/tenant_roi_metrics.py",
+      "transforms/commercial/usage_metering.py",
+      "transforms/ingestion/salesforce_sync.py",
+      "transforms/ml/churn_prediction.py",
+      "transforms/ml/deal_scoring.py",
+      "transforms/ml/next_best_action.py"
+    ],
+    "/RevOps/Telemetry/feature_usage": [
+      "transforms/commercial/implementation_status.py",
+      "transforms/commercial/tenant_health_metrics.py",
+      "transforms/commercial/usage_metering.py"
+    ],
+    "/RevOps/Telemetry/marketing_touches": [
+      "transforms/ingestion/telemetry_feeds.py"
+    ],
+    "/RevOps/Telemetry/product_usage": [
+      "transforms/ingestion/telemetry_feeds.py",
+      "transforms/ml/churn_prediction.py"
+    ],
+    "/RevOps/Telemetry/support_tickets": [
+      "transforms/ingestion/telemetry_feeds.py",
+      "transforms/ml/churn_prediction.py"
+    ],
+    "/Salesforce/Raw/Account": [
+      "transforms/ingestion/salesforce_sync.py"
+    ],
+    "/Salesforce/Raw/Contact": [
+      "transforms/ingestion/salesforce_sync.py"
+    ],
+    "/Salesforce/Raw/Event": [
+      "transforms/ingestion/salesforce_sync.py"
+    ],
+    "/Salesforce/Raw/Opportunity": [
+      "transforms/ingestion/salesforce_sync.py"
+    ],
+    "/Salesforce/Raw/Task": [
+      "transforms/ingestion/salesforce_sync.py"
+    ],
+    "/Salesforce/Raw/User": [
+      "transforms/ingestion/salesforce_sync.py"
+    ],
+    "/Zendesk/Raw/Tickets": [
+      "transforms/ingestion/telemetry_feeds.py"
+    ]
+  },
+  "commercial_datasets": {
+    "/RevOps/Agents/action_feedback": {
+      "type": "input",
+      "producers": [
+        "webapp_ui",
+        "sdk_api"
+      ],
+      "consumers": [
+        "ai_training",
+        "quality_dashboard",
+        "ops_agent"
+      ],
+      "description": "User feedback on agent/action quality"
+    },
+    "/RevOps/Agents/action_log": {
+      "type": "input",
+      "producers": [
+        "agent_executor",
+        "action_dispatcher"
+      ],
+      "consumers": [
+        "usage_tracking",
+        "analytics_dashboard"
+      ],
+      "description": "Execution logs for agent/action invocations"
+    },
+    "/RevOps/Audit/notification_events": {
+      "type": "input",
+      "producers": [
+        "notification_service"
+      ],
+      "consumers": [
+        "notification_analytics",
+        "cs_console",
+        "ops_agent"
+      ],
+      "description": "Audit trail of notifications sent"
+    },
+    "/RevOps/Audit/subscription_events": {
+      "type": "input",
+      "producers": [
+        "billing_service",
+        "contract_service"
+      ],
+      "consumers": [
+        "revenue_analytics",
+        "cs_console",
+        "audit_reports"
+      ],
+      "description": "Audit trail for subscription/billing events"
+    },
+    "/RevOps/Audit/webhook_delivery_log": {
+      "type": "input",
+      "producers": [
+        "webhook_dispatcher"
+      ],
+      "consumers": [
+        "webhook_analytics",
+        "integration_health",
+        "ops_agent"
+      ],
+      "description": "Audit of outbound webhook delivery attempts"
+    },
+    "/RevOps/Config/user_notification_preferences": {
+      "type": "config",
+      "producers": [
+        "settings_ui",
+        "onboarding"
+      ],
+      "consumers": [
+        "notification_service"
+      ],
+      "description": "Per-user notification preferences"
+    },
+    "/RevOps/Config/webhook_configs": {
+      "type": "config",
+      "producers": [
+        "settings_ui",
+        "api"
+      ],
+      "consumers": [
+        "webhook_dispatcher",
+        "integration_health"
+      ],
+      "description": "Webhook endpoint configurations"
+    },
+    "/RevOps/Monitoring/sync_status": {
+      "type": "analytics",
+      "producers": [
+        "crm_sync",
+        "billing_sync",
+        "usage_sync"
+      ],
+      "consumers": [
+        "ops_dashboard",
+        "ops_agent",
+        "alerting"
+      ],
+      "description": "Health status of external system syncs"
+    }
+  },
+  "analytics_consumers": {
+    "/RevOps/Analytics/notification_daily_rollup": [
+      "notification_analytics_view",
+      "ops_dashboard"
+    ],
+    "/RevOps/Analytics/notification_channel_stats": [
+      "notification_analytics_view"
+    ],
+    "/RevOps/Analytics/notification_latency_metrics": [
+      "notification_analytics_view"
+    ],
+    "/RevOps/Analytics/webhook_analytics": [
+      "integration_health_view",
+      "ops_dashboard"
+    ],
+    "/RevOps/Commercial/notification_preferences": [
+      "settings_ui",
+      "notification_service"
+    ],
+    "/RevOps/Commercial/notification_summary": [
+      "ops_dashboard",
+      "cs_console"
+    ],
+    "/RevOps/Commercial/webhook_analytics": [
+      "integration_health_view",
+      "ops_dashboard"
+    ]
+  },
+  "gaps": {
+    "missing_transforms": [],
+    "orphaned_transforms": [],
+    "missing_inputs": []
+  },
+  "build_order": [
+    [
+      "transforms/config/salesforce_field_map.py",
+      "transforms/ingestion/hubspot_sync.py",
+      "transforms/reference/stage_benchmarks.py",
+      "transforms/sample_data/generate_accounts.py",
+      "transforms/sample_data/generate_opportunities.py",
+      "transforms/sample_data/generate_sales_reps.py",
+      "transforms/scenario/generate_scenario_accounts.py",
+      "transforms/scenario/generate_scenario_opportunities.py",
+      "transforms/scenario/generate_scenario_reps.py"
+    ],
+    [
+      "transforms/analytics/compensation_analytics.py",
+      "transforms/analytics/data_quality_analytics.py",
+      "transforms/analytics/dealdesk_analytics.py",
+      "transforms/analytics/forecast_confidence.py",
+      "transforms/analytics/rep_performance_analytics.py",
+      "transforms/analytics/stage_velocity_analytics.py",
+      "transforms/audit/api_access_log.py",
+      "transforms/config/customer_settings.py",
+      "transforms/enrichment/calculate_deal_health.py",
+      "transforms/enrichment/deal_health_score.py",
+      "transforms/enrichment/enrich_accounts.py",
+      "transforms/sample_data/generate_activities.py",
+      "transforms/scenario/generate_process_events.py",
+      "transforms/scenario/generate_scenario_activities.py"
+    ],
+    [
+      "transforms/analytics/coaching_analytics.py",
+      "transforms/analytics/forecast_rollup.py",
+      "transforms/analytics/historical_details.py",
+      "transforms/analytics/pipeline_health_summary.py",
+      "transforms/analytics/pipeline_summary.py",
+      "transforms/analytics/process_bottleneck_analytics.py",
+      "transforms/analytics/win_loss_analysis.py",
+      "transforms/dashboard/compute_dashboard_kpis.py",
+      "transforms/enrichment/enrich_users.py"
+    ],
+    [
+      "transforms/agents/action_apis.py",
+      "transforms/agents/action_hooks.py",
+      "transforms/agents/config_agent.py",
+      "transforms/agents/ops_agent.py",
+      "transforms/agents/self_service_wizard.py",
+      "transforms/analytics/alerts_analytics.py",
+      "transforms/analytics/capacity_hiring_planning.py",
+      "transforms/analytics/cross_functional_telemetry.py",
+      "transforms/analytics/customer_health_expansion.py",
+      "transforms/analytics/forecasting_hub.py",
+      "transforms/analytics/leading_indicator_analytics.py",
+      "transforms/analytics/pipeline_hygiene_analytics.py",
+      "transforms/analytics/qbr_pack_builder.py",
+      "transforms/analytics/scenario_modeling.py",
+      "transforms/analytics/territory_account_planning.py",
+      "transforms/commercial/billing_plans.py",
+      "transforms/commercial/implementation_status.py",
+      "transforms/commercial/integrations_webhooks.py",
+      "transforms/commercial/notification_log.py",
+      "transforms/commercial/tenant_health_metrics.py",
+      "transforms/commercial/tenant_roi_metrics.py",
+      "transforms/commercial/usage_metering.py",
+      "transforms/dashboard/compute_next_best_actions.py",
+      "transforms/ingestion/salesforce_sync.py",
+      "transforms/ingestion/telemetry_feeds.py",
+      "transforms/ml/churn_prediction.py",
+      "transforms/ml/deal_scoring.py",
+      "transforms/ml/next_best_action.py",
+      "transforms/monitoring/alert_evaluator.py",
+      "transforms/monitoring/build_metrics_collector.py",
+      "transforms/monitoring/ops_dashboard.py"
+    ]
+  ]
+}

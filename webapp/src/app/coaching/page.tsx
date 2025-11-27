@@ -10,9 +10,15 @@ import {
   getRepPerformance,
   getDriverComparisons,
   getNextBestActions,
-  getDataSource,
+  getActivityMetrics,
+  getSalesReps,
+  getDataSourceAsync,
 } from '@/lib/foundry'
-import * as mockData from '@/data/mockData'
+import {
+  defaultRepPerformance,
+  defaultActivityMetrics,
+  defaultSalesRep,
+} from '@/lib/defaults'
 import { formatCurrency, formatPercent, formatDelta, cn } from '@/lib/utils'
 import {
   ChevronDown,
@@ -32,49 +38,70 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from 'recharts'
-import type { RepPerformance, DriverComparison, NextBestAction, ActivityMetrics, CoachingInsight, PipelineDeal } from '@/types'
+import type { RepPerformance, DriverComparison, NextBestAction, ActivityMetrics, CoachingInsight, PipelineDeal, SalesRep } from '@/types'
 
 export default function RepCoachingDashboard() {
-  const [selectedRep, setSelectedRep] = useState(mockData.salesReps[0])
+  // Rep selector state
+  const [salesReps, setSalesReps] = useState<SalesRep[]>([defaultSalesRep])
+  const [selectedRep, setSelectedRep] = useState<SalesRep>(defaultSalesRep)
   const [showRepDropdown, setShowRepDropdown] = useState(false)
   const [loading, setLoading] = useState(true)
   const [dataSource, setDataSource] = useState<'foundry' | 'mock'>('mock')
 
-  // Dynamic data state
-  const [rep, setRep] = useState<RepPerformance>(mockData.repPerformance)
-  const [driverComparisons, setDriverComparisons] = useState<DriverComparison[]>(mockData.driverComparisons)
-  const [nextBestActions, setNextBestActions] = useState<NextBestAction[]>(mockData.nextBestActions)
-  const [activityMetrics, setActivityMetrics] = useState<ActivityMetrics>(mockData.activityMetrics)
-  const [coachingStrengths, setCoachingStrengths] = useState<CoachingInsight[]>(mockData.coachingStrengths)
-  const [coachingImprovements, setCoachingImprovements] = useState<CoachingInsight[]>(mockData.coachingImprovements)
-  const [coachingActions, setCoachingActions] = useState<CoachingInsight[]>(mockData.coachingActions)
-  const [pipelineDeals, setPipelineDeals] = useState<PipelineDeal[]>(mockData.pipelineDeals)
+  // Dynamic data state - use defaults for initial state
+  const [rep, setRep] = useState<RepPerformance>(defaultRepPerformance)
+  const [driverComparisons, setDriverComparisons] = useState<DriverComparison[]>([])
+  const [nextBestActions, setNextBestActions] = useState<NextBestAction[]>([])
+  const [activityMetrics, setActivityMetrics] = useState<ActivityMetrics>(defaultActivityMetrics)
+  const [coachingStrengths, setCoachingStrengths] = useState<CoachingInsight[]>([])
+  const [coachingImprovements, setCoachingImprovements] = useState<CoachingInsight[]>([])
+  const [coachingActions, setCoachingActions] = useState<CoachingInsight[]>([])
+  const [pipelineDeals, setPipelineDeals] = useState<PipelineDeal[]>([])
+
+  // Load sales reps on mount
+  useEffect(() => {
+    async function loadSalesReps() {
+      try {
+        const reps = await getSalesReps()
+        if (reps.length > 0) {
+          setSalesReps(reps)
+          setSelectedRep(reps[0])
+        }
+      } catch (error) {
+        console.error('Error loading sales reps:', error)
+      }
+    }
+    loadSalesReps()
+  }, [])
 
   // Fetch data when selectedRep changes
   useEffect(() => {
+    // Skip if no rep selected yet
+    if (!selectedRep.id) return
+
     async function loadRepData() {
       setLoading(true)
-      setDataSource(getDataSource())
+
+      // Check server to accurately determine data source
+      const source = await getDataSourceAsync()
+      setDataSource(source)
 
       try {
-        const [repData, drivers, actions] = await Promise.all([
-          getRepPerformance(selectedRep.id).catch(() => mockData.repPerformance),
-          getDriverComparisons(selectedRep.id).catch(() => mockData.driverComparisons),
-          getNextBestActions(selectedRep.id).catch(() => mockData.nextBestActions),
+        const [repData, drivers, actions, activity] = await Promise.all([
+          getRepPerformance(selectedRep.id).catch(() => defaultRepPerformance),
+          getDriverComparisons(selectedRep.id).catch(() => []),
+          getNextBestActions(selectedRep.id).catch(() => []),
+          getActivityMetrics(selectedRep.id).catch(() => defaultActivityMetrics),
         ])
 
         setRep(repData)
         setDriverComparisons(drivers)
         setNextBestActions(actions)
-        // These currently use mock data only
-        setActivityMetrics(mockData.activityMetrics)
-        setCoachingStrengths(mockData.coachingStrengths)
-        setCoachingImprovements(mockData.coachingImprovements)
-        setCoachingActions(mockData.coachingActions)
-        setPipelineDeals(mockData.pipelineDeals)
+        setActivityMetrics(activity)
+        // TODO: Add fetchers for these when Foundry datasets are ready
+        // For now they remain empty until data loads
       } catch (error) {
         console.error('Error loading rep data:', error)
-        // Keep mock data on error
       } finally {
         setLoading(false)
       }
@@ -133,7 +160,7 @@ export default function RepCoachingDashboard() {
                 {/* Dropdown menu */}
                 {showRepDropdown && (
                   <div className="absolute top-full mt-2 right-0 w-64 bg-bg-elevated border border-border-subtle rounded-lg shadow-xl z-50 overflow-hidden">
-                    {mockData.salesReps.map((repOption) => (
+                    {salesReps.map((repOption) => (
                       <button
                         key={repOption.id}
                         onClick={() => {

@@ -1,0 +1,69 @@
+{
+  "customer_id": "startup-co",
+  "customer_name": "StartupCo Inc",
+  "tier": "starter",
+  "primary_crm": "hubspot",
+  "crm_instance_url": "https://app.hubspot.com/contacts/12345678",
+  "timezone": "America/New_York",
+  "currency": "USD",
+  "currency_symbol": "$",
+  "date_format": "YYYY-MM-DD",
+  "fiscal_year_start": "01-01",
+  "max_users": 10,
+  "max_opportunities": 5000,
+  "data_retention_days": 365,
+  "features": {
+    "pipeline_health": true,
+    "pipeline_hygiene": true,
+    "forecast_summary": true,
+    "deal_predictions": false,
+    "coaching_insights": false,
+    "rep_performance": false,
+    "activity_analytics": false,
+    "scenario_modeling": false,
+    "territory_planning": false,
+    "custom_integrations": false,
+    "api_access": false,
+    "sso_enabled": false,
+    "white_labeling": false,
+    "data_export": false
+  },
+  "thresholds": {
+    "health": {
+      "critical": 40,
+      "at_risk": 60,
+      "monitor": 80,
+      "healthy": 80
+    },
+    "hygiene": {
+      "days_stale_warning": 7,
+      "days_stale_critical": 14,
+      "days_past_close_warning": 7,
+      "days_past_close_critical": 30,
+      "missing_next_step_days": 3,
+      "missing_amount_threshold": 0
+    },
+    "forecast": {
+      "pipeline_coverage_target": 3.0,
+      "commit_coverage_target": 1.2,
+      "win_rate_benchmark": 0.25,
+      "avg_cycle_days_benchmark": 45,
+      "quota_attainment_target": 1.0
+    }
+  },
+  "alerts": {
+    "enabled": true,
+    "default_channels": ["email"],
+    "email_recipients": ["founder@startup.co"],
+    "email_from": "alerts@revops-hub.io",
+    "rules": [
+      {"name": "stale_pipeline", "enabled": true, "severity": "warning", "channels": [], "threshold": 0.1, "cooldown_minutes": 60},
+      {"name": "build_failure", "enabled": true, "severity": "critical", "channels": [], "threshold": null, "cooldown_minutes": 30}
+    ]
+  },
+  "schedules": [
+    {"name": "daily-sync", "cron": "0 6 * * *", "datasets": ["/RevOps/Staging/opportunities", "/RevOps/Staging/accounts"], "enabled": true, "retry_count": 2, "timeout_minutes": 60},
+    {"name": "daily-analytics", "cron": "0 7 * * *", "datasets": ["/RevOps/Analytics/pipeline_health_summary", "/RevOps/Dashboard/kpis"], "enabled": true, "retry_count": 2, "timeout_minutes": 60}
+  ],
+  "custom_fields": {}
+}

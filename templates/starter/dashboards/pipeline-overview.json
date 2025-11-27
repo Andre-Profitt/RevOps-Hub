@@ -1,0 +1,115 @@
+{
+  "id": "pipeline-overview",
+  "name": "Pipeline Overview",
+  "version": "1.0.0",
+  "description": "Track deals through pipeline stages with key metrics",
+  "layout": {
+    "type": "grid",
+    "columns": 12,
+    "rows": "auto"
+  },
+  "widgets": [
+    {
+      "id": "total-pipeline",
+      "type": "metric",
+      "title": "Total Pipeline",
+      "position": { "col": 1, "row": 1, "width": 3, "height": 1 },
+      "config": {
+        "query": "SELECT SUM(amount) as value FROM opportunities WHERE stage NOT IN ('Closed Won', 'Closed Lost')",
+        "format": "currency",
+        "comparison": {
+          "type": "previous_period",
+          "label": "vs last month"
+        }
+      }
+    },
+    {
+      "id": "open-deals",
+      "type": "metric",
+      "title": "Open Deals",
+      "position": { "col": 4, "row": 1, "width": 3, "height": 1 },
+      "config": {
+        "query": "SELECT COUNT(*) as value FROM opportunities WHERE stage NOT IN ('Closed Won', 'Closed Lost')",
+        "format": "number"
+      }
+    },
+    {
+      "id": "win-rate",
+      "type": "metric",
+      "title": "Win Rate",
+      "position": { "col": 7, "row": 1, "width": 3, "height": 1 },
+      "config": {
+        "query": "SELECT ROUND(100.0 * SUM(CASE WHEN stage = 'Closed Won' THEN 1 ELSE 0 END) / COUNT(*), 1) as value FROM opportunities WHERE stage IN ('Closed Won', 'Closed Lost') AND close_date >= DATE_SUB(CURRENT_DATE, 90)",
+        "format": "percentage"
+      }
+    },
+    {
+      "id": "avg-deal-size",
+      "type": "metric",
+      "title": "Avg Deal Size",
+      "position": { "col": 10, "row": 1, "width": 3, "height": 1 },
+      "config": {
+        "query": "SELECT AVG(amount) as value FROM opportunities WHERE stage = 'Closed Won' AND close_date >= DATE_SUB(CURRENT_DATE, 90)",
+        "format": "currency"
+      }
+    },
+    {
+      "id": "pipeline-by-stage",
+      "type": "funnel",
+      "title": "Pipeline by Stage",
+      "position": { "col": 1, "row": 2, "width": 6, "height": 3 },
+      "config": {
+        "query": "SELECT stage, COUNT(*) as count, SUM(amount) as value FROM opportunities WHERE stage NOT IN ('Closed Won', 'Closed Lost') GROUP BY stage ORDER BY stage_order",
+        "labelField": "stage",
+        "valueField": "value",
+        "countField": "count"
+      }
+    },
+    {
+      "id": "deals-by-close-date",
+      "type": "bar",
+      "title": "Expected Close by Month",
+      "position": { "col": 7, "row": 2, "width": 6, "height": 3 },
+      "config": {
+        "query": "SELECT DATE_TRUNC('month', close_date) as month, SUM(amount) as value FROM opportunities WHERE stage NOT IN ('Closed Won', 'Closed Lost') AND close_date >= CURRENT_DATE GROUP BY 1 ORDER BY 1",
+        "xField": "month",
+        "yField": "value",
+        "format": "currency"
+      }
+    },
+    {
+      "id": "recent-deals",
+      "type": "table",
+      "title": "Recently Updated Deals",
+      "position": { "col": 1, "row": 5, "width": 12, "height": 3 },
+      "config": {
+        "query": "SELECT name, account_name, stage, amount, close_date, owner_name FROM opportunities WHERE stage NOT IN ('Closed Won', 'Closed Lost') ORDER BY last_modified_date DESC LIMIT 10",
+        "columns": [
+          { "field": "name", "label": "Deal Name", "link": true },
+          { "field": "account_name", "label": "Account" },
+          { "field": "stage", "label": "Stage" },
+          { "field": "amount", "label": "Amount", "format": "currency" },
+          { "field": "close_date", "label": "Close Date", "format": "date" },
+          { "field": "owner_name", "label": "Owner" }
+        ]
+      }
+    }
+  ],
+  "filters": [
+    {
+      "id": "owner",
+      "type": "select",
+      "label": "Owner",
+      "field": "owner_id",
+      "multiple": true
+    },
+    {
+      "id": "date-range",
+      "type": "date_range",
+      "label": "Close Date",
+      "field": "close_date",
+      "default": "this_quarter"
+    }
+  ],
+  "refreshInterval": 300
+}

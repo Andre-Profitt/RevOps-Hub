@@ -25,10 +25,18 @@ import {
   getTelemetrySummary,
   getFunnelHandoffs,
   getCrossTeamActivity,
-  getDataSource,
+  getDataSourceAsync,
   type DashboardFilters,
 } from '@/lib/foundry'
-import * as mockData from '@/data/mockData'
+import {
+  defaultDashboardKPIs,
+  defaultHealthDistribution,
+  defaultHygieneSummary,
+  defaultLeadingIndicatorsSummary,
+  defaultTelemetrySummary,
+} from '@/lib/defaults'
+import { DashboardSkeleton } from '@/components/ui/Skeleton'
+import { ErrorState } from '@/components/ui/ErrorState'
 import { formatCurrency, formatPercent, formatDelta, cn } from '@/lib/utils'
 import { ChevronDown, RefreshCw, Settings, Bell, Loader2, AlertTriangle, CheckCircle2, XCircle, Clock, Users, Calendar, TrendingUp, Shield, Brain, Target, Zap, ArrowUpRight, ArrowDownRight, GitBranch, BarChart3, ArrowRight, Timer } from 'lucide-react'
 import type { StuckDeal, DashboardKPIs, ForecastTrendPoint, HealthDistribution, ProcessBottleneck, CompetitiveLoss, StageVelocity, FunnelStage, HygieneSummary, HygieneAlert, HygieneTrendPoint, DealPrediction, LeadingIndicatorsSummary, TelemetrySummary, FunnelHandoffMetrics, CrossTeamActivity } from '@/types'
@@ -39,22 +47,23 @@ const TEAMS = ['All Teams', 'West', 'Central', 'East', 'South']
 export default function PipelineHealthDashboard() {
   const [selectedDeal, setSelectedDeal] = useState<StuckDeal | null>(null)
   const [loading, setLoading] = useState(true)
-  const [dashboardKPIs, setDashboardKPIs] = useState<DashboardKPIs>(mockData.dashboardKPIs)
-  const [forecastTrend, setForecastTrend] = useState<ForecastTrendPoint[]>(mockData.forecastTrend)
-  const [stuckDeals, setStuckDeals] = useState<StuckDeal[]>(mockData.stuckDeals)
-  const [healthDistribution, setHealthDistribution] = useState<HealthDistribution>(mockData.healthDistribution)
-  const [processBottlenecks, setProcessBottlenecks] = useState<ProcessBottleneck[]>(mockData.processBottlenecks)
-  const [competitiveLosses, setCompetitiveLosses] = useState<CompetitiveLoss[]>(mockData.competitiveLosses)
-  const [stageVelocity, setStageVelocity] = useState<StageVelocity[]>(mockData.stageVelocity)
-  const [pipelineFunnel, setPipelineFunnel] = useState<FunnelStage[]>(mockData.pipelineFunnel)
-  const [hygieneSummary, setHygieneSummary] = useState<HygieneSummary>(mockData.hygieneSummary)
-  const [hygieneAlerts, setHygieneAlerts] = useState<HygieneAlert[]>(mockData.hygieneAlerts)
-  const [hygieneTrends, setHygieneTrends] = useState<HygieneTrendPoint[]>(mockData.hygieneTrends)
-  const [dealPredictions, setDealPredictions] = useState<DealPrediction[]>(mockData.dealPredictions)
-  const [leadingIndicators, setLeadingIndicators] = useState<LeadingIndicatorsSummary>(mockData.leadingIndicatorsSummary)
-  const [telemetrySummary, setTelemetrySummary] = useState<TelemetrySummary>(mockData.telemetrySummary)
-  const [funnelHandoffs, setFunnelHandoffs] = useState<FunnelHandoffMetrics[]>(mockData.funnelHandoffs)
-  const [crossTeamActivity, setCrossTeamActivity] = useState<CrossTeamActivity[]>(mockData.crossTeamActivity)
+  const [error, setError] = useState<string | null>(null)
+  const [dashboardKPIs, setDashboardKPIs] = useState<DashboardKPIs>(defaultDashboardKPIs)
+  const [forecastTrend, setForecastTrend] = useState<ForecastTrendPoint[]>([])
+  const [stuckDeals, setStuckDeals] = useState<StuckDeal[]>([])
+  const [healthDistribution, setHealthDistribution] = useState<HealthDistribution>(defaultHealthDistribution)
+  const [processBottlenecks, setProcessBottlenecks] = useState<ProcessBottleneck[]>([])
+  const [competitiveLosses, setCompetitiveLosses] = useState<CompetitiveLoss[]>([])
+  const [stageVelocity, setStageVelocity] = useState<StageVelocity[]>([])
+  const [pipelineFunnel, setPipelineFunnel] = useState<FunnelStage[]>([])
+  const [hygieneSummary, setHygieneSummary] = useState<HygieneSummary>(defaultHygieneSummary)
+  const [hygieneAlerts, setHygieneAlerts] = useState<HygieneAlert[]>([])
+  const [hygieneTrends, setHygieneTrends] = useState<HygieneTrendPoint[]>([])
+  const [dealPredictions, setDealPredictions] = useState<DealPrediction[]>([])
+  const [leadingIndicators, setLeadingIndicators] = useState<LeadingIndicatorsSummary>(defaultLeadingIndicatorsSummary)
+  const [telemetrySummary, setTelemetrySummary] = useState<TelemetrySummary>(defaultTelemetrySummary)
+  const [funnelHandoffs, setFunnelHandoffs] = useState<FunnelHandoffMetrics[]>([])
+  const [crossTeamActivity, setCrossTeamActivity] = useState<CrossTeamActivity[]>([])
   const [dataSource, setDataSource] = useState<'foundry' | 'mock'>('mock')
 
   // Filter state
@@ -68,7 +77,11 @@ export default function PipelineHealthDashboard() {
   useEffect(() => {
     async function loadData() {
       setLoading(true)
-      setDataSource(getDataSource())
+      setError(null)
+
+      // Check server to accurately determine data source
+      const source = await getDataSourceAsync()
+      setDataSource(source)
 
       // Build filters object from current state
       const filters: DashboardFilters = {
@@ -77,21 +90,23 @@ export default function PipelineHealthDashboard() {
       }
 
       try {
-        const [kpis, trend, stuck, health, bottlenecks, losses, hygiene, alerts, trends, predictions, indicators, telemetry, handoffs, teamActivity] = await Promise.all([
-          getDashboardKPIs(filters).catch(() => mockData.dashboardKPIs),
-          getForecastTrend(filters).catch(() => mockData.forecastTrend),
-          getStuckDeals(filters).catch(() => mockData.stuckDeals),
-          getHealthDistribution(filters).catch(() => mockData.healthDistribution),
-          getProcessBottlenecks(filters).catch(() => mockData.processBottlenecks),
-          getCompetitiveLosses().catch(() => mockData.competitiveLosses),
-          getHygieneSummary(filters).catch(() => mockData.hygieneSummary),
-          getHygieneAlerts(filters).catch(() => mockData.hygieneAlerts),
-          getHygieneTrends().catch(() => mockData.hygieneTrends),
-          getDealPredictions(filters).catch(() => mockData.dealPredictions),
-          getLeadingIndicatorsSummary(filters).catch(() => mockData.leadingIndicatorsSummary),
-          getTelemetrySummary(filters).catch(() => mockData.telemetrySummary),
-          getFunnelHandoffs(filters).catch(() => mockData.funnelHandoffs),
-          getCrossTeamActivity(filters).catch(() => mockData.crossTeamActivity),
+        const [kpis, trend, stuck, health, bottlenecks, losses, hygiene, alerts, trends, predictions, indicators, telemetry, handoffs, teamActivity, velocity, funnel] = await Promise.all([
+          getDashboardKPIs(filters),
+          getForecastTrend(filters),
+          getStuckDeals(filters),
+          getHealthDistribution(filters),
+          getProcessBottlenecks(filters),
+          getCompetitiveLosses(filters),
+          getHygieneSummary(filters),
+          getHygieneAlerts(filters),
+          getHygieneTrends(),
+          getDealPredictions(filters),
+          getLeadingIndicatorsSummary(filters),
+          getTelemetrySummary(filters),
+          getFunnelHandoffs(filters),
+          getCrossTeamActivity(filters),
+          getStageVelocity(filters),
+          getPipelineFunnel(filters),
         ])
 
         setDashboardKPIs(kpis)
@@ -108,11 +123,11 @@ export default function PipelineHealthDashboard() {
         setTelemetrySummary(telemetry)
         setFunnelHandoffs(handoffs)
         setCrossTeamActivity(teamActivity)
-        setStageVelocity(getStageVelocity())
-        setPipelineFunnel(getPipelineFunnel())
-      } catch (error) {
-        console.error('Error loading dashboard data:', error)
-        // Keep mock data on error
+        setStageVelocity(velocity)
+        setPipelineFunnel(funnel)
+      } catch (err) {
+        console.error('Error loading dashboard data:', err)
+        setError(err instanceof Error ? err.message : 'Failed to load dashboard data')
       } finally {
         setLoading(false)
       }
@@ -123,6 +138,54 @@ export default function PipelineHealthDashboard() {
 
   const handleRefresh = () => {
     setRefreshKey((k) => k + 1)
+  }
+
+  // Show loading skeleton on initial load
+  if (loading && dashboardKPIs.quarterTarget === 0) {
+    return (
+      <div className="min-h-screen bg-bg-primary">
+        <header className="border-b border-border-subtle bg-bg-secondary/50 backdrop-blur-sm sticky top-0 z-50">
+          <div className="max-w-[1600px] mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-xl font-semibold text-text-primary">Pipeline Health Dashboard</h1>
+                <p className="text-sm text-text-muted flex items-center gap-2">
+                  RevOps Hub • Loading...
+                  <Loader2 className="w-3 h-3 animate-spin" />
+                </p>
+              </div>
+            </div>
+          </div>
+        </header>
+        <DashboardSkeleton />
+      </div>
+    )
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="min-h-screen bg-bg-primary">
+        <header className="border-b border-border-subtle bg-bg-secondary/50 backdrop-blur-sm sticky top-0 z-50">
+          <div className="max-w-[1600px] mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-xl font-semibold text-text-primary">Pipeline Health Dashboard</h1>
+                <p className="text-sm text-text-muted">RevOps Hub • {selectedQuarter}</p>
+              </div>
+            </div>
+          </div>
+        </header>
+        <div className="max-w-[1600px] mx-auto px-6 py-8">
+          <ErrorState
+            title="Failed to load dashboard"
+            message={error}
+            onRetry={handleRefresh}
+            variant="full"
+          />
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -268,6 +331,54 @@ export default function PipelineHealthDashboard() {
                 className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 rounded-lg text-sm font-medium text-white transition-colors"
               >
                 Customers
+              </Link>
+
+              {/* Nav to Forecasting Hub */}
+              <Link
+                href="/forecast"
+                className="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg text-sm font-medium text-white transition-colors"
+              >
+                Forecast
+              </Link>
+
+              {/* Nav to Win/Loss Analysis */}
+              <Link
+                href="/winloss"
+                className="px-4 py-2 bg-rose-500 hover:bg-rose-600 rounded-lg text-sm font-medium text-white transition-colors"
+              >
+                Win/Loss
+              </Link>
+
+              {/* Nav to Deal Desk */}
+              <Link
+                href="/dealdesk"
+                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 rounded-lg text-sm font-medium text-white transition-colors"
+              >
+                Deal Desk
+              </Link>
+
+              {/* Nav to Compensation */}
+              <Link
+                href="/compensation"
+                className="px-4 py-2 bg-violet-500 hover:bg-violet-600 rounded-lg text-sm font-medium text-white transition-colors"
+              >
+                Comp
+              </Link>
+
+              {/* Nav to Data Quality */}
+              <Link
+                href="/data-quality"
+                className="px-4 py-2 bg-cyan-500 hover:bg-cyan-600 rounded-lg text-sm font-medium text-white transition-colors"
+              >
+                Data Quality
+              </Link>
+
+              {/* Nav to Alerts */}
+              <Link
+                href="/alerts"
+                className="px-4 py-2 bg-red-500 hover:bg-red-600 rounded-lg text-sm font-medium text-white transition-colors"
+              >
+                Alerts
               </Link>
 
               {/* Nav to coaching */}

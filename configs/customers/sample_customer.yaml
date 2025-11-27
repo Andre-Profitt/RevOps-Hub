@@ -1,0 +1,40 @@
+# Sample Customer Configuration
+customer_id: CUST-001
+customer_name: Acme Corporation
+tier: Growth
+
+# Override default limits (optional)
+limits:
+  users: 75  # Upgraded from 50
+
+# Custom feature flags (optional)
+features:
+  - core
+  - forecasting
+  - ai_predictions
+  - custom_reports
+  - api_access  # Added as custom
+
+# Contact information
+contacts:
+  primary:
+    name: John Smith
+    email: john.smith@acme.com
+    role: VP Sales Operations
+  billing:
+    name: Jane Doe
+    email: billing@acme.com
+
+# Contract details
+contract:
+  start_date: "2024-01-01"
+  end_date: "2024-12-31"
+  auto_renew: true
+
+# Integration settings
+integrations:
+  salesforce:
+    enabled: true
+    sync_frequency: hourly
+  hubspot:
+    enabled: false

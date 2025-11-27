@@ -16,6 +16,7 @@ health we want to demonstrate. This transform shows the calculation methodology.
 from transforms.api import transform, Input, Output
 from pyspark.sql import functions as F
 from pyspark.sql.window import Window
+from quality.data_quality_checks import DataQualityChecker, assert_opportunity_quality
 
 
 @transform(
@@ -28,6 +29,9 @@ def compute(ctx, opportunities, stage_benchmarks, output):
 
     opps = opportunities.dataframe()
     benchmarks = stage_benchmarks.dataframe()
+
+    # Data quality checks on input
+    assert_opportunity_quality(opps, "deal_health_input").finalize()
 
     # Current date for calculations
     CURRENT_DATE = F.to_date(F.lit("2024-11-15"))
@@ -215,5 +219,13 @@ def compute(ctx, opportunities, stage_benchmarks, output):
         "is_hero_deal",
         "story_notes"
     )
+
+    # Data quality checks on output
+    (DataQualityChecker(output_df, "deal_health_output")
+        .assert_not_empty()
+        .assert_no_nulls("opportunity_id", "health_score", "health_category")
+        .assert_in_range("health_score", 0, 100)
+        .assert_values_in("health_category", ["Healthy", "Monitor", "At Risk", "Critical"])
+        .finalize())
 
     output.write_dataframe(output_df)

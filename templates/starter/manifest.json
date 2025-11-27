@@ -1,0 +1,61 @@
+{
+  "name": "RevOps Starter Pack",
+  "version": "1.0.0",
+  "tier": "starter",
+  "description": "Essential RevOps dashboards and workflows for small teams",
+  "author": "RevOps Team",
+  "minCliVersion": "0.1.0",
+  "contents": {
+    "dashboards": [
+      {
+        "id": "pipeline-overview",
+        "name": "Pipeline Overview",
+        "description": "Track deals through stages with win rate and velocity metrics",
+        "file": "dashboards/pipeline-overview.json"
+      },
+      {
+        "id": "forecast-summary",
+        "name": "Forecast Summary",
+        "description": "Monthly forecast vs quota with simple rollup",
+        "file": "dashboards/forecast-summary.json"
+      }
+    ],
+    "workflows": [
+      {
+        "id": "deal-sync",
+        "name": "CRM Deal Sync",
+        "description": "Sync deals from CRM on configurable schedule",
+        "file": "workflows/deal-sync.json"
+      },
+      {
+        "id": "weekly-digest",
+        "name": "Weekly Pipeline Digest",
+        "description": "Automated weekly email with pipeline summary",
+        "file": "workflows/weekly-digest.json"
+      }
+    ],
+    "datasets": [
+      "opportunities",
+      "accounts",
+      "users",
+      "forecasts"
+    ]
+  },
+  "configuration": {
+    "required": [
+      "crm_connection_id",
+      "timezone"
+    ],
+    "optional": [
+      "fiscal_year_start",
+      "currency"
+    ]
+  },
+  "limits": {
+    "maxUsers": 5,
+    "maxDeals": 10000,
+    "aiFeatures": false,
+    "customDashboards": false,
+    "apiAccess": false
+  }
+}

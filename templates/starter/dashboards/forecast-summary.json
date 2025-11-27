@@ -1,0 +1,119 @@
+{
+  "id": "forecast-summary",
+  "name": "Forecast Summary",
+  "version": "1.0.0",
+  "description": "Monthly forecast vs quota tracking",
+  "layout": {
+    "type": "grid",
+    "columns": 12,
+    "rows": "auto"
+  },
+  "widgets": [
+    {
+      "id": "quota-attainment",
+      "type": "gauge",
+      "title": "Quota Attainment",
+      "position": { "col": 1, "row": 1, "width": 4, "height": 2 },
+      "config": {
+        "query": "SELECT ROUND(100.0 * SUM(CASE WHEN stage = 'Closed Won' THEN amount ELSE 0 END) / MAX(quota), 1) as value FROM forecasts WHERE period = DATE_TRUNC('month', CURRENT_DATE)",
+        "format": "percentage",
+        "thresholds": [
+          { "value": 0, "color": "#ef4444" },
+          { "value": 50, "color": "#eab308" },
+          { "value": 80, "color": "#22c55e" }
+        ]
+      }
+    },
+    {
+      "id": "closed-won",
+      "type": "metric",
+      "title": "Closed Won",
+      "position": { "col": 5, "row": 1, "width": 4, "height": 1 },
+      "config": {
+        "query": "SELECT SUM(amount) as value FROM opportunities WHERE stage = 'Closed Won' AND close_date >= DATE_TRUNC('month', CURRENT_DATE)",
+        "format": "currency"
+      }
+    },
+    {
+      "id": "quota",
+      "type": "metric",
+      "title": "Monthly Quota",
+      "position": { "col": 9, "row": 1, "width": 4, "height": 1 },
+      "config": {
+        "query": "SELECT SUM(quota) as value FROM forecasts WHERE period = DATE_TRUNC('month', CURRENT_DATE)",
+        "format": "currency"
+      }
+    },
+    {
+      "id": "commit-pipeline",
+      "type": "metric",
+      "title": "Commit Pipeline",
+      "position": { "col": 5, "row": 2, "width": 4, "height": 1 },
+      "config": {
+        "query": "SELECT SUM(amount) as value FROM opportunities WHERE forecast_category = 'Commit' AND stage NOT IN ('Closed Won', 'Closed Lost')",
+        "format": "currency"
+      }
+    },
+    {
+      "id": "best-case-pipeline",
+      "type": "metric",
+      "title": "Best Case",
+      "position": { "col": 9, "row": 2, "width": 4, "height": 1 },
+      "config": {
+        "query": "SELECT SUM(amount) as value FROM opportunities WHERE forecast_category IN ('Commit', 'Best Case') AND stage NOT IN ('Closed Won', 'Closed Lost')",
+        "format": "currency"
+      }
+    },
+    {
+      "id": "forecast-trend",
+      "type": "line",
+      "title": "Forecast Trend",
+      "position": { "col": 1, "row": 3, "width": 12, "height": 3 },
+      "config": {
+        "query": "SELECT period, closed_won, commit_forecast, best_case_forecast, quota FROM forecast_snapshots WHERE period >= DATE_SUB(CURRENT_DATE, 180) ORDER BY period",
+        "xField": "period",
+        "series": [
+          { "field": "closed_won", "label": "Closed Won", "color": "#22c55e" },
+          { "field": "commit_forecast", "label": "Commit", "color": "#3b82f6" },
+          { "field": "best_case_forecast", "label": "Best Case", "color": "#8b5cf6", "dashed": true },
+          { "field": "quota", "label": "Quota", "color": "#6b7280", "dashed": true }
+        ],
+        "format": "currency"
+      }
+    },
+    {
+      "id": "forecast-by-rep",
+      "type": "table",
+      "title": "Forecast by Rep",
+      "position": { "col": 1, "row": 6, "width": 12, "height": 3 },
+      "config": {
+        "query": "SELECT owner_name, quota, closed_won, commit, best_case, ROUND(100.0 * closed_won / quota, 1) as attainment FROM forecast_by_rep WHERE period = DATE_TRUNC('month', CURRENT_DATE) ORDER BY attainment DESC",
+        "columns": [
+          { "field": "owner_name", "label": "Rep" },
+          { "field": "quota", "label": "Quota", "format": "currency" },
+          { "field": "closed_won", "label": "Closed Won", "format": "currency" },
+          { "field": "commit", "label": "Commit", "format": "currency" },
+          { "field": "best_case", "label": "Best Case", "format": "currency" },
+          { "field": "attainment", "label": "Attainment", "format": "percentage", "highlight": true }
+        ]
+      }
+    }
+  ],
+  "filters": [
+    {
+      "id": "period",
+      "type": "month_picker",
+      "label": "Period",
+      "field": "period",
+      "default": "current_month"
+    },
+    {
+      "id": "team",
+      "type": "select",
+      "label": "Team",
+      "field": "team_id",
+      "multiple": false
+    }
+  ],
+  "refreshInterval": 300
+}
