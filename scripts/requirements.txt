@@ -1,0 +1,2 @@
+# Requirements for RevOps scripts
+pyyaml>=6.0

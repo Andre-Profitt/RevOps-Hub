@@ -30,6 +30,12 @@ if YAML_AVAILABLE:
 else:
     yaml = None
 
+try:
+    import yaml
+    YAML_AVAILABLE = True
+except ImportError:
+    YAML_AVAILABLE = False
+
 
 @dataclass
 class ValidationError:
@@ -121,6 +127,10 @@ class ConfigValidator:
             ))
             customer_id = ""
         elif not customer_id.strip():
+        # Validate tier (lowercase to match PLAN_DEFINITIONS)
+        valid_tiers = ["starter", "growth", "enterprise"]
+        tier_value = config.get("tier", "").lower() if config.get("tier") else None
+        if tier_value and tier_value not in valid_tiers:
             self.errors.append(ValidationError(
                 file=str(path),
                 path="customer_id",
@@ -408,6 +418,11 @@ class ConfigValidator:
             if path.suffix in [".yaml", ".yml"]:
                 if yaml is None:
                     raise RuntimeError(YAML_MISSING_MESSAGE)
+                if not YAML_AVAILABLE:
+                    raise ImportError(
+                        "PyYAML is required to parse YAML files. "
+                        "Install with: pip install pyyaml"
+                    )
                 return yaml.safe_load(f)
             else:
                 return json.load(f)
@@ -460,6 +475,11 @@ def main():
     yaml_files = list(config_dir.rglob("*.yaml")) + list(config_dir.rglob("*.yml"))
     if yaml_files and not YAML_AVAILABLE:
         print(f"ERROR: {YAML_MISSING_MESSAGE}")
+    # Check for yaml dependency if yaml files exist
+    yaml_files = list(config_dir.rglob("*.yaml")) + list(config_dir.rglob("*.yml"))
+    if yaml_files and not YAML_AVAILABLE:
+        print("ERROR: PyYAML is required to validate YAML configuration files.")
+        print("Install with: pip install pyyaml")
         print(f"\nFound {len(yaml_files)} YAML file(s) that cannot be validated.")
         sys.exit(1)
 
