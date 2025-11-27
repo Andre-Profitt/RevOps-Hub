@@ -16,13 +16,13 @@ import sys
 import json
 import importlib.util
 from pathlib import Path
-from typing import List, Tuple, Optional, Dict
+from typing import Dict, List
 from dataclasses import dataclass
-from datetime import datetime
 
 
 yaml_spec = importlib.util.find_spec("yaml")
-if yaml_spec:
+YAML_AVAILABLE = yaml_spec is not None
+if YAML_AVAILABLE:
     import yaml  # type: ignore
 else:
     yaml = None
@@ -455,6 +455,14 @@ def main():
         print("Creating empty config directory structure...")
         (config_dir / "customers").mkdir(parents=True, exist_ok=True)
         (config_dir / "tiers").mkdir(parents=True, exist_ok=True)
+
+    # Fail fast if YAML configs exist but PyYAML is missing
+    yaml_files = list(config_dir.rglob("*.yaml")) + list(config_dir.rglob("*.yml"))
+    if yaml_files and not YAML_AVAILABLE:
+        print("ERROR: PyYAML is required to validate YAML configuration files.")
+        print("Install with: pip install pyyaml")
+        print(f"\nFound {len(yaml_files)} YAML file(s) that cannot be validated.")
+        sys.exit(1)
 
     validator = ConfigValidator(config_dir)
     success = validator.validate_all()
