@@ -1,0 +1,40 @@
+{
+  "customer_id": "CUST-001",
+  "customer_name": "Acme Corporation",
+  "tier": "Growth",
+  "limits": {
+    "users": 75
+  },
+  "features": [
+    "core",
+    "forecasting",
+    "ai_predictions",
+    "custom_reports",
+    "api_access"
+  ],
+  "contacts": {
+    "primary": {
+      "name": "John Smith",
+      "email": "john.smith@acme.com",
+      "role": "VP Sales Operations"
+    },
+    "billing": {
+      "name": "Jane Doe",
+      "email": "billing@acme.com"
+    }
+  },
+  "contract": {
+    "start_date": "2024-01-01",
+    "end_date": "2024-12-31",
+    "auto_renew": true
+  },
+  "integrations": {
+    "salesforce": {
+      "enabled": true,
+      "sync_frequency": "hourly"
+    },
+    "hubspot": {
+      "enabled": false
+    }
+  }
+}
