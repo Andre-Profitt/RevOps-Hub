@@ -14,11 +14,16 @@ Exit codes:
 
 import sys
 import json
-import yaml
 from pathlib import Path
 from typing import List, Tuple, Optional
 from dataclasses import dataclass
 from datetime import datetime
+
+try:
+    import yaml
+    YAML_AVAILABLE = True
+except ImportError:
+    YAML_AVAILABLE = False
 
 
 @dataclass
@@ -93,9 +98,10 @@ class ConfigValidator:
                     message=f"Missing required field: {field}"
                 ))
 
-        # Validate tier
-        valid_tiers = ["Starter", "Growth", "Enterprise"]
-        if config.get("tier") and config["tier"] not in valid_tiers:
+        # Validate tier (lowercase to match PLAN_DEFINITIONS)
+        valid_tiers = ["starter", "growth", "enterprise"]
+        tier_value = config.get("tier", "").lower() if config.get("tier") else None
+        if tier_value and tier_value not in valid_tiers:
             self.errors.append(ValidationError(
                 file=str(path),
                 path="tier",
@@ -215,6 +221,11 @@ class ConfigValidator:
         """Load a config file (YAML or JSON)."""
         with open(path) as f:
             if path.suffix in [".yaml", ".yml"]:
+                if not YAML_AVAILABLE:
+                    raise ImportError(
+                        "PyYAML is required to parse YAML files. "
+                        "Install with: pip install pyyaml"
+                    )
                 return yaml.safe_load(f)
             else:
                 return json.load(f)
@@ -262,6 +273,14 @@ def main():
         print("Creating empty config directory structure...")
         (config_dir / "customers").mkdir(parents=True, exist_ok=True)
         (config_dir / "tiers").mkdir(parents=True, exist_ok=True)
+
+    # Check for yaml dependency if yaml files exist
+    yaml_files = list(config_dir.rglob("*.yaml")) + list(config_dir.rglob("*.yml"))
+    if yaml_files and not YAML_AVAILABLE:
+        print("ERROR: PyYAML is required to validate YAML configuration files.")
+        print("Install with: pip install pyyaml")
+        print(f"\nFound {len(yaml_files)} YAML file(s) that cannot be validated.")
+        sys.exit(1)
 
     validator = ConfigValidator(config_dir)
     success = validator.validate_all()
