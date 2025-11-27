@@ -106,8 +106,41 @@ class ConfigValidator:
                     message=f"Missing required field: {field}"
                 ))
 
-        # Ensure customer IDs are unique across files
+        # Validate customer identity fields
         customer_id = config.get("customer_id")
+        if customer_id is None:
+            customer_id = ""
+        if not isinstance(customer_id, str):
+            self.errors.append(ValidationError(
+                file=str(path),
+                path="customer_id",
+                message="customer_id must be a string"
+            ))
+            customer_id = ""
+        elif not customer_id.strip():
+            self.errors.append(ValidationError(
+                file=str(path),
+                path="customer_id",
+                message="customer_id must not be empty"
+            ))
+
+        customer_name = config.get("customer_name")
+        if customer_name is None:
+            customer_name = ""
+        if not isinstance(customer_name, str):
+            self.errors.append(ValidationError(
+                file=str(path),
+                path="customer_name",
+                message="customer_name must be a string"
+            ))
+        elif not customer_name.strip():
+            self.errors.append(ValidationError(
+                file=str(path),
+                path="customer_name",
+                message="customer_name must not be empty"
+            ))
+
+        # Ensure customer IDs are unique across files
         if isinstance(customer_id, str):
             if customer_id in self._seen_customer_ids:
                 self.errors.append(ValidationError(
@@ -140,7 +173,14 @@ class ConfigValidator:
 
         # Validate limits (if present)
         if "limits" in config:
-            self._validate_limits(path, config["limits"])
+            if isinstance(config["limits"], dict):
+                self._validate_limits(path, config["limits"])
+            else:
+                self.errors.append(ValidationError(
+                    file=str(path),
+                    path="limits",
+                    message="Limits must be provided as an object"
+                ))
 
         # Validate features (if present)
         if "features" in config:
@@ -161,6 +201,14 @@ class ConfigValidator:
 
     def _validate_limits(self, path: Path, limits: dict):
         """Validate limit configuration."""
+        if not isinstance(limits, dict):
+            self.errors.append(ValidationError(
+                file=str(path),
+                path="limits",
+                message="Limits must be provided as an object"
+            ))
+            return
+
         numeric_limits = ["users", "opportunities", "api_calls", "compute_hours"]
 
         for limit in numeric_limits:
@@ -289,6 +337,7 @@ class ConfigValidator:
             return []
 
         valid_tiers: List[str] = []
+        seen: Dict[str, str] = {}
         for config_file in tier_dir.glob("*.*"):
             if config_file.suffix not in {".json", ".yaml", ".yml"}:
                 continue
@@ -305,10 +354,13 @@ class ConfigValidator:
                 continue
 
             tier_name = config.get("tier_name") or config.get("name")
-            if tier_name:
-                valid_tiers.append(str(tier_name))
-            else:
-                valid_tiers.append(config_file.stem.title())
+            candidate_name = str(tier_name) if tier_name else config_file.stem.title()
+            normalized_name = candidate_name.lower()
+            if normalized_name in seen:
+                continue
+
+            seen[normalized_name] = candidate_name
+            valid_tiers.append(candidate_name)
 
         return valid_tiers
 
