@@ -127,10 +127,6 @@ class ConfigValidator:
             ))
             customer_id = ""
         elif not customer_id.strip():
-        # Validate tier (lowercase to match PLAN_DEFINITIONS)
-        valid_tiers = ["starter", "growth", "enterprise"]
-        tier_value = config.get("tier", "").lower() if config.get("tier") else None
-        if tier_value and tier_value not in valid_tiers:
             self.errors.append(ValidationError(
                 file=str(path),
                 path="customer_id",
