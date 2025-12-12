@@ -26,6 +26,7 @@
  * - compensation: Compensation & Attainment data
  * - data-quality: Data Quality Admin data
  * - alerts: Alerts & Notifications data
+ * - actions: Action Inbox and Impact Tracker data
  */
 
 // Core utilities and types
@@ -242,3 +243,11 @@ export {
   getScenarioAccounts,
   getScenarioActivities,
 } from './staging'
+
+// Action Inbox
+export {
+  fetchDashboardActions,
+  fetchImpactTracker,
+  fetchImpactSummary,
+  type ImpactSummary,
+} from './actions'

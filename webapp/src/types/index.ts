@@ -1225,6 +1225,58 @@ export interface AlertSummary {
 }
 
 // =====================================================
+// Action Inbox & Closed-loop Analytics Types
+// =====================================================
+
+export interface DashboardActionItem {
+  actionId: string
+  opportunityId: string
+  accountId: string
+  accountName: string
+  opportunityName: string
+  repId: string
+  ownerName: string
+  region: string
+  segment: string
+  actionType: string
+  actionTitle: string
+  actionDescription: string
+  priority: number
+  expectedImpact: string
+  expectedImpactAmount: number
+  confidence: number
+  reasoning: string | null
+  dueDate: string
+  createdAt: string
+  status: string
+  source: string
+  playbook: string
+  amount: number
+  healthScore: number
+  healthCategory: string
+  riskLevel: string
+  needsAttention: boolean
+}
+
+export interface InboxImpactMetrics {
+  quarter: string
+  region: string
+  segment: string
+  actionsCreated: number
+  actionsWithDecision: number
+  actionsWithoutDecision: number
+  avgTimeToDecisionDays: number
+  totalExpectedImpactAmount: number
+  totalRealizedImpactAmount: number
+  dealsWon: number
+  dealsLost: number
+  dealsSlipped: number
+  decisionRate: number
+  realizedVsExpectedRatio: number
+  lastUpdatedTs: string
+}
+
+// =====================================================
 // Foundry Schema Mapping Reference
 // =====================================================
 // The Foundry transforms output snake_case field names.
