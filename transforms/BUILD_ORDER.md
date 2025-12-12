@@ -56,7 +56,15 @@ python scripts/generate_manifest.py
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                          TIER 5: DASHBOARD ROLLUPS                          │
 │  dashboard/compute_dashboard_kpis.py → /RevOps/Dashboard/kpis               │
-│  dashboard/compute_next_best_actions.py                                     │
+│  analytics/next_best_actions.py → /RevOps/Dashboard/next_best_actions       │
+│  decisions/sales_interventions_schema.py → /RevOps/Decisions/...            │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                       TIER 5b: CLOSED-LOOP ANALYTICS                        │
+│  analytics/intervention_effectiveness.py                                    │
+│  analytics/action_impact_tracker.py → /RevOps/Inbox/impact_tracker          │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -135,6 +143,15 @@ Final aggregations consumed directly by the webapp and action recommendation eng
 | `dashboard/compute_dashboard_kpis.py` | forecast_confidence, opportunities | `/RevOps/Dashboard/kpis` |
 | `analytics/next_best_actions.py` | deal_health, sales_reps | `/RevOps/Dashboard/next_best_actions`, `/RevOps/Coaching/next_best_actions` |
 | `decisions/sales_interventions_schema.py` | (none - schema only) | `/RevOps/Decisions/sales_interventions` |
+
+### Tier 5b: Closed-Loop Analytics
+
+Measures effectiveness of actions and interventions. Requires decisions to be logged.
+
+| Transform | Dependencies | Key Outputs |
+|-----------|--------------|-------------|
+| `analytics/intervention_effectiveness.py` | sales_interventions, next_best_actions | `/RevOps/Analytics/intervention_effectiveness` |
+| `analytics/action_impact_tracker.py` | next_best_actions, sales_interventions | `/RevOps/Inbox/impact_tracker` |
 
 ### Tier 6: Monitoring & Operations
 
