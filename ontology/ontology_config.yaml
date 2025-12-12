@@ -421,6 +421,142 @@ object_types:
         source_column: is_completed
         filterable: true
 
+  # ------------------------------------------
+  # ACTION ITEM
+  # ------------------------------------------
+  - api_name: "ActionItem"
+    display_name: "Action Item"
+    plural_name: "Action Items"
+    description: "Prioritized next best actions on deals and accounts"
+    icon: "check-circle"
+    primary_key: "actionId"
+    title_property: "actionTitle"
+    backing_dataset: "/RevOps/Dashboard/next_best_actions"
+    properties:
+      - api_name: actionId
+        display_name: "Action ID"
+        type: string
+        source_column: action_id
+
+      - api_name: actionTitle
+        display_name: "Title"
+        type: string
+        source_column: action_title
+        searchable: true
+
+      - api_name: actionType
+        display_name: "Action Type"
+        type: string
+        source_column: action_type
+        filterable: true
+
+      - api_name: actionDescription
+        display_name: "Description"
+        type: string
+        source_column: action_description
+
+      - api_name: opportunityId
+        display_name: "Opportunity ID"
+        type: string
+        source_column: opportunity_id
+
+      - api_name: opportunityName
+        display_name: "Opportunity"
+        type: string
+        source_column: opportunity_name
+        searchable: true
+
+      - api_name: accountId
+        display_name: "Account ID"
+        type: string
+        source_column: account_id
+
+      - api_name: accountName
+        display_name: "Account"
+        type: string
+        source_column: account_name
+        searchable: true
+
+      - api_name: repId
+        display_name: "Assigned Rep ID"
+        type: string
+        source_column: rep_id
+
+      - api_name: repName
+        display_name: "Assigned Rep"
+        type: string
+        source_column: owner_name
+        filterable: true
+
+      - api_name: region
+        display_name: "Region"
+        type: string
+        source_column: region
+        filterable: true
+
+      - api_name: segment
+        display_name: "Segment"
+        type: string
+        source_column: segment
+        filterable: true
+
+      - api_name: priority
+        display_name: "Priority"
+        type: integer
+        source_column: priority
+        filterable: true
+
+      - api_name: expectedImpact
+        display_name: "Expected Impact"
+        type: string
+        source_column: expected_impact
+
+      - api_name: expectedImpactAmount
+        display_name: "Expected Impact ($)"
+        type: double
+        source_column: expected_impact_amount
+        aggregatable: true
+        format: currency
+
+      - api_name: confidence
+        display_name: "Confidence"
+        type: double
+        source_column: confidence
+        format: percent
+
+      - api_name: reasoning
+        display_name: "Reasoning"
+        type: string
+        source_column: reasoning
+
+      - api_name: status
+        display_name: "Status"
+        type: string
+        source_column: status
+        filterable: true
+
+      - api_name: source
+        display_name: "Source"
+        type: string
+        source_column: source
+        filterable: true
+
+      - api_name: playbook
+        display_name: "Playbook"
+        type: string
+        source_column: playbook
+        filterable: true
+
+      - api_name: dueDate
+        display_name: "Due Date"
+        type: date
+        source_column: due_date
+
+      - api_name: createdAt
+        display_name: "Created At"
+        type: datetime
+        source_column: created_at
+
 
 # ================================================
 # LINK TYPES
@@ -476,3 +612,27 @@ link_types:
     from_property: "managerId"
     to_property: "repId"
     description: "Manager relationship (note: managers need to also exist in SalesRep table)"
+
+  - api_name: "actionToOpportunity"
+    display_name: "Related Opportunity"
+    from_object: "ActionItem"
+    to_object: "Opportunity"
+    cardinality: "many-to-one"
+    from_property: "opportunityId"
+    to_property: "opportunityId"
+
+  - api_name: "actionToAccount"
+    display_name: "Related Account"
+    from_object: "ActionItem"
+    to_object: "Account"
+    cardinality: "many-to-one"
+    from_property: "accountId"
+    to_property: "accountId"
+
+  - api_name: "actionToRep"
+    display_name: "Assigned Rep"
+    from_object: "ActionItem"
+    to_object: "SalesRep"
+    cardinality: "many-to-one"
+    from_property: "repId"
+    to_property: "repId"

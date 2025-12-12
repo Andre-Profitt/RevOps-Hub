@@ -126,14 +126,15 @@ Analytics that depend on Tier 3 outputs.
 | `analytics/cross_functional_telemetry.py` | hygiene_alerts, deal_health | `/RevOps/Analytics/telemetry_summary`, `/RevOps/Analytics/funnel_handoff_metrics` |
 | `analytics/qbr_pack_builder.py` | forecast_history, hygiene_summary | `/RevOps/Analytics/qbr_*` |
 
-### Tier 5: Dashboard Rollups
+### Tier 5: Dashboard Rollups & Actions
 
-Final aggregations consumed directly by the webapp.
+Final aggregations consumed directly by the webapp and action recommendation engine.
 
 | Transform | Dependencies | Key Outputs |
 |-----------|--------------|-------------|
 | `dashboard/compute_dashboard_kpis.py` | forecast_confidence, opportunities | `/RevOps/Dashboard/kpis` |
-| `dashboard/compute_next_best_actions.py` | deal_health, hygiene_alerts | `/RevOps/Dashboard/next_best_actions` |
+| `analytics/next_best_actions.py` | deal_health, sales_reps | `/RevOps/Dashboard/next_best_actions`, `/RevOps/Coaching/next_best_actions` |
+| `decisions/sales_interventions_schema.py` | (none - schema only) | `/RevOps/Decisions/sales_interventions` |
 
 ### Tier 6: Monitoring & Operations
 
